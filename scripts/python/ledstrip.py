@@ -11,10 +11,10 @@ ip = "http://192.168.1.220/"
 parser = argparse.ArgumentParser(description="control this ledstrip.")
 parser.add_argument("-p", "--power", help="to turn on or off.")
 parser.add_argument("-c", "--color", help="choose a color.")
-parser.add_argument("-r", "--rgb", help="choose a color via rgb value.")
+parser.add_argument("-R", "--rgb", help="choose a color via rgb value.")
 parser.add_argument("-b", "--brightness", help="choose the brightness.")
 parser.add_argument("-H", "--hsv", help="choose a color via hsv value.")
-parser.add_argument("-R", "--rainbow", help="pick the rainbow function and choose a speed at which the color changes.")
+parser.add_argument("-r", "--rainbow", help="pick the rainbow function and choose a speed at which the color changes.")
 args = parser.parse_args()
 
 # Check if the power argument was passed and execute the function.
