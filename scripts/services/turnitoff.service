@@ -1,0 +1,12 @@
+[Unit]
+Description=Turn off ledstrip and amp when shutting down.
+Before=poweroff.target
+
+[Service]
+User=alex
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/alex/dotfiles/scripts/python/switch.py -a off
+ExecStartPost=/usr/bin/python3 /home/alex/dotfiles/scripts/python/ledstrip.py -p off
+
+[Install]
+WantedBy=poweroff.target

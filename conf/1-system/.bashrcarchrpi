@@ -1,0 +1,29 @@
+
+#
+#  Bashrc file for Arch Linux on the Raspberry Pi
+#
+
+# vcgencmd stuff
+alias vctemp='/opt/vc/bin/vcgencmd measure_temp'
+alias wtemp='watch /opt/vc/bin/vcgencmd measure_temp'
+alias vccore='/opt/vc/bin/vcgencmd measure_clock'
+
+# some exports
+# export TERM to use the rpi in urxvt
+export TERM=xterm-256color
+# visual and editor
+#export EDITOR=vim
+#export VISUAL=vim
+
+# customize the prompt
+green="\[$(tput setaf 2)\]"
+orange="\[$(tput setaf 3)\]"
+reset="\[$(tput sgr0)\]"
+bgwhite="\[$(tput setab 0)\]"
+boldon="\[$(tput bold)\]"
+if [ $(id | cut -d '(' -f2 | cut -d ')' -f1) == "root" ]; then
+    userc="\[$(tput setaf 1)\]"
+else
+    userc="\[$(tput setaf 3)\]"
+fi
+export PS1="${boldon}${bgwhite}${blue}(_)_)::${userc}\u${blue}@\h::D${green}~~\w ${reset}$ "

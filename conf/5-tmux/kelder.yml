@@ -1,0 +1,13 @@
+name: kelder
+root: /var/www/html/de_kelder
+windows:
+    - dev:
+        layout: even-vertical
+        panes:
+            - dek;pm2p stop 0;ssn
+            - dek;cd 1*/s*;sss
+            - dek
+            - dek
+    - git:
+        panes:
+            - dek;gs

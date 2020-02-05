@@ -1,0 +1,7 @@
+# SQLite conf file
+.header ON
+.separator "\t"
+.nullvalue "Null"
+.prompt "SQL> " ":::> "
+.mode tabs
+

@@ -1,0 +1,10 @@
+name: hmm
+root: /var/www/html/backup/projects/urlname/
+windows:
+  - watchers:
+      panes:
+        - hmm
+        - hmm
+  - mongo:
+      - mongo
+attach: false

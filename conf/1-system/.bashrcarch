@@ -1,0 +1,38 @@
+#
+#  Extra .bashrc for Arch Linux
+#
+
+# alias for using pacman and yay
+alias i='yay -S'
+alias ui='sudo pacman -Rns'
+alias clean='sudo pacman -Sc;yay -Yc'
+alias updaats='yay'
+
+# some ls aliases
+alias ll='ls -al'
+alias la='ls -A'
+alias l='ls -C'
+alias ls='ls -hF --color=auto'
+
+# fixed the ruby path for installing gems
+#PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+# path for ruby in the home directory
+PATH="$PATH:/home/alex/.gem/ruby/2.6.0/bin"
+PATH="$PATH:/home/alex/.gem/ruby/2.5.0/bin"
+# path for ruby in the root directory
+PATH="$PATH:/root/.gem/ruby/2.5.0/bin"
+
+# echo the command for looking up service files
+alias qql='echo "sudo pacman -Qql package | grep -Fe .service -e .socket"'
+
+# start ssh-agent everytime
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval "$(<~/.ssh-agent-thing)"
+fi
+
+# set neovim as editor?
+export EDITOR=nvim
+export VISUAL=nvim

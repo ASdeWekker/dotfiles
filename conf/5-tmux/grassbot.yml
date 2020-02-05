@@ -1,0 +1,8 @@
+name: grassbot
+root: /var/www/html/backup/alex/grassbot3000/1/
+windows:
+  - watchers:
+      panes:
+        - cd /var/www/html/backup/alex/grassbot3000/1/
+        - cd /var/www/html/backup/alex/grassbot3000/1/
+attach: false

@@ -1,0 +1,16 @@
+#
+#  Bashrc for Arch Linux on the Desktop x86/64
+#
+
+# customize the prompt
+green="\[$(tput setaf 2)\]"
+blue="\[$(tput setaf 4)\]"
+reset="\[$(tput sgr0)\]"
+bgwhite="\[$(tput setab 0)\]"
+boldon="\[$(tput bold)\]"
+if [ $(id | cut -d '(' -f2 | cut -d ')' -f1) == "root" ]; then
+    userc="\[$(tput setaf 1)\]"
+else
+    userc="\[$(tput setaf 4)\]"
+fi
+export PS1="${boldon}${bgwhite}${blue}(_)_)::${userc}\u${blue}@\h::D${green}~~\w ${reset}$ "

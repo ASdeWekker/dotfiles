@@ -1,0 +1,151 @@
+#
+#  Alias file for, you guessed it, aliases.
+#
+
+# alias for using pacman and yay
+alias i='yay -S'
+alias ui='sudo pacman -Rns'
+alias clean='sudo pacman -Sc;yay -Yc'
+alias updaats='yay'
+
+# some ls aliases
+alias ls='ls -hF --color=auto'
+alias l='ls -C'
+alias la='ls -A'
+alias ll='ls -al'
+
+# going into the project folders.
+alias hmm='cd /var/www/html/penp/projects/urlname'
+alias hmma='cd /var/www/html/penp/projects/alex/alexdewekker/2'
+alias hmmm='cd /var/www/html/penp/projects/darten'
+alias cv='cd /var/www/html/penp/projects/alex/cv/2'
+alias sp='cd /var/www/html/penp/projects/speedtest'
+alias pp='cd /var/www/html/penp'
+alias dek='cd /var/www/html/kelder'
+alias ard='cd /home/alex/Arduino'
+alias cdd='cd /mnt/vd0/data'
+alias dot='cd /home/alex/dotfiles'
+
+# Starting services: pug, npm & compass.
+alias ssn='npm start'
+alias sss='sass --watch styles.sass:styles.css'
+alias ssp='pug -wP index.pug index.html'
+
+# reload .bashrc.
+alias reload-bash='source ~/.bashrc'
+alias reload-zsh='source ~/.zshrc'
+
+# ssh aliases
+alias piet='ssh piet'
+alias aad='ssh aad'
+alias serge='ssh serge'
+alias willem='ssh willem'
+alias oscar='ssh oscar'
+
+# shortcut for checking systemctl status.
+alias syss='sudo systemctl' turned off because of ohmyzsh
+
+# how to git gud and other helpful git things.
+alias git-gud='git push'
+alias gs='git status'
+#alias ga='git add -A' using the ga alias supplied by the ohmyzsh git plugin
+alias gc='git commit -m'
+alias gp='git pull'
+
+# nmap shortcut for this network.
+alias nmapp='nmap -sP "192.168.1.*"'
+alias nmapp10='nmap -sP "10.8.0.*"'
+
+# history shortcut.
+alias hh='history'
+
+# sensors and stuff.
+alias sens='sensors | grep "Core*"'
+
+# tmux aliases.
+# attach shortcut.
+alias tat='tmux attach -t'
+# session check shortcut.
+alias tls='tmux list-sessions'
+# tmuxinator
+alias mux='tmuxinator'
+
+# check the git repos.
+alias check='cd;dot;gs;gp;pp;gs;gp;ard;gs;gp;dek;gs;gp'
+alias chexit='check;exit'
+
+# replace commands:
+# prettyping.
+alias ping='prettyping'
+alias pingg='/usr/bin/ping'
+# bat.
+alias cat='bat'
+alias catt='/usr/bin/cat'
+
+# libvirt and what not.
+alias suvi='sudo virsh'
+alias suviw1='sudo virsh start win10'
+alias suvil='sudo virsh list'
+alias suvid='sudo virsh destroy'
+alias suvip='sudo virsh poweroff'
+
+# suspend the system and then exit the ssh connection.
+# doei and doeii.
+alias slp='systemctl suspend'
+alias slpd='slp;exit'
+alias doei='systemctl poweroff'
+alias sdoei='sudo systemctl poweroff'
+alias doeii='systemctl reboot'
+alias sdoeii='sudo systemctl reboot'
+
+# sqlite3.
+alias sq='sqlite3'
+
+# to use sudo with an alias.
+alias sudo='sudo '
+
+# start pc.
+alias wolpc='wol 30:9c:23:04:60:2f'
+alias wolserv='wol 70:85:c2:81:9a:b7'
+
+# switch to the postgres user.
+alias psqlu='sudo -u postgres -i'
+alias psqldek='psql -h 192.168.1.90 dekelder alex'
+
+# vim and nvim.
+alias vim='nvim'
+alias vimm='/usr/bin/vim'
+
+# sublime text.
+alias subl='subl3'
+
+# new pm2 environments.
+alias pm2o='PM2_HOME=$HOME/.pm2o pm2'
+alias pm2p='PM2_HOME=$HOME/.pm2p pm2'
+
+# docker.
+alias dok='sudo docker'
+alias ctop='sudo ctop'
+
+# weertje.
+alias weer='curl wttr.in'
+
+# picocom.
+alias pico='picocom /dev/ttyUSB0 -b115200'
+
+# LEDje.
+alias ledon='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p on'
+alias ledoff='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p off'
+alias ledtog='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
+alias ledtoggle='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
+
+# echo the command for looking up service files
+alias qql='echo "sudo pacman -Qql package | grep -Fe .service -e .socket"'
+
+# vcgencmd stuff
+alias vctemp='/opt/vc/bin/vcgencmd measure_temp'
+alias wtemp='watch /opt/vc/bin/vcgencmd measure_temp'
+alias vccore='/opt/vc/bin/vcgencmd measure_clock'
+
+# make spotify bigger on my 4k monitor
+alias spotify='/usr/bin/spotify --force-device-scale-factor=1.5'

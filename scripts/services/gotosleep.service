@@ -1,0 +1,14 @@
+# Not needed anymore, able to place certain scripts somewhere now.
+
+[Unit]
+Description=Turn off ledstrip and amp when going to sleep.
+Before=suspend.target
+
+[Service]
+User=alex
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/alex/dotfiles/scripts/python/switch.py -a off
+ExecStartPost=/usr/bin/python3 /home/alex/dotfiles/scripts/python/ledstrip.py -p off
+
+[Install]
+WantedBy=suspend.target

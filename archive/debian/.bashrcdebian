@@ -1,0 +1,15 @@
+#
+# Extra .bashrc stuff for ubunduuuu
+#
+
+# install shortcut
+alias i='sudo apt install'
+alias ui='sudo apt purge'
+
+# some ls aliases
+alias ll='ls -al'
+alias la='ls -A'
+alias l='ls -C'
+alias ls='ls -hF --color=auto'
+
+

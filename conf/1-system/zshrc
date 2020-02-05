@@ -1,0 +1,103 @@
+### Zshrc
+
+### PATH ###
+#typeset -U path
+#path=(/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/alex/.gem/ruby/2.6.0/bin)
+source /home/alex/.config/.uenvs
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+
+# source my alias and tmuxinator file
+source ~/dotfiles/conf/1-system/.alias
+# find one for zsh
+#source ~/.bin/tmuxinator.bash
+
+# export TERM for urxvt, neovim and ampy
+TERM=xterm-256color
+EDITOR=nvim
+VISUAL=nvim
+AMPY_PORT=/dev/ttyUSB0
+AMPY_BAUD=115200
+
+# Set and unset things
+setopt appendhistory autocd extendedglob nomatch
+unsetopt beep notify
+bindkey -v
+
+# plugins
+plugins=(
+    colored-man-pages
+    colorize
+    command-not-found
+    cp
+    extract
+    history
+    sublime
+    web-search
+)
+
+# some more stuff is happening down here
+zstyle :compinstall filename '/home/alex/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# prompt
+setprompt() {
+	setopt prompt_subst
+
+	# check the hostname
+	if [[ "$(hostname)" == "aad" ]]; then
+		p_host='%F{blue}'
+	elif [[ "$(hostname)" == "piet" ]]; then
+		p_host=' %F{yellow}%M'
+	elif [[ "$(hostname)" == "serge" ]]; then
+		p_host=' %F{green}%M'
+	elif [[ "$(hostname)" == "oscar" ]]; then
+		p_host=' %F{cyan}%M'
+	else
+		p_host=' %M'
+	fi
+	# check the username
+	if [[ "$(id | cut -d '(' -f2 | cut -d ')' -f1)" == "alex" ]]; then
+		p_name='$'
+	else
+		p_name='%F{red}#'
+	fi
+
+	PROMPT='${p_host} %~ ${p_name}%f '
+}
+setprompt
+
+# path for ruby in the home and root directory
+if [[ "$(id | cut -d '(' -f2 | cut -d ')' -f1)" == "alex" ]]; then
+	PATH="$PATH:/home/alex/.gem/ruby/2.6.0/bin"
+else
+    PATH="$PATH:/root/.gem/ruby/2.6.0/bin"
+fi
+
+# start ssh-agent everytime
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval "$(<~/.ssh-agent-thing)"
+fi
+
+# my git function
+gitt () {
+    git status
+    git add -A
+    git commit -m "$1"
+    if [[ "$2" == "y" ]]; then
+        git push
+        git status
+    else
+        git status
+    fi
+}
+
+# vim: set ts=4 sw=4 et:

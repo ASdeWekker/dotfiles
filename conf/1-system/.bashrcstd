@@ -1,0 +1,46 @@
+### NEW FILE
+
+### NORMAL
+
+# source the tmuxinator and alias file
+source ~/.bin/tmuxinator.bash
+source ~/shn/.alias
+
+# function for easy git
+gitt () {
+    git status
+    git add -A
+    git commit -m "$1"
+    if [ $2 == "y" ]; then
+        git push
+        git status
+    else
+        git status
+    fi
+}
+export -f gitt
+
+# start ssh-agent everytime
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval "$(<~/.ssh-agent-thing)"
+fi
+
+# path for ruby in the home and root directory
+if [ $(id | cut -d '(' -f2 | cut -d ')' -f1) == "alex" ]; then
+	PATH="$PATH:/home/alex/.gem/ruby/2.6.0/bin"
+else
+	PATH="$PATH:/root/.gem/ruby/2.6.0/bin"
+fi
+
+# some exports
+# export TERM to use via ssh in urxvt
+export TERM=xterm-256color
+# export neovim
+export EDITOR=nvim
+export VISUAL=nvim
+# ampy
+export AMPY_PORT=/dev/ttyUSB0
+export AMPY_BAUD=115200

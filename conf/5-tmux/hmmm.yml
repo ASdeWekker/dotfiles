@@ -1,0 +1,10 @@
+name: hmmm
+root: /var/www/html/backup
+windows:
+  - darten:
+      panes:
+        - hmmm
+        - hmmm
+  - mongo:
+      - mongo
+attach: false
