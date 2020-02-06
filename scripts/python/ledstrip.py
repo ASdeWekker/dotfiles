@@ -8,13 +8,15 @@ import requests
 ip = "http://192.168.1.220/"
 
 # Argparse configuration.
-parser = argparse.ArgumentParser(description="control this ledstrip.")
-parser.add_argument("-p", "--power", help="to turn on or off.")
-parser.add_argument("-c", "--color", help="choose a color.")
-parser.add_argument("-R", "--rgb", help="choose a color via rgb value.")
-parser.add_argument("-b", "--brightness", help="choose the brightness.")
-parser.add_argument("-H", "--hsv", help="choose a color via hsv value.")
-parser.add_argument("-r", "--rainbow", help="pick the rainbow function and choose a speed at which the color changes.")
+parser = argparse.ArgumentParser(description="Control this ledstrip.")
+parser.add_argument("-p", "--power", help="To turn on or off.")
+parser.add_argument("-c", "--color", help="Choose a color.")
+parser.add_argument("-R", "--rgb", help="Choose a color via rgb value.")
+parser.add_argument("-b", "--brightness", help="Choose the brightness.")
+parser.add_argument("-H", "--hsv", help="Choose a color via hsv value.")
+parser.add_argument("-r", "--rainbow", help="Pick the rainbow function and choose a speed at which the color changes.")
+parser.add_argument("-f", "--fade", help="Let the current color fade in and out at the desired speed.")
+parser.add_argument("-w", "--wakeup", help="Turn on the wakeup function.", action="store_true")
 args = parser.parse_args()
 
 # Check if the power argument was passed and execute the function.
@@ -40,4 +42,12 @@ if args.brightness:
 
 if args.rainbow:
 	response = requests.post(ip + "rainbow", data={"speed": str(args.rainbow)})
+	print(response.text)
+
+if args.fade:
+	response = requests.post(ip + "fade", data={"delay": str(args.fade)})
+	print(response.text)
+
+if args.wakeup:
+	response = requests.post(ip + "wakeup")
 	print(response.text)
