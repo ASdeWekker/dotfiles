@@ -11,6 +11,7 @@ parser.add_argument("-A", "--all", help="All of them")
 parser.add_argument("-o", "--overhead", help="Overhead lamp")
 parser.add_argument("-s", "--standing", help="Standing lamp")
 parser.add_argument("-a", "--amp", help="Amplifier")
+parser.add_argument("-l", "--lights", help="Both lights")
 args = parser.parse_args()
 
 
@@ -31,4 +32,7 @@ else:
 		response = requests.post(ip("222"), data={"power": str(args.standing)})
 	if args.amp:
 		response = requests.post(ip("223"), data={"power": str(args.amp)})
+	if args.lights:
+		response = requests.post(ip("221"), data={"power": str(args.lights)})
+		response = requests.post(ip("222"), data={"power": str(args.lights)})
 
