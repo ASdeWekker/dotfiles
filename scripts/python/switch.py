@@ -1,5 +1,6 @@
 #!/bin/python
 
+
 # Some imports.
 import argparse
 import requests
@@ -17,49 +18,43 @@ parser.add_argument("-a", "--amp", help="Amplifier")
 parser.add_argument("-l", "--lights", help="Both lights")
 args = parser.parse_args()
 
+# Another array, this one is for the arguments.
+ARGS = [args.all, args.overhead, args.standing, args.amp, args.lights]
+
+
 # A function to enter the ip address and get the status.
 def get(val):
-	return "http://192.168.1." + val + "/status"
+	return "http://192.168.1.22%s/status" % (val)
 
 
 # A function to enter the ip address and post to the power endpoint.
 def post(val):
-	return "http://192.168.1." + val + "/power"
+	return "http://192.168.1.22%s/power" % (val)
 
 
 # Use this function to check the status of a device.
-if args.overhead == "status" or args.standing == "status" or args.amp == "status":
+if any ("status" for i in ARGS):
 	if args.overhead:
-		response = requests.get(get("221"))
-		print(response.text)
+		response = requests.get(get("1"))
 	if args.standing:
-		response = requests.get(get("222"))
-		print(response.text)
+		response = requests.get(get("2"))
 	if args.amp:
-		response = requests.get(get("223"))
-		print(response.text)
+		response = requests.get(get("3"))
 # Otherwise check if one of the power arguments have been passed so execute those
-elif args.all in POWER_ARGS or args.overhead in POWER_ARGS or args.standing in POWER_ARGS or args.amp in POWER_ARGS:
+elif any (i in POWER_ARGS for i in ARGS):
 	# Check if -A has been passed, otherwise check for the individual ones.
 	if args.all:
-		response = requests.post(post("221"), data={"power": str(args.all)})
-		print(response.text)
-		response = requests.post(post("222"), data={"power": str(args.all)})
-		print(response.text)
-		response = requests.post(post("223"), data={"power": str(args.all)})
-		print(response.text)
+		response = requests.post(post("1"), data={"power": str(args.all)})
+		response = requests.post(post("2"), data={"power": str(args.all)})
+		response = requests.post(post("3"), data={"power": str(args.all)})
 	else:
 		if args.overhead:
-			response = requests.post(post("221"), data={"power": str(args.overhead)})
-			print(response.text)
+			response = requests.post(post("1"), data={"power": str(args.overhead)})
 		if args.standing:
-			response = requests.post(post("222"), data={"power": str(args.standing)})
-			print(response.text)
+			response = requests.post(post("2"), data={"power": str(args.standing)})
 		if args.amp:
-			response = requests.post(post("223"), data={"power": str(args.amp)})
-			print(response.text)
+			response = requests.post(post("3"), data={"power": str(args.amp)})
 		if args.lights:
-			response = requests.post(post("221"), data={"power": str(args.lights)})
-			print(response.text)
-			response = requests.post(post("222"), data={"power": str(args.lights)})
-			print(response.text)
+			response = requests.post(post("1"), data={"power": str(args.lights)})
+			response = requests.post(post("2"), data={"power": str(args.lights)})
+print(response.text)
