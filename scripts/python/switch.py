@@ -6,7 +6,7 @@ import requests
 
 
 # A small array of power arguments you can pass.
-power_args = ["on", "off", "toggle"]
+POWER_ARGS = ["on", "off", "toggle"]
 
 # Argparse config and adding arguments.
 parser = argparse.ArgumentParser(description="Turn a switch on or off.")
@@ -38,7 +38,9 @@ if args.overhead == "status" or args.standing == "status" or args.amp == "status
 	if args.amp:
 		response = requests.get(get("223"))
 		print(response.text)
-elif args.all in power_args or args.overhead in power_args or args.standing in power_args or args.amp in power_args:
+# Otherwise check if one of the power arguments have been passed so execute those
+elif args.all in POWER_ARGS or args.overhead in POWER_ARGS or args.standing in POWER_ARGS or args.amp in POWER_ARGS:
+	# Check if -A has been passed, otherwise check for the individual ones.
 	if args.all:
 		response = requests.post(post("221"), data={"power": str(args.all)})
 		print(response.text)
@@ -61,4 +63,3 @@ elif args.all in power_args or args.overhead in power_args or args.standing in p
 			print(response.text)
 			response = requests.post(post("222"), data={"power": str(args.lights)})
 			print(response.text)
-
