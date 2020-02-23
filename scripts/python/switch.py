@@ -33,7 +33,7 @@ def post(val):
 
 
 # Use this function to check the status of a device.
-if args.standing == "status":
+if "status" in ARGS:
 	if args.overhead:
 		res = req.get(get("1"))
 	if args.standing:
