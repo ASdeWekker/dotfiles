@@ -50,4 +50,4 @@ if args.wakeup:
 # Check the status of the ledstrip.
 if args.status:
 	res = req.post("%sstatus" % (ip))
-print(res.json())
+print(res.text)
