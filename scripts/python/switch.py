@@ -36,42 +36,33 @@ def post(val):
 
 # Use this function to check the status of a device.
 if "status" in ARGS:
-	if args.all:
-		for i in IPS:
-			res = req.get(get(i))
-			print(res.text)
 	if args.overhead:
 		res = req.get(get("1"))
-		print(res.text)
+		# print(res.text)
 	if args.standing:
 		res = req.get(get("2"))
-		print(res.text)
+		# print(res.text)
 	if args.amp:
 		res = req.get(get("3"))
-		print(res.text)
-	if args.lights:
-		res = req.get(get("1"))
-		print(res.text)
-		res = req.get(get("2"))
-		print(res.text)
+		# print(res.text)
 # Check if one of the power arguments have been passed so execute those.
 elif any(i in POWER_ARGS for i in ARGS):
 	# Check if -A has been passed, otherwise check for the individual ones.
 	if args.all:
 		for i in IPS:
 			res = req.post(post(i), data={"power": str(args.all)})
-			print(res.text)
+			# print(res.text)
 	if args.overhead:
 		res = req.post(post("1"), data={"power": str(args.overhead)})
-		print(res.text)
+		# print(res.text)
 	if args.standing:
 		res = req.post(post("2"), data={"power": str(args.standing)})
-		print(res.text)
+		# print(res.text)
 	if args.amp:
 		res = req.post(post("3"), data={"power": str(args.amp)})
-		print(res.text)
+		# print(res.text)
 	if args.lights:
 		res = req.post(post("1"), data={"power": str(args.lights)})
-		print(res.text)
+		# print(res.text)
 		res = req.post(post("2"), data={"power": str(args.lights)})
-		print(res.text)
+print(res.text)
