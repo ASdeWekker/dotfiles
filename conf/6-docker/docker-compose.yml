@@ -66,28 +66,6 @@ services:
             - /var:/data-var:rw
 
 
-    # firefly
-    firefly:
-        container_name: firefly
-        environment:
-            FF_DB_HOST: 192.168.1.90:5432
-            FF_DB_NAME: firefly
-            FF_DB_USER: firefly
-            FF_DB_PASSWORD: firefly
-            FF_DB_KEY: sjakebdnfjeiqkamdngheidnakebdoem
-            FF_APP_ENV: local
-            FF_DB_CONNECTION: pgsql
-            TZ: Europe/Amsterdam
-            APP_LOG_LEVEL: debug
-        image: jc5x/firefly-iii:latest
-        ports:
-            - "8888:80"
-        restart: unless-stopped
-        volumes:
-            - /var/www/firefly-iii/storage/export:/firefly_iii_export:rw
-            - /var/www/firefly-iii/storage/upload:/firefly_iii_upload:rw
-
-
     # Plex
     plex:
         container_name: plex
@@ -222,40 +200,7 @@ services:
             - /home/alex/.docker/config/organizr:/config:rw
 
 
-    # Piwigo
-    piwigo:
-        container_name: piwigo
-        environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
-        image: linuxserver/piwigo:latest
-        ports:
-            - "8182:80"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/piwigo:/config:rw
-            - /etc/localtime:/etc/localtime:ro
-
-
-    # Bazarr
-    bazarr:
-        container_name: bazarr
-        environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
-        image: linuxserver/bazarr:latest
-        ports:
-            - "6767:6767"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/bazarr:/config:rw
-            - /mnt/vd0/data/videos:/tv:rw
-            - /mnt/vd0/data/videos:/movies:rw
-
-
-    # emby
+    # Emby
     emby:
         container_name: emby
         environment:
