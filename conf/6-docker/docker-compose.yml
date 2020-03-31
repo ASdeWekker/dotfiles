@@ -155,18 +155,20 @@ services:
             - /home/alex/downloads/deluge:/downloads:rw
 
 
-    # Watchtower
-    watchtower:
-        command: --schedule "0 0 4 * * *" --cleanup
-        container_name: watchtower
+    # Ouroboros
+    ouroboros:
+        container_name: ouroboros
         environment:
+            CLEANUP: "true"
+            INTERVAL: 300
+            LOG_LEVEL: "info"
+            SELF_UPDATE: "true"
+            IGNORE: "mariadb"
             TZ: Europe/Amsterdam
-        image: v2tec/watchtower:latest
+        image: pyouroboros/ouroboros:latest
         restart: unless-stopped
         volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /var/run/docker.sock:/var/run/docker.sock:rw
-            - /home/alex/.docker/config/watchtower/config.json:/config/config.json:rw
+            - /var/run/docker.sock:/var/run/docker.sock
 
 
     # Jackett
