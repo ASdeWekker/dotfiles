@@ -66,13 +66,14 @@ neofetch
 neovim
 net-tools
 netctl
+networkmanager
 nginx-mainline
 nmap
 npm
+oh-my-zsh-git
 openssh
 openvpn
 ovpngen
-pacman
 pacman-mirrorlist
 patch
 pciutils
