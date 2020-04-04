@@ -2,47 +2,27 @@
 # This is my docker compose file. #
 #                                 #
 
-
 version: "3.4"
-
 
 # Services.
 services:
 
-
-    # Maria DB
-    mariadb:
-        container_name: mariadb
-        environment:
-            MYSQL_ROOT_PASSWORD: nginxproxymanager
-            MYSQL_DATABASE: nginxproxymanager
-            MYSQL_USER: nginxproxymanager
-            MYSQL_PASSWORD: nginxproxymanager
-        image: mariadb
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/mariadb/data/mysql:/var/lib/mysql:rw
-
-
-    # Nginx proxy manager
-    nginx-proxy-manager:
-        container_name: nginx-proxy-manager
-        depends_on: 
-            - mariadb
+    # Deluge
+    deluge:
+        container_name: deluge
         environment:
             PUID: 1000
-            GUID: 998
-        image: jc21/nginx-proxy-manager:latest
+            PGID: 998
+            TZ: Europe/Amsterdam
+        image: linuxserver/deluge:latest
         ports:
-            - "8181:81"
-            - "8080:80"
-            - "4443:443"
+            - "58846:58846"
+            - "58946:58946"
+            - "8112:8112"
         restart: unless-stopped
         volumes:
-            - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
-
+            - /home/alex/.docker/config/deluge:/config:rw
+            - /home/alex/downloads/deluge:/downloads:rw
 
     # Duplicati
     duplicati:
@@ -65,6 +45,96 @@ services:
             - /usr:/data-usr:rw
             - /var:/data-var:rw
 
+    # Emby
+    emby:
+        container_name: emby
+        environment:
+            PUID: 1000
+            PGID: 998
+        image: emby/embyserver:latest
+        ports:
+            - "8096:8096"
+            - "8920:8920"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/emby:/config:rw
+            - /mnt/vd0/data/videos:/mnt/share1:rw
+
+    # Jackett
+    jackett:
+        container_name: jackett
+        environment:
+            PUID: 1000
+            PGID: 998
+            TZ: Europe/Amsterdam
+        image: linuxserver/jackett:latest
+        ports:
+            - "9117:9117"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/jackett:/config:rw
+            - /home/alex/downloads/jackett:/downloads:rw
+            - /etc/localtime:/etc/localtime:ro
+
+    # Maria DB
+    mariadb:
+        container_name: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: nginxproxymanager
+            MYSQL_DATABASE: nginxproxymanager
+            MYSQL_USER: nginxproxymanager
+            MYSQL_PASSWORD: nginxproxymanager
+        image: mariadb
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/mariadb/data/mysql:/var/lib/mysql:rw
+
+    # Nginx proxy manager
+    nginx-proxy-manager:
+        container_name: nginx-proxy-manager
+        depends_on: 
+            - mariadb
+        environment:
+            PUID: 1000
+            GUID: 998
+        image: jc21/nginx-proxy-manager:latest
+        ports:
+            - "8181:81"
+            - "8080:80"
+            - "4443:443"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
+            - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
+            - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+
+    # Organizr
+    organizr:
+        container_name: organizr
+        environment:
+            PUID: 1000
+            PGID: 998
+        image: organizrtools/organizr-v2:latest
+        ports:
+            - "8081:80"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/organizr:/config:rw
+
+    # Ouroboros
+    ouroboros:
+        container_name: ouroboros
+        environment:
+            CLEANUP: "true"
+            INTERVAL: 300
+            LOG_LEVEL: "info"
+            SELF_UPDATE: "true"
+            IGNORE: "mariadb"
+            TZ: Europe/Amsterdam
+        image: pyouroboros/ouroboros:latest
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
 
     # Plex
     plex:
@@ -85,7 +155,6 @@ services:
             - /home/alex/downloads/plex/transcode:/transcode:rw
             - /mnt/vd0/data/videos:/data:rw
     
-
     # Portainer
     portainer:
         command: -H unix:///var/run/docker.sock
@@ -101,42 +170,6 @@ services:
             - /etc/localtime:/etc/localtime:ro
             - /home/alex/.docker/shared:/shared:rw
             - /var/run/docker.sock:/var/run/docker.sock:rw
-
-
-    # Deluge
-    deluge:
-        container_name: deluge
-        environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
-        image: linuxserver/deluge:latest
-        ports:
-            - "58846:58846"
-            - "58946:58946"
-            - "8112:8112"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/deluge:/config:rw
-            - /home/alex/downloads/deluge:/downloads:rw
-
-
-    # Sonarr
-    sonarr:
-        container_name: sonarr
-        environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
-        image: linuxserver/sonarr:preview
-        ports:
-            - "8989:8989"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/sonarr:/config:rw
-            - /mnt/vd0/data/videos:/tv:rw
-            - /home/alex/downloads/deluge:/downloads:rw
-
 
     # Radarr
     radarr:
@@ -154,66 +187,18 @@ services:
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
 
-
-    # Ouroboros
-    ouroboros:
-        container_name: ouroboros
-        environment:
-            CLEANUP: "true"
-            INTERVAL: 300
-            LOG_LEVEL: "info"
-            SELF_UPDATE: "true"
-            IGNORE: "mariadb"
-            TZ: Europe/Amsterdam
-        image: pyouroboros/ouroboros:latest
-        restart: unless-stopped
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-
-
-    # Jackett
-    jackett:
-        container_name: jackett
+    # Sonarr
+    sonarr:
+        container_name: sonarr
         environment:
             PUID: 1000
             PGID: 998
             TZ: Europe/Amsterdam
-        image: linuxserver/jackett:latest
+        image: linuxserver/sonarr:preview
         ports:
-            - "9117:9117"
+            - "8989:8989"
         restart: unless-stopped
         volumes:
-            - /home/alex/.docker/config/jackett:/config:rw
-            - /home/alex/downloads/jackett:/downloads:rw
-            - /etc/localtime:/etc/localtime:ro
-
-
-    # Organizr
-    organizr:
-        container_name: organizr
-        environment:
-            PUID: 1000
-            PGID: 998
-        image: organizrtools/organizr-v2:latest
-        ports:
-            - "8081:80"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/organizr:/config:rw
-
-
-    # Emby
-    emby:
-        container_name: emby
-        environment:
-            PUID: 1000
-            PGID: 998
-        image: emby/embyserver:latest
-        ports:
-            - "8096:8096"
-            - "8920:8920"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/emby:/config:rw
-            - /mnt/vd0/data/videos:/mnt/share1:rw
-
+            - /home/alex/.docker/config/sonarr:/config:rw
+            - /mnt/vd0/data/videos:/tv:rw
+            - /home/alex/downloads/deluge:/downloads:rw
