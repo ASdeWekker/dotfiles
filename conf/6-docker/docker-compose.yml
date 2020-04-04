@@ -11,9 +11,9 @@ services:
     deluge:
         container_name: deluge
         environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
         image: linuxserver/deluge:latest
         ports:
             - "58846:58846"
@@ -28,8 +28,8 @@ services:
     duplicati:
         container_name: duplicati
         environment:
-            PUID: 1000
-            PGID: 998
+            - PUID=1000
+            - PGID=998
         image: duplicati/duplicati:latest
         ports:
             - "8200:8200"
@@ -49,8 +49,8 @@ services:
     emby:
         container_name: emby
         environment:
-            PUID: 1000
-            PGID: 998
+            - PUID=1000
+            - PGID=998
         image: emby/embyserver:latest
         ports:
             - "8096:8096"
@@ -64,9 +64,9 @@ services:
     jackett:
         container_name: jackett
         environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
         image: linuxserver/jackett:latest
         ports:
             - "9117:9117"
@@ -80,10 +80,10 @@ services:
     mariadb:
         container_name: mariadb
         environment:
-            MYSQL_ROOT_PASSWORD: nginxproxymanager
-            MYSQL_DATABASE: nginxproxymanager
-            MYSQL_USER: nginxproxymanager
-            MYSQL_PASSWORD: nginxproxymanager
+            - MYSQL_ROOT_PASSWORD=nginxproxymanager
+            - MYSQL_DATABASE=nginxproxymanager
+            - MYSQL_USER=nginxproxymanager
+            - MYSQL_PASSWORD=nginxproxymanager
         image: mariadb
         restart: unless-stopped
         volumes:
@@ -95,8 +95,8 @@ services:
         depends_on: 
             - mariadb
         environment:
-            PUID: 1000
-            GUID: 998
+            - PUID=1000
+            - GUID=998
         image: jc21/nginx-proxy-manager:latest
         ports:
             - "8181:81"
@@ -112,8 +112,8 @@ services:
     organizr:
         container_name: organizr
         environment:
-            PUID: 1000
-            PGID: 998
+            - PUID=1000
+            - PGID=998
         image: organizrtools/organizr-v2:latest
         ports:
             - "8081:80"
@@ -125,12 +125,12 @@ services:
     ouroboros:
         container_name: ouroboros
         environment:
-            CLEANUP: "true"
-            INTERVAL: 300
-            LOG_LEVEL: "info"
-            SELF_UPDATE: "true"
-            IGNORE: "mariadb"
-            TZ: Europe/Amsterdam
+            - CLEANUP=true
+            - INTERVAL=300
+            - LOG_LEVEL=info
+            - SELF_UPDATE=true
+            - IGNORE=mariadb
+            - TZ=Europe/Amsterdam
         image: pyouroboros/ouroboros:latest
         restart: unless-stopped
         volumes:
@@ -140,15 +140,14 @@ services:
     plex:
         container_name: plex
         environment:
-            ADVERTISE_IP: http://192.168.1.111:32400/
-            PLEX_UID: 1000
-            PLEX_GID: 998
-            TZ: Europe/Amsterdam
-            PLEX_CLAIM: claim-8_2xiVmTJ2t3JaK_Jqd8
+            - ADVERTISE_IP=http://192.168.1.111:32400/
+            - PLEX_UID=1000
+            - PLEX_GID=998
+            - TZ=Europe/Amsterdam
+            - PLEX_CLAIM=claim-8_2xiVmTJ2t3JaK_Jqd8
         image: plexinc/pms-docker:latest
         ports:
             - "32400:32400"
-
         restart: unless-stopped
         volumes:
             - /home/alex/.docker/config/plex:/config:rw
@@ -160,7 +159,7 @@ services:
         command: -H unix:///var/run/docker.sock
         container_name: portainer
         environment:
-            TZ: Europe/Amsterdam
+            - TZ=Europe/Amsterdam
         image: portainer/portainer:latest
         ports:
             - "9000:9000"
@@ -175,9 +174,9 @@ services:
     radarr:
         container_name: radarr
         environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
         image: linuxserver/radarr:preview
         ports:
             - "7878:7878"
@@ -191,9 +190,9 @@ services:
     sonarr:
         container_name: sonarr
         environment:
-            PUID: 1000
-            PGID: 998
-            TZ: Europe/Amsterdam
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
         image: linuxserver/sonarr:preview
         ports:
             - "8989:8989"
