@@ -202,3 +202,18 @@ services:
             - /home/alex/.docker/config/sonarr:/config:rw
             - /mnt/vd0/data/videos:/tv:rw
             - /home/alex/downloads/deluge:/downloads:rw
+
+    # Tautulli
+    tautulli:
+        container_name: tautulli
+        environment:
+            - PUID=1000
+            - GUID=998
+            - TZ=Europe/Amsterdam
+        image: tautulli/tautulli:latest
+        ports:
+            - "8182:8181"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/tautulli:/config:rw
+            - "/home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro"
