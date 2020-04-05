@@ -130,6 +130,7 @@ services:
             - LOG_LEVEL=info
             - SELF_UPDATE=true
             - IGNORE=mariadb
+            - NOTIFIERS=${OUROBOROS_NOTIFIERS}
             - TZ=Europe/Amsterdam
         image: pyouroboros/ouroboros:latest
         restart: unless-stopped
