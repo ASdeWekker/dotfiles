@@ -145,7 +145,7 @@ services:
             - PLEX_UID=1000
             - PLEX_GID=998
             - TZ=Europe/Amsterdam
-            - PLEX_CLAIM=claim-8_2xiVmTJ2t3JaK_Jqd8
+            - PLEX_CLAIM=${PLEX_CLAIM}
         image: plexinc/pms-docker:latest
         ports:
             - "32400:32400"
