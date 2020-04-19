@@ -7,6 +7,19 @@ version: "3.4"
 # Services.
 services:
 
+    # Bitwarden
+    bitwarden:
+        container_name: bitwarden
+        environment:
+            - LOG_FILE=/data/bitwarden.log
+            - SIGNUPS_ALLOWED=true
+        image: bitwardenrs/server:latest
+        ports:
+            - "8000:80"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/bitwarden:/data:rw
+
     # Deluge
     deluge:
         container_name: deluge
@@ -202,6 +215,18 @@ services:
             - /home/alex/.docker/config/sonarr:/config:rw
             - /mnt/vd0/data/videos:/tv:rw
             - /home/alex/downloads/deluge:/downloads:rw
+
+    # Statping
+    statping:
+        container_name: statping
+        environment:
+            - DB_CONN=sqlite
+        image: hunterlong/statping:latest
+        ports:
+            - "8282:8080"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/statping/data:/app:rw
 
     # Tautulli
     tautulli:
