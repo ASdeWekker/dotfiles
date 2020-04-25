@@ -1,2 +1,4 @@
 AddKeysToAgent confirm
 
+Host 192.168.1.36
+    KexAlgorithms +diffie-hellman-group1-sha1
