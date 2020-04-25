@@ -11,7 +11,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 # source my alias and tmuxinator file
-source ~/dotfiles/conf/1-system/.alias
+source /home/alex/dotfiles/conf/1-system/.alias
 # find one for zsh
 #source ~/.bin/tmuxinator.bash
 
