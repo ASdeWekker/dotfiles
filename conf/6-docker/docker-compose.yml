@@ -73,6 +73,21 @@ services:
             - /home/alex/.docker/config/emby:/config:rw
             - /mnt/vd0/data/videos:/mnt/share1:rw
 
+    # Heimdall
+    heimdall:
+        container_name: heimdall
+        environment:
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
+        image: linuxserver/heimdall:latest
+        ports:
+            - "9009:80"
+            - "9010:443"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/heimdall:/config:rw
+
     # Jackett
     jackett:
         container_name: jackett
