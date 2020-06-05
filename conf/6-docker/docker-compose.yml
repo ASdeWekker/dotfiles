@@ -165,26 +165,6 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
-    # Pihole
-    pihole:
-        container_name: pihole
-        dns:
-            - 127.0.0.1
-            - 1.1.1.1
-        environment:
-            - TZ=Europe/Amsterdam
-        image: pihole/pihole:latest
-        ports:
-            - "53:53/tcp"
-            - "53:53/udp"
-            - "67:67/udp"
-            - "80:80/tcp"
-            - "4444:443/tcp"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/pihole:/etc/pihole:rw
-            - /home/alex/.docker/config/pihole/dnsmasq-config:/etc/dnsmasq.d:rw
-
     # Plex
     plex:
         container_name: plex
