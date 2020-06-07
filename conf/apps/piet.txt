@@ -5,7 +5,6 @@ bash
 bat
 binutils
 bison
-bitwarden_rs
 bzip2
 certbot
 certbot-nginx
