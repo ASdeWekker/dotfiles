@@ -165,6 +165,18 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
+    # PHP
+    php:
+        container_name: php
+        environment:
+            - TZ=Europe/Amsterdam
+        image: php:7.2-apache
+        ports:
+            - "82:80"
+        restart: unless-stopped
+        volumes:
+            - /var/www/html/php72:/var/www/html:rw
+
     # Plex
     plex:
         container_name: plex
