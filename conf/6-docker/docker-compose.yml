@@ -177,6 +177,17 @@ services:
         volumes:
             - /var/www/html/php72:/var/www/html:rw
 
+    # PHPMyAdmin
+    phpmyadmin:
+        container_name: phpmyadmin
+        environment:
+            - TZ=Europe/Amsterdam
+            - PMA_HOST=127.0.0.1
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "83:80"
+        restart: unless-stopped
+
     # Plex
     plex:
         container_name: plex
