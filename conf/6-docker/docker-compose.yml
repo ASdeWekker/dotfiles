@@ -73,6 +73,27 @@ services:
             - /home/alex/.docker/config/emby:/config:rw
             - /mnt/vd0/data/videos:/mnt/share1:rw
 
+    # Gitea
+    gitea:
+        container_name: gitea
+        environment:
+            - USER_UID=1000
+            - USER_GID=998
+            - DB_TYPE=mysql
+            - DB_HOST=${DB_HOST}
+            - DB_NAME=${DB_NAME}
+            - DB_USER=${DB_USER}
+            - DB_PASSWD=${DB_PASSWD}
+        image: gitea/gitea:latest
+        ports:
+            - "3000:3000"
+            - "222:22"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/gitea:/data
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+
     # Heimdall
     heimdall:
         container_name: heimdall
