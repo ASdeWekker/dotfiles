@@ -73,13 +73,33 @@ services:
             - /home/alex/.docker/config/emby:/config:rw
             - /mnt/vd0/data/videos:/mnt/share1:rw
 
+    # Firefly
+    firefly:
+        container_name: firefly
+        environment:
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
+            - APP_KEY=
+            - DB_HOST=serge.local
+            - DB_PORT=3306
+            - DB_DATABASE=
+            - DB_USERNAME=
+            - DB_PASSWORD=
+        image: jc5x/firefly-iii:latest
+        ports:
+            - "8080:8080"
+        volumes:
+            - /firefly-iii-export:/home/alex/.docker/config/firefly-iii-export
+            - /firefly-iii-upload:/home/alex/.docker/config/firefly-iii-upload
+
     # Gitea
     gitea:
         container_name: gitea
         environment:
             - USER_UID=1000
             - USER_GID=998
-            - DB_TYPE=mysql
+            - DB_TYPE={DB_TYPE}
             - DB_HOST=${DB_HOST}
             - DB_NAME=${DB_NAME}
             - DB_USER=${DB_USER}
@@ -233,7 +253,7 @@ services:
         container_name: portainer
         environment:
             - TZ=Europe/Amsterdam
-        image: portainer/portainer:latest
+        image: portainer/portainer-ce:latest
         ports:
             - "9000:9000"
         restart: unless-stopped
