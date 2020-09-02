@@ -81,11 +81,11 @@ services:
             - PGID=998
             - TZ=Europe/Amsterdam
             - APP_KEY=
-            - DB_HOST=serge.local
-            - DB_PORT=3306
-            - DB_DATABASE=
-            - DB_USERNAME=
-            - DB_PASSWORD=
+            - DB_HOST=${FIREFLY_DB_HOST}
+            - DB_PORT=${FIREFLY_DB_PORT}
+            - DB_DATABASE=${FIREFLY_DB_DATABASE}
+            - DB_USERNAME=${FIREFLY_DB_USERNAME}
+            - DB_PASSWORD=${FIREFLY_DB_PASSWORD}
         image: jc5x/firefly-iii:latest
         ports:
             - "8080:8080"
