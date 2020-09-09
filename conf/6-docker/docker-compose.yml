@@ -309,3 +309,21 @@ services:
         volumes:
             - /home/alex/.docker/config/tautulli:/config:rw
             - "/home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro"
+
+    # Wordpress
+    wordpress:
+        container_name: wordpress
+        environment:
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
+            - WORDPRESS_DB_NAME=${WP_DB_NAME}
+            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
+            - WORDPRESS_DB_HOST=${WP_DB_HOST}
+            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
+        image: wordpress:5.3.0-php7.2-fpm
+        ports:
+            - "82:9000"
+        restart: unless-stopped
+        volumes:
+            - /wordpress:/var/www/html
