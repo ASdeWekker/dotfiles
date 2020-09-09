@@ -80,7 +80,7 @@ services:
             - PUID=1000
             - PGID=998
             - TZ=Europe/Amsterdam
-            - APP_KEY=
+            - APP_KEY=${FIREFLY_APP_KEY}
             - DB_HOST=${FIREFLY_DB_HOST}
             - DB_PORT=${FIREFLY_DB_PORT}
             - DB_DATABASE=${FIREFLY_DB_DATABASE}
@@ -88,7 +88,7 @@ services:
             - DB_PASSWORD=${FIREFLY_DB_PASSWORD}
         image: jc5x/firefly-iii:latest
         ports:
-            - "8080:8080"
+            - "8222:8080"
         volumes:
             - /firefly-iii-export:/home/alex/.docker/config/firefly-iii-export
             - /firefly-iii-upload:/home/alex/.docker/config/firefly-iii-upload
@@ -99,11 +99,11 @@ services:
         environment:
             - USER_UID=1000
             - USER_GID=998
-            - DB_TYPE={DB_TYPE}
-            - DB_HOST=${DB_HOST}
-            - DB_NAME=${DB_NAME}
-            - DB_USER=${DB_USER}
-            - DB_PASSWD=${DB_PASSWD}
+            - DB_TYPE={GITEA_DB_TYPE}
+            - DB_HOST=${GITEA_DB_HOST}
+            - DB_NAME=${GITEA_DB_DATABASE}
+            - DB_USER=${GITEA_DB_USERNAME}
+            - DB_PASSWD=${GITEA_DB_PASSWORD}
         image: gitea/gitea:latest
         ports:
             - "3000:3000"
