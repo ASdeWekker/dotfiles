@@ -38,60 +38,60 @@ services:
             - /home/alex/downloads/deluge:/downloads:rw
 
     # Duplicati
-    duplicati:
-        container_name: duplicati
-        environment:
-            - PUID=1000
-            - PGID=998
-        image: duplicati/duplicati:latest
-        ports:
-            - "8200:8200"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/duplicati:/duplicati:rw
-            - /boot:/data-boot:rw
-            - /etc:/data-etc:rw
-            - /home:/data-home:rw
-            - /opt:/data-opt:rw
-            - /root:/data-root:rw
-            - /srv:/data-srv:rw
-            - /usr:/data-usr:rw
-            - /var:/data-var:rw
+    # duplicati:
+    #     container_name: duplicati
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=998
+    #     image: duplicati/duplicati:latest
+    #     ports:
+    #         - "8200:8200"
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /home/alex/.docker/config/duplicati:/duplicati:rw
+    #         - /boot:/data-boot:rw
+    #         - /etc:/data-etc:rw
+    #         - /home:/data-home:rw
+    #         - /opt:/data-opt:rw
+    #         - /root:/data-root:rw
+    #         - /srv:/data-srv:rw
+    #         - /usr:/data-usr:rw
+    #         - /var:/data-var:rw
 
     # Emby
-    emby:
-        container_name: emby
-        environment:
-            - PUID=1000
-            - PGID=998
-        image: emby/embyserver:latest
-        ports:
-            - "8096:8096"
-            - "8920:8920"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/emby:/config:rw
-            - /mnt/vd0/data/videos:/mnt/share1:rw
+    # emby:
+    #     container_name: emby
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=998
+    #     image: emby/embyserver:latest
+    #     ports:
+    #         - "8096:8096"
+    #         - "8920:8920"
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /home/alex/.docker/config/emby:/config:rw
+    #         - /mnt/vd0/data/videos:/mnt/share1:rw
 
     # Firefly
-    firefly:
-        container_name: firefly
-        environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
-            - APP_KEY=${FIREFLY_APP_KEY}
-            - DB_HOST=${FIREFLY_DB_HOST}
-            - DB_PORT=${FIREFLY_DB_PORT}
-            - DB_DATABASE=${FIREFLY_DB_DATABASE}
-            - DB_USERNAME=${FIREFLY_DB_USERNAME}
-            - DB_PASSWORD=${FIREFLY_DB_PASSWORD}
-        image: jc5x/firefly-iii:latest
-        ports:
-            - "8222:8080"
-        volumes:
-            - /firefly-iii-export:/home/alex/.docker/config/firefly-iii-export
-            - /firefly-iii-upload:/home/alex/.docker/config/firefly-iii-upload
+    # firefly:
+    #     container_name: firefly
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=998
+    #         - TZ=Europe/Amsterdam
+    #         - APP_KEY=${FIREFLY_APP_KEY}
+    #         - DB_HOST=${FIREFLY_DB_HOST}
+    #         - DB_PORT=${FIREFLY_DB_PORT}
+    #         - DB_DATABASE=${FIREFLY_DB_DATABASE}
+    #         - DB_USERNAME=${FIREFLY_DB_USERNAME}
+    #         - DB_PASSWORD=${FIREFLY_DB_PASSWORD}
+    #     image: jc5x/firefly-iii:latest
+    #     ports:
+    #         - "8222:8080"
+    #     volumes:
+    #         - /firefly-iii-export:/home/alex/.docker/config/firefly-iii-export
+    #         - /firefly-iii-upload:/home/alex/.docker/config/firefly-iii-upload
 
     # Gitea
     gitea:
@@ -159,36 +159,36 @@ services:
             - /home/alex/.docker/config/mariadb/data/mysql:/var/lib/mysql:rw
 
     # Nginx proxy manager
-    nginx-proxy-manager:
-        container_name: nginx-proxy-manager
-        depends_on: 
-            - mariadb
-        environment:
-            - PUID=1000
-            - GUID=998
-        image: jc21/nginx-proxy-manager:latest
-        ports:
-            - "8181:81"
-            - "8080:80"
-            - "4443:443"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+    # nginx-proxy-manager:
+    #     container_name: nginx-proxy-manager
+    #     depends_on: 
+    #         - mariadb
+    #     environment:
+    #         - PUID=1000
+    #         - GUID=998
+    #     image: jc21/nginx-proxy-manager:latest
+    #     ports:
+    #         - "8181:81"
+    #         - "8080:80"
+    #         - "4443:443"
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
+    #         - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
+    #         - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
 
     # Organizr
-    organizr:
-        container_name: organizr
-        environment:
-            - PUID=1000
-            - PGID=998
-        image: organizrtools/organizr-v2:latest
-        ports:
-            - "8081:80"
-        restart: unless-stopped
-        volumes:
-            - /home/alex/.docker/config/organizr:/config:rw
+    # organizr:
+    #     container_name: organizr
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=998
+    #     image: organizrtools/organizr-v2:latest
+    #     ports:
+    #         - "8081:80"
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /home/alex/.docker/config/organizr:/config:rw
 
     # Ouroboros
     ouroboros:
@@ -219,15 +219,15 @@ services:
             - /var/www/html/php72:/var/www/html:rw
 
     # PHPMyAdmin
-    phpmyadmin:
-        container_name: phpmyadmin
-        environment:
-            - TZ=Europe/Amsterdam
-            - PMA_HOST=127.0.0.1
-        image: phpmyadmin/phpmyadmin
-        ports:
-            - "83:80"
-        restart: unless-stopped
+    # phpmyadmin:
+    #     container_name: phpmyadmin
+    #     environment:
+    #         - TZ=Europe/Amsterdam
+    #         - PMA_HOST=127.0.0.1
+    #     image: phpmyadmin/phpmyadmin
+    #     ports:
+    #         - "83:80"
+    #     restart: unless-stopped
 
     # Plex
     plex:
@@ -311,19 +311,19 @@ services:
             - "/home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro"
 
     # Wordpress
-    wordpress:
-        container_name: wordpress
-        environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
-            - WORDPRESS_DB_NAME=${WP_DB_NAME}
-            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
-            - WORDPRESS_DB_HOST=${WP_DB_HOST}
-            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-        image: wordpress:5.3.0-php7.2-fpm
-        ports:
-            - "82:9000"
-        restart: unless-stopped
-        volumes:
-            - /wordpress:/var/www/html
+    # wordpress:
+    #     container_name: wordpress
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=998
+    #         - TZ=Europe/Amsterdam
+    #         - WORDPRESS_DB_NAME=${WP_DB_NAME}
+    #         - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
+    #         - WORDPRESS_DB_HOST=${WP_DB_HOST}
+    #         - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
+    #     image: wordpress:5.3.0-php7.2-fpm
+    #     ports:
+    #         - "82:9000"
+    #     restart: unless-stopped
+    #     volumes:
+    #         - /wordpress:/var/www/html
