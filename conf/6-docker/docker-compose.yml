@@ -159,23 +159,23 @@ services:
             - /home/alex/.docker/config/mariadb/data/mysql:/var/lib/mysql:rw
 
     # Nginx proxy manager
-    # nginx-proxy-manager:
-    #     container_name: nginx-proxy-manager
-    #     depends_on: 
-    #         - mariadb
-    #     environment:
-    #         - PUID=1000
-    #         - GUID=998
-    #     image: jc21/nginx-proxy-manager:latest
-    #     ports:
-    #         - "8181:81"
-    #         - "8080:80"
-    #         - "4443:443"
-    #     restart: unless-stopped
-    #     volumes:
-    #         - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
-    #         - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
-    #         - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+    nginx-proxy-manager:
+        container_name: nginx-proxy-manager
+        depends_on: 
+            - mariadb
+        environment:
+            - PUID=1000
+            - GUID=998
+        image: jc21/nginx-proxy-manager:latest
+        ports:
+            - "8181:81"
+            - "8080:80"
+            - "4443:443"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
+            - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
+            - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
 
     # Organizr
     # organizr:
