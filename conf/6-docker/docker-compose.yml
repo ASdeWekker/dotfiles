@@ -270,7 +270,7 @@ services:
             - PUID=1000
             - PGID=998
             - TZ=Europe/Amsterdam
-        image: linuxserver/radarr:preview
+        image: linuxserver/radarr:nightly
         ports:
             - "7878:7878"
         restart: unless-stopped
