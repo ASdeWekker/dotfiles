@@ -279,6 +279,34 @@ services:
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
 
+    # Scrutiny
+    scrutiny:
+        cap_add:
+            - SYS_RAWIO
+            - SYS_ADMIN
+        container_name: scrutiny
+        devices:
+            - /dev/sda:/dev/sda
+            - /dev/sdb:/dev/sdb
+            - /dev/sdc:/dev/sdc
+            - /dev/sdd:/dev/sdd
+            - /dev/sde:/dev/sde
+            - /dev/sdf:/dev/sdf
+        environment:
+            - PGID=1000
+            - PUID=998
+            - TZ=Europe/Amsterdam
+            - SCRUTINY_API_ENDPOINT=http://192.168.1.111:8088
+            - SCRUTINY_WEB=true
+            - SCRUTINY_COLLECTOR=true
+        image: linuxserver/scrutiny
+        ports:
+            - "8088:8080"
+        restart: unless-stopped
+        volumes:
+            - /homw/alex/.docker/config/scrutiny:/config
+            - /run/udev:/run/udev:ro
+
     # Sonarr
     sonarr:
         container_name: sonarr
