@@ -357,6 +357,22 @@ services:
         volumes:
             - /home/alex/.docker/config/tautulli:/config:rw
             - /home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
+    
+    # Torrents.csv
+    torrents-csv:
+        container_name: torrents-csv
+        environment:
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
+            - TORRENTS_CSV_DB_FILE=/app/torrents.db
+            - TORRENTS_CSV_FRONT_END_DIR=/app/dist
+        image: dessalines/torrents-csv:latest
+        ports:
+            - "8902:8080"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/torrents-csv:/app
 
     # Wordpress
     # wordpress:
