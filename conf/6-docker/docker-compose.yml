@@ -240,7 +240,7 @@ services:
             - PLEX_CLAIM=${PLEX_CLAIM}
               NVIDIA_DRIVER_CAPIBILITIES=compute,video,utility
             - NVIDIA_VISIBLE_DEVICES=all
-        image: plexinc/pms-docker:plexpass
+        image: plexinc/pms-docker:latest
         ports:
             - "32400:32400"
         restart: unless-stopped
