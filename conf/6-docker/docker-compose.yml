@@ -238,7 +238,9 @@ services:
             - PLEX_GID=998
             - TZ=Europe/Amsterdam
             - PLEX_CLAIM=${PLEX_CLAIM}
-        image: plexinc/pms-docker:latest
+              NVIDIA_DRIVER_CAPIBILITIES=compute,video,utility
+            - NVIDIA_VISIBLE_DEVICES=all
+        image: plexinc/pms-docker:plexpass
         ports:
             - "32400:32400"
         restart: unless-stopped
@@ -278,6 +280,24 @@ services:
             - /home/alex/.docker/config/radarr:/config:rw
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
+
+    # Readarr
+    readarr:
+        container_name: readarr
+        environment:
+            - PUID=1000
+            - PGID=998
+            - TZ=Europe/Amsterdam
+        image: hotio/readarr:nightly
+        ports:
+            - "8787:8787"
+        restart: unless-stopped
+        volumes:
+            - /home/alex/.docker/config/readarr:/config
+            - /mnt/vd0/data/books:/books
+            - /mnt/vd0/data/books/audiobooks:/audiobooks
+            - /home/alex/downloads/deluge:/data/downloads/Seeding/Books
+            - /etc/localtime:/etc/localtime:ro
 
     # Scrutiny
     scrutiny:
@@ -336,7 +356,7 @@ services:
         restart: unless-stopped
         volumes:
             - /home/alex/.docker/config/tautulli:/config:rw
-            - "/home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro"
+            - /home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
 
     # Wordpress
     # wordpress:
