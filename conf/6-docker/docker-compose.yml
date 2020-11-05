@@ -372,7 +372,10 @@ services:
             - "8902:8080"
         restart: unless-stopped
         volumes:
-            - /home/alex/.docker/config/torrents-csv/torrents.db:/app/torrents.db
+            # - /home/alex/.docker/config/torrents-csv/torrents.db:/app/torrents.db
+            - type: bind
+              source: ../../torrents.db
+              target: /app/torrents.db
 
     # Wordpress
     # wordpress:
