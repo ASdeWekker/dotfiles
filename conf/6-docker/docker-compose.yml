@@ -367,12 +367,12 @@ services:
             - TZ=Europe/Amsterdam
             - TORRENTS_CSV_DB_FILE=/app/torrents.db
             - TORRENTS_CSV_FRONT_END_DIR=/app/dist
-        image: dessalines/torrents-csv:latest
+        image: dessalines/torrents-csv:v0.0.7.8
         ports:
             - "8902:8080"
         restart: unless-stopped
         volumes:
-            - /home/alex/.docker/config/torrents-csv:/app
+            - /home/alex/.docker/config/torrents-csv/torrents.db:/app/torrents.db
 
     # Wordpress
     # wordpress:
