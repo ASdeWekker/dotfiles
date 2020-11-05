@@ -16,39 +16,39 @@ services:
         image: bitwardenrs/server:latest
         ports:
             - "8000:80"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/bitwarden:/data:rw
+            - ${CONFIG}/bitwarden:/data:rw
 
     # Deluge
     deluge:
         container_name: deluge
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: linuxserver/deluge:latest
         ports:
             - "58846:58846"
             - "58946:58946"
             - "8112:8112"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/deluge:/config:rw
+            - ${CONFIG}/deluge:/config:rw
             - /home/alex/downloads/deluge:/downloads:rw
 
     # Duplicati
     # duplicati:
     #     container_name: duplicati
     #     environment:
-    #         - PUID=1000
-    #         - PGID=998
+    #         - PUID=${UID}
+    #         - PGID=${GID}
     #     image: duplicati/duplicati:latest
     #     ports:
     #         - "8200:8200"
-    #     restart: unless-stopped
+    #     restart: ${US}
     #     volumes:
-    #         - /home/alex/.docker/config/duplicati:/duplicati:rw
+    #         - ${CONFIG}/duplicati:/duplicati:rw
     #         - /boot:/data-boot:rw
     #         - /etc:/data-etc:rw
     #         - /home:/data-home:rw
@@ -62,24 +62,24 @@ services:
     # emby:
     #     container_name: emby
     #     environment:
-    #         - PUID=1000
-    #         - PGID=998
+    #         - PUID=${UID}
+    #         - PGID=${GID}
     #     image: emby/embyserver:latest
     #     ports:
     #         - "8096:8096"
     #         - "8920:8920"
-    #     restart: unless-stopped
+    #     restart: ${US}
     #     volumes:
-    #         - /home/alex/.docker/config/emby:/config:rw
+    #         - ${CONFIG}/emby:/config:rw
     #         - /mnt/vd0/data/videos:/mnt/share1:rw
 
     # Firefly
     # firefly:
     #     container_name: firefly
     #     environment:
-    #         - PUID=1000
-    #         - PGID=998
-    #         - TZ=Europe/Amsterdam
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
     #         - APP_KEY=${FIREFLY_APP_KEY}
     #         - DB_HOST=${FIREFLY_DB_HOST}
     #         - DB_PORT=${FIREFLY_DB_PORT}
@@ -90,15 +90,15 @@ services:
     #     ports:
     #         - "8222:8080"
     #     volumes:
-    #         - /firefly-iii-export:/home/alex/.docker/config/firefly-iii-export
-    #         - /firefly-iii-upload:/home/alex/.docker/config/firefly-iii-upload
+    #         - /firefly-iii-export:${CONFIG}/firefly-iii-export
+    #         - /firefly-iii-upload:${CONFIG}/firefly-iii-upload
 
     # Gitea
     gitea:
         container_name: gitea
         environment:
-            - USER_UID=1000
-            - USER_GID=998
+            - USER_UID=${UID}
+            - USER_GID=${GID}
             - DB_TYPE={GITEA_DB_TYPE}
             - DB_HOST=${GITEA_DB_HOST}
             - DB_NAME=${GITEA_DB_DATABASE}
@@ -108,9 +108,9 @@ services:
         ports:
             - "3000:3000"
             - "222:22"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/gitea:/data
+            - ${CONFIG}/gitea:/data
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
 
@@ -118,30 +118,30 @@ services:
     heimdall:
         container_name: heimdall
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: linuxserver/heimdall:latest
         ports:
             - "9009:80"
             - "9010:443"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/heimdall:/config:rw
+            - ${CONFIG}/heimdall:/config:rw
 
     # Jackett
     jackett:
         container_name: jackett
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: linuxserver/jackett:latest
         ports:
             - "9117:9117"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/jackett:/config:rw
+            - ${CONFIG}/jackett:/config:rw
             - /home/alex/downloads/jackett:/downloads:rw
             - /etc/localtime:/etc/localtime:ro
 
@@ -154,9 +154,9 @@ services:
             - MYSQL_USER=nginxproxymanager
             - MYSQL_PASSWORD=nginxproxymanager
         image: mariadb
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/mariadb/data/mysql:/var/lib/mysql:rw
+            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
     # Nginx proxy manager
     nginx-proxy-manager:
@@ -164,31 +164,31 @@ services:
         depends_on: 
             - mariadb
         environment:
-            - PUID=1000
-            - GUID=998
+            - PUID=${UID}
+            - GUID=${GID}
         image: jc21/nginx-proxy-manager:latest
         ports:
             - "8181:81"
             - "8080:80"
             - "4443:443"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/nginx-proxy-manager/config:/app/config:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/data:/data:rw
-            - /home/alex/.docker/config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+            - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
+            - ${CONFIG}/nginx-proxy-manager/data:/data:rw
+            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
 
     # Organizr
     # organizr:
     #     container_name: organizr
     #     environment:
-    #         - PUID=1000
-    #         - PGID=998
+    #         - PUID=${UID}
+    #         - PGID=${GID}
     #     image: organizrtools/organizr-v2:latest
     #     ports:
     #         - "8081:80"
-    #     restart: unless-stopped
+    #     restart: ${US}
     #     volumes:
-    #         - /home/alex/.docker/config/organizr:/config:rw
+    #         - ${CONFIG}/organizr:/config:rw
 
     # Ouroboros
     ouroboros:
@@ -200,9 +200,9 @@ services:
             - SELF_UPDATE=true
             - IGNORE=mariadb
             - NOTIFIERS=${OUROBOROS_NOTIFIERS}
-            - TZ=Europe/Amsterdam
+            - TZ=${TZ}
         image: pyouroboros/ouroboros:latest
-        restart: unless-stopped
+        restart: ${US}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
@@ -210,11 +210,11 @@ services:
     php:
         container_name: php
         environment:
-            - TZ=Europe/Amsterdam
+            - TZ=${TZ}
         image: php:7.2-apache
         ports:
             - "82:80"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
             - /var/www/html/php72:/var/www/html:rw
 
@@ -222,30 +222,30 @@ services:
     # phpmyadmin:
     #     container_name: phpmyadmin
     #     environment:
-    #         - TZ=Europe/Amsterdam
+    #         - TZ=${TZ}
     #         - PMA_HOST=127.0.0.1
     #     image: phpmyadmin/phpmyadmin
     #     ports:
     #         - "83:80"
-    #     restart: unless-stopped
+    #     restart: ${US}
 
     # Plex
     plex:
         container_name: plex
         environment:
             - ADVERTISE_IP=http://192.168.1.111:32400/
-            - PLEX_UID=1000
-            - PLEX_GID=998
-            - TZ=Europe/Amsterdam
+            - PLEX_UID=${UID}
+            - PLEX_GID=${GID}
+            - TZ=${TZ}
             - PLEX_CLAIM=${PLEX_CLAIM}
               NVIDIA_DRIVER_CAPIBILITIES=compute,video,utility
             - NVIDIA_VISIBLE_DEVICES=all
         image: plexinc/pms-docker:latest
         ports:
             - "32400:32400"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/plex:/config:rw
+            - ${CONFIG}/plex:/config:rw
             - /home/alex/downloads/plex/transcode:/transcode:rw
             - /mnt/vd0/data/videos:/data:rw
     
@@ -254,13 +254,13 @@ services:
         command: -H unix:///var/run/docker.sock
         container_name: portainer
         environment:
-            - TZ=Europe/Amsterdam
+            - TZ=${TZ}
         image: portainer/portainer-ce:latest
         ports:
             - "9000:9000"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/portainer:/data:rw
+            - ${CONFIG}/portainer:/data:rw
             - /etc/localtime:/etc/localtime:ro
             - /home/alex/.docker/shared:/shared:rw
             - /var/run/docker.sock:/var/run/docker.sock:rw
@@ -269,15 +269,15 @@ services:
     radarr:
         container_name: radarr
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: linuxserver/radarr:nightly
         ports:
             - "7878:7878"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/radarr:/config:rw
+            - ${CONFIG}/radarr:/config:rw
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
 
@@ -285,15 +285,15 @@ services:
     readarr:
         container_name: readarr
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: hotio/readarr:nightly
         ports:
             - "8787:8787"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/readarr:/config
+            - ${CONFIG}/readarr:/config
             - /mnt/vd0/data/books:/books
             - /mnt/vd0/data/books/audiobooks:/audiobooks
             - /home/alex/downloads/deluge:/data/downloads/Seeding/Books
@@ -313,16 +313,16 @@ services:
             - /dev/sde:/dev/sde
             - /dev/sdf:/dev/sdf
         environment:
-            - PGID=1000
-            - PUID=998
-            - TZ=Europe/Amsterdam
+            - PGID=${UID}
+            - PUID=${GID}
+            - TZ=${TZ}
             - SCRUTINY_API_ENDPOINT=http://192.168.1.111:8088
             - SCRUTINY_WEB=true
             - SCRUTINY_COLLECTOR=true
         image: linuxserver/scrutiny
         ports:
             - "8088:8080"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
             - /homw/alex/.docker/config/scrutiny:/config
             - /run/udev:/run/udev:ro
@@ -331,15 +331,15 @@ services:
     sonarr:
         container_name: sonarr
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: linuxserver/sonarr:preview
         ports:
             - "8989:8989"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/sonarr:/config:rw
+            - ${CONFIG}/sonarr:/config:rw
             - /mnt/vd0/data/videos:/tv:rw
             - /home/alex/downloads/deluge:/downloads:rw
 
@@ -347,40 +347,40 @@ services:
     tautulli:
         container_name: tautulli
         environment:
-            - PUID=1000
-            - GUID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
         image: tautulli/tautulli:latest
         ports:
             - "8182:8181"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/tautulli:/config:rw
-            - /home/alex/.docker/config/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
+            - ${CONFIG}/tautulli:/config:rw
+            - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
     # Torrents.csv
     torrents-csv:
         container_name: torrents-csv
         environment:
-            - PUID=1000
-            - PGID=998
-            - TZ=Europe/Amsterdam
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
             - TORRENTS_CSV_DB_FILE=/app/torrents.db
             - TORRENTS_CSV_FRONT_END_DIR=/app/dist
         image: dessalines/torrents-csv:v0.0.7.8
         ports:
             - "8902:8080"
-        restart: unless-stopped
+        restart: ${US}
         volumes:
-            - /home/alex/.docker/config/torrents-csv/torrents.db:/app/torrents.db
+            - ${CONFIG}/torrents-csv/torrents.db:/app/torrents.db
 
     # Wordpress
     # wordpress:
     #     container_name: wordpress
     #     environment:
-    #         - PUID=1000
-    #         - PGID=998
-    #         - TZ=Europe/Amsterdam
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
     #         - WORDPRESS_DB_NAME=${WP_DB_NAME}
     #         - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
     #         - WORDPRESS_DB_HOST=${WP_DB_HOST}
@@ -388,6 +388,6 @@ services:
     #     image: wordpress:5.3.0-php7.2-fpm
     #     ports:
     #         - "82:9000"
-    #     restart: unless-stopped
+    #     restart: ${US}
     #     volumes:
     #         - /wordpress:/var/www/html
