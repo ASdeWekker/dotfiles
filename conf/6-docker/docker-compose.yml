@@ -296,7 +296,7 @@ services:
             - ${CONFIG}/readarr:/config
             - /mnt/vd0/data/books:/books
             - /mnt/vd0/data/books/audiobooks:/audiobooks
-            - /home/alex/downloads/deluge:/data/downloads/Seeding/Books
+            - /home/alex/downloads/deluge:/downloads
             - /etc/localtime:/etc/localtime:ro
 
     # Scrutiny
