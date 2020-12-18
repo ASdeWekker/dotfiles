@@ -232,6 +232,8 @@ services:
     # Plex
     plex:
         container_name: plex
+        devices:
+            - "/dev/dri:/dev/dri"
         environment:
             - ADVERTISE_IP=http://192.168.1.111:32400/
             - PLEX_UID=${UID}
