@@ -360,6 +360,24 @@ services:
             - ${CONFIG}/tautulli:/config:rw
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
+    # Tekkit
+    tekkit:
+        container_name: tekkit
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - SERVER_OP=Niles018
+        image: dang1t/tekkit-classic-docker:latest
+        ports:
+            - "25565:25565"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/tekkit-server/world:/minecraft/world
+            - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
+            - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
+            - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
+
     # Torrents.csv
     torrents-csv:
         container_name: torrents-csv
