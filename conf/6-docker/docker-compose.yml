@@ -284,22 +284,22 @@ services:
             - /home/alex/downloads/deluge:/downloads:rw
 
     # Readarr
-    readarr:
-        container_name: readarr
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-        image: hotio/readarr:nightly
-        ports:
-            - "8787:8787"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/readarr:/config
-            - /mnt/vd0/data/books:/books
-            - /mnt/vd0/data/books/audiobooks:/audiobooks
-            - /home/alex/downloads/deluge:/downloads
-            - /etc/localtime:/etc/localtime:ro
+    # readarr:
+    #     container_name: readarr
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #     image: hotio/readarr:nightly
+    #     ports:
+    #         - "8787:8787"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/readarr:/config
+    #         - /mnt/vd0/data/books:/books
+    #         - /mnt/vd0/data/books/audiobooks:/audiobooks
+    #         - /home/alex/downloads/deluge:/downloads
+    #         - /etc/localtime:/etc/localtime:ro
 
     # Scrutiny
     scrutiny:
@@ -330,22 +330,22 @@ services:
             - /run/udev:/run/udev:ro
 
     # Sky Factory
-    skyfactory:
-        container_name: skyfactory
-        environment:
-            - PGID=${UID}
-            - PUID=${GID}
-            - TZ=${TZ}
-              #            - SERVER_OP=Niles018
-        image: cochief/skyfactory4
-        ports:
-            - "25566:25565"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/skyfactory/world:/minecraft/world
-            - ${CONFIG}/skyfactory/ops.json:/minecraft/ops.json
-            - ${CONFIG}/skyfactory/server.properties:/minecraft/server.properties
-            - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
+    # skyfactory:
+    #     container_name: skyfactory
+    #     environment:
+    #         - PGID=${UID}
+    #         - PUID=${GID}
+    #         - TZ=${TZ}
+    #           #            - SERVER_OP=Niles018
+    #     image: cochief/skyfactory4
+    #     ports:
+    #         - "25566:25565"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/skyfactory/world:/minecraft/world
+    #         - ${CONFIG}/skyfactory/ops.json:/minecraft/ops.json
+    #         - ${CONFIG}/skyfactory/server.properties:/minecraft/server.properties
+    #         - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
 
     # Sonarr
     sonarr:
@@ -379,38 +379,55 @@ services:
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
     # Tekkit
-    tekkit:
-        container_name: tekkit
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - SERVER_OP=Niles018
-        image: dang1t/tekkit-classic-docker:latest
-        ports:
-            - "25565:25565"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/tekkit-server/world:/minecraft/world
-            - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
-            - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
-            - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
+    # tekkit:
+    #     container_name: tekkit
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TZ=${TZ}
+    #         - SERVER_OP=Niles018
+    #     image: dang1t/tekkit-classic-docker:latest
+    #     ports:
+    #         - "25565:25565"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/tekkit-server/world:/minecraft/world
+    #         - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
+    #         - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
+    #         - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
 
     # Torrents.csv
-    torrents-csv:
-        container_name: torrents-csv
+    # torrents-csv:
+    #     container_name: torrents-csv
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - TORRENTS_CSV_DB_FILE=/app/torrents.db
+    #         - TORRENTS_CSV_FRONT_END_DIR=/app/dist
+    #     image: dessalines/torrents-csv:v0.0.7.8
+    #     ports:
+    #         - "8902:8080"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/torrents-csv/torrents.db:/app/torrents.db
+    
+    # Valheim
+    valheim-server:
+        container_name: valheim-server
         environment:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - TORRENTS_CSV_DB_FILE=/app/torrents.db
-            - TORRENTS_CSV_FRONT_END_DIR=/app/dist
-        image: dessalines/torrents-csv:v0.0.7.8
+            - SERVER_NAME=Kloenkerserver
+            - WORLD_NAME=Kloenkeraarde
+            - SERVER_PASS=Kloenker1
+        image: lloesche/valheim-server
         ports:
-            - "8902:8080"
-        restart: ${US}
+            - "2456-2458:2456-2458/udp"
+        restart: {US}
         volumes:
-            - ${CONFIG}/torrents-csv/torrents.db:/app/torrents.db
+            - ${CONFIG}/valheim:/config
 
     # Wordpress
     # wordpress:
