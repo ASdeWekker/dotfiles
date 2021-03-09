@@ -329,6 +329,24 @@ services:
             - /homw/alex/.docker/config/scrutiny:/config
             - /run/udev:/run/udev:ro
 
+    # Sky Factory
+    skyfactory:
+        container_name: skyfactory
+        environment:
+            - PGID=${UID}
+            - PUID=${GID}
+            - TZ=${TZ}
+              #            - SERVER_OP=Niles018
+        image: cochief/skyfactory4
+        ports:
+            - "25566:25565"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/skyfactory/world:/minecraft/world
+            - ${CONFIG}/skyfactory/ops.json:/minecraft/ops.json
+            - ${CONFIG}/skyfactory/server.properties:/minecraft/server.properties
+            - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
+
     # Sonarr
     sonarr:
         container_name: sonarr
