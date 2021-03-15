@@ -354,7 +354,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-        image: linuxserver/sonarr:preview
+        image: linuxserver/sonarr:latest
         ports:
             - "8989:8989"
         restart: ${US}
@@ -425,7 +425,7 @@ services:
         image: lloesche/valheim-server
         ports:
             - "2456-2458:2456-2458/udp"
-        restart: {US}
+        restart: ${US}
         volumes:
             - ${CONFIG}/valheim:/config
 
