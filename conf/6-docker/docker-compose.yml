@@ -207,16 +207,16 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
 
     # PHP
-    php:
-        container_name: php
-        environment:
-            - TZ=${TZ}
-        image: php:7.3-apache
-        ports:
-            - "82:80"
-        restart: ${US}
-        volumes:
-            - /var/www/html/php73:/var/www/html:rw
+    # php:
+    #     container_name: php
+    #     environment:
+    #         - TZ=${TZ}
+    #     image: php:7.3-apache
+    #     ports:
+    #         - "82:80"
+    #     restart: ${US}
+    #     volumes:
+    #         - /var/www/html/php73:/var/www/html:rw
 
     # PHPMyAdmin
     # phpmyadmin:
@@ -379,22 +379,22 @@ services:
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
     # Tekkit
-    tekkit:
-        container_name: tekkit
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - SERVER_OP=Niles018
-        image: dang1t/tekkit-classic-docker:latest
-        ports:
-            - "25565:25565"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/tekkit-server/world:/minecraft/world
-            - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
-            - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
-            - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
+    # tekkit:
+    #     container_name: tekkit
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TZ=${TZ}
+    #         - SERVER_OP=Niles018
+    #     image: dang1t/tekkit-classic-docker:latest
+    #     ports:
+    #         - "25565:25565"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/tekkit-server/world:/minecraft/world
+    #         - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
+    #         - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
+    #         - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
 
     # Torrents.csv
     # torrents-csv:
@@ -413,36 +413,36 @@ services:
     #         - ${CONFIG}/torrents-csv/torrents.db:/app/torrents.db
     
     # Valheim
-    valheim-server:
-        container_name: valheim-server
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - SERVER_NAME=Kloenkerserver
-            - WORLD_NAME=Kloenkeraarde
-            - SERVER_PASS=Kloenker1
-        image: lloesche/valheim-server
-        ports:
-            - "2456-2458:2456-2458/udp"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/valheim:/config
-
-    # Wordpress
-    # wordpress:
-    #     container_name: wordpress
+    # valheim-server:
+    #     container_name: valheim-server
     #     environment:
     #         - PUID=${UID}
     #         - PGID=${GID}
     #         - TZ=${TZ}
-    #         - WORDPRESS_DB_NAME=${WP_DB_NAME}
-    #         - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
-    #         - WORDPRESS_DB_HOST=${WP_DB_HOST}
-    #         - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-    #     image: wordpress:5.3.0-php7.2-fpm
+    #         - SERVER_NAME=Kloenkerserver
+    #         - WORLD_NAME=Kloenkeraarde
+    #         - SERVER_PASS=Kloenker1
+    #     image: lloesche/valheim-server
     #     ports:
-    #         - "82:9000"
+    #         - "2456-2458:2456-2458/udp"
     #     restart: ${US}
     #     volumes:
-    #         - /wordpress:/var/www/html
+    #         - ${CONFIG}/valheim:/config
+
+    # Wordpress
+    wordpress:
+        container_name: wordpress
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - WORDPRESS_DB_NAME=${WP_DB_NAME}
+            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
+            - WORDPRESS_DB_HOST=${WP_DB_HOST}
+            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
+        image: wordpress:5.8.0-php7.3-apache
+        ports:
+            - "82:9000"
+        restart: ${US}
+        volumes:
+            - /var/www/html/php73:/var/www/html:rw
