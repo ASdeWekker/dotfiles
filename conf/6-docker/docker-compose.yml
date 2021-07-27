@@ -211,12 +211,12 @@ services:
         container_name: php
         environment:
             - TZ=${TZ}
-        image: php:7.2-apache
+        image: php:7.3-apache
         ports:
             - "82:80"
         restart: ${US}
         volumes:
-            - /var/www/html/php72:/var/www/html:rw
+            - /var/www/html/php73:/var/www/html:rw
 
     # PHPMyAdmin
     # phpmyadmin:
