@@ -158,6 +158,18 @@ services:
         volumes:
             - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
+    # MYSQL for Wordpress
+    wordpress_db:
+        environment:
+            - MYSQL_ROOT_PASSWORD=${WP_DB_PASSWORD}
+            - MYSQL_DATABASE=${WP_DB_NAME}
+            - MYSQL_USER=alex
+            - MYSQL_PASSWORD=${WP_DB_PASSWORD}
+        image: mysql:5.7
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
+
     # Nginx proxy manager
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
@@ -219,15 +231,18 @@ services:
     #         - /var/www/html/php73:/var/www/html:rw
 
     # PHPMyAdmin
-    # phpmyadmin:
-    #     container_name: phpmyadmin
-    #     environment:
-    #         - TZ=${TZ}
-    #         - PMA_HOST=127.0.0.1
-    #     image: phpmyadmin/phpmyadmin
-    #     ports:
-    #         - "83:80"
-    #     restart: ${US}
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on: 
+            - wordpress_db
+        environment:
+            - TZ=${TZ}
+            - PMA_ARBITRARY=1
+            - PMA_HOST=wordpress_db:3306
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "83:80"
+        restart: ${US}
 
     # Plex
     plex:
@@ -431,18 +446,21 @@ services:
 
     # Wordpress
     wordpress:
+        command: docker-php-ext-install mysqli && php-fpm
         container_name: wordpress
+        depends_on: 
+            - wordpress_db
         environment:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
             - WORDPRESS_DB_NAME=${WP_DB_NAME}
             - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
-            - WORDPRESS_DB_HOST=${WP_DB_HOST}
+            - WORDPRESS_DB_HOST=wordpress_db:3306
             - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-        image: wordpress:latest
+        image: wordpress:5.7.0-php7.3-apache
         ports:
             - "82:9000"
         restart: ${US}
         volumes:
-            - /var/www/html/php73:/var/www/html:rw
+            - /var/www/html/php72:/var/www/html:rw
