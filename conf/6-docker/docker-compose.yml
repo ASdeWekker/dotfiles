@@ -2,7 +2,7 @@
 # This is my docker compose file. #
 #                                 #
 
-version: "3.4"
+version: "3.9"
 
 # Services.
 services:
@@ -213,7 +213,7 @@ services:
     #         - TZ=${TZ}
     #     image: php:7.3-apache
     #     ports:
-    #         - "82:80"
+    #         - "84:80"
     #     restart: ${US}
     #     volumes:
     #         - /var/www/html/php73:/var/www/html:rw
@@ -440,7 +440,7 @@ services:
             - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
             - WORDPRESS_DB_HOST=${WP_DB_HOST}
             - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-        image: wordpress:5.8.0-php7.3-apache
+        image: wordpress:latest
         ports:
             - "82:9000"
         restart: ${US}
