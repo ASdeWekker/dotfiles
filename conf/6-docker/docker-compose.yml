@@ -73,6 +73,22 @@ services:
     #         - ${CONFIG}/emby:/config:rw
     #         - /mnt/vd0/data/videos:/mnt/share1:rw
 
+    # Factorio
+    factorio:
+        container_name: factorio
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - INSTANCE_NAME=Fjanctonrio
+            - INSTANCE_DESC=Factorio met de boys
+        image: factoriotools/factorio:latest
+        ports:
+            - "34194:34197"
+            - "27015:27015"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/factorio:/factorio:rw
+
     # Firefly
     # firefly:
     #     container_name: firefly
