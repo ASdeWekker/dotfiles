@@ -160,6 +160,7 @@ services:
 
     # MYSQL for Wordpress
     wordpress_db:
+        container_name: wordpress_db
         environment:
             - MYSQL_ROOT_PASSWORD=${WP_DB_PASSWORD}
             - MYSQL_DATABASE=${WP_DB_NAME}
@@ -446,7 +447,7 @@ services:
 
     # Wordpress
     wordpress:
-        command: docker-php-ext-install mysqli && php-fpm
+      #command: docker-php-ext-install mysqli && php-fpm
         container_name: wordpress
         depends_on: 
             - wordpress_db
