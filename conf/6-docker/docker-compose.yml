@@ -74,18 +74,18 @@ services:
     #         - /mnt/vd0/data/videos:/mnt/share1:rw
 
     # Factorio
-    factorio:
-        container_name: factorio
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-        image: factoriotools/factorio:latest
-        ports:
-            - "34197:34197/udp"
-            - "27015:27015"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/factorio:/factorio:rw
+#    factorio:
+#        container_name: factorio
+#        environment:
+#            - PUID=${UID}
+#            - PGID=${GID}
+#        image: factoriotools/factorio:latest
+#        ports:
+#            - "34197:34197/udp"
+#            - "27015:27015"
+#        restart: ${US}
+#        volumes:
+#            - ${CONFIG}/factorio:/factorio:rw
 
     # Firefly
     # firefly:
@@ -183,30 +183,30 @@ services:
             - /etc/localtime:/etc/localtime:ro
 
     # Maria DB
-    mariadb:
-        container_name: mariadb
-        environment:
-            - MYSQL_ROOT_PASSWORD=nginxproxymanager
-            - MYSQL_DATABASE=nginxproxymanager
-            - MYSQL_USER=nginxproxymanager
-            - MYSQL_PASSWORD=nginxproxymanager
-        image: mariadb
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
+#    mariadb:
+#        container_name: mariadb
+#        environment:
+#            - MYSQL_ROOT_PASSWORD=nginxproxymanager
+#            - MYSQL_DATABASE=nginxproxymanager
+#            - MYSQL_USER=nginxproxymanager
+#            - MYSQL_PASSWORD=nginxproxymanager
+#        image: mariadb
+#        restart: ${US}
+#        volumes:
+#            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
     # MYSQL for Wordpress
-    wordpress_db:
-        container_name: wordpress_db
-        environment:
-            - MYSQL_ROOT_PASSWORD=${WP_DB_PASSWORD}
-            - MYSQL_DATABASE=${WP_DB_NAME}
-            - MYSQL_USER=alex
-            - MYSQL_PASSWORD=${WP_DB_PASSWORD}
-        image: mysql:5.7
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
+#    wordpress_db:
+#        container_name: wordpress_db
+#        environment:
+#            - MYSQL_ROOT_PASSWORD=${WP_DB_PASSWORD}
+#            - MYSQL_DATABASE=${WP_DB_NAME}
+#            - MYSQL_USER=alex
+#            - MYSQL_PASSWORD=${WP_DB_PASSWORD}
+#        image: mysql:5.7
+#        restart: ${US}
+#        volumes:
+#            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
     # Nginx proxy manager
     nginx-proxy-manager:
@@ -269,18 +269,18 @@ services:
     #         - /var/www/html/php73:/var/www/html:rw
 
     # PHPMyAdmin
-    phpmyadmin:
-        container_name: phpmyadmin
-        depends_on: 
-            - wordpress_db
-        environment:
-            - TZ=${TZ}
-            - PMA_ARBITRARY=1
-            - PMA_HOST=wordpress_db:3306
-        image: phpmyadmin/phpmyadmin
-        ports:
-            - "83:80"
-        restart: ${US}
+#    phpmyadmin:
+#        container_name: phpmyadmin
+#        depends_on:
+#            - wordpress_db
+#        environment:
+#            - TZ=${TZ}
+#            - PMA_ARBITRARY=1
+#            - PMA_HOST=wordpress_db:3306
+#        image: phpmyadmin/phpmyadmin
+#        ports:
+#            - "83:80"
+#        restart: ${US}
 
     # Plex
     plex:
@@ -515,22 +515,21 @@ services:
     #         - ${CONFIG}/valheim:/config
 
     # Wordpress
-    wordpress:
-      #command: docker-php-ext-install mysqli && php-fpm
-        container_name: wordpress
-        depends_on: 
-            - wordpress_db
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - WORDPRESS_DB_NAME=${WP_DB_NAME}
-            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
-            - WORDPRESS_DB_HOST=wordpress_db:3306
-            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-        image: wordpress:5.7.0-php7.3-apache
-        ports:
-            - "82:9000"
-        restart: ${US}
-        volumes:
-            - /var/www/html/php72:/var/www/html:rw
+#    wordpress:
+#        container_name: wordpress
+#        depends_on:
+#            - wordpress_db
+#        environment:
+#            - PUID=${UID}
+#            - PGID=${GID}
+#            - TZ=${TZ}
+#            - WORDPRESS_DB_NAME=${WP_DB_NAME}
+#            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
+#            - WORDPRESS_DB_HOST=wordpress_db:3306
+#            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
+#        image: wordpress:5.7.0-php7.3-apache
+#        ports:
+#            - "82:9000"
+#        restart: ${US}
+#        volumes:
+#            - /var/www/html/php72:/var/www/html:rw
