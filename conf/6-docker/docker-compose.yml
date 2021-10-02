@@ -183,17 +183,17 @@ services:
             - /etc/localtime:/etc/localtime:ro
 
     # Maria DB
-#    mariadb:
-#        container_name: mariadb
-#        environment:
-#            - MYSQL_ROOT_PASSWORD=nginxproxymanager
-#            - MYSQL_DATABASE=nginxproxymanager
-#            - MYSQL_USER=nginxproxymanager
-#            - MYSQL_PASSWORD=nginxproxymanager
-#        image: mariadb
-#        restart: ${US}
-#        volumes:
-#            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
+    mariadb:
+        container_name: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=nginxproxymanager
+            - MYSQL_DATABASE=nginxproxymanager
+            - MYSQL_USER=nginxproxymanager
+            - MYSQL_PASSWORD=nginxproxymanager
+        image: mariadb
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
     # MYSQL for Wordpress
 #    wordpress_db:
