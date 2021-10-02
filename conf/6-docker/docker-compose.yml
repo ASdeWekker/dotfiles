@@ -79,11 +79,9 @@ services:
         environment:
             - PUID=${UID}
             - PGID=${GID}
-            - INSTANCE_NAME=Fjanctonrio
-            - INSTANCE_DESC=Factorio met de boys
         image: factoriotools/factorio:latest
         ports:
-            - "34194:34197"
+            - "34197:34197/udp"
             - "27015:27015"
         restart: ${US}
         volumes:
