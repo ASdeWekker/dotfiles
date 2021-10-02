@@ -299,6 +299,38 @@ services:
             - /home/alex/.docker/shared:/shared:rw
             - /var/run/docker.sock:/var/run/docker.sock:rw
 
+    # Prowlarr
+    prowlarr:
+        container_name: prowlarr
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: linuxserver/prowlarr:develop
+        ports:
+            - "9696:9696"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/prowlarr:/config:rw
+
+    # QBittorrent
+    qbittorrent:
+        container_name: qbittorrent
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - WEBUI_PORT=8080
+        image: linuxserver/qbittorrent:latest
+        ports:
+            - "6881:6881"
+            - "6881:6881/udp"
+            - "8113:8080"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/qbittorrent:/config:rw
+            - /home/alex/downloads/qbittorrent:/downloads:rw
+
     # Radarr
     radarr:
         container_name: radarr
