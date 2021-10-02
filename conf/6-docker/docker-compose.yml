@@ -128,6 +128,29 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
 
+    # Gluetun
+    gluetun:
+        cap_add:
+            - NET_ADMIN
+        container_name: gluetun
+        environment:
+#            - PUID=${UID}
+#            - PGID=${GID}
+            - VPNSP=nordvpn
+            - OPENVPN_USER=${NORD_USER}
+            - OPENVPN_PASSWORD=${NORD_PW}
+            - REGION=${NORD_REGION}
+            - SERVER_HOSTNAME=${NORD_SERVER}
+            - TZ=${TZ}
+        image: qmcgaw/gluetun:latest
+        ports:
+            - "8888:8888/tcp"
+            - "8388:8388/tcp"
+            - "8388:8388/udp"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/gluetun:/gluetun:rw
+
     # Heimdall
     heimdall:
         container_name: heimdall
