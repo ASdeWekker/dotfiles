@@ -343,6 +343,7 @@ services:
             - TZ=${TZ}
             - WEBUI_PORT=8113
         image: linuxserver/qbittorrent:latest
+        network_mode: "service:gluetun"
         ports:
             - "6881:6881"
             - "6881:6881/udp"
