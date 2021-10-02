@@ -318,12 +318,12 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - WEBUI_PORT=8080
+            - WEBUI_PORT=8113
         image: linuxserver/qbittorrent:latest
         ports:
             - "6881:6881"
             - "6881:6881/udp"
-            - "8113:8080"
+            - "8113:8113"
         restart: ${US}
         volumes:
             - ${CONFIG}/qbittorrent:/config:rw
