@@ -11,6 +11,7 @@ services:
     bitwarden:
         container_name: bitwarden
         environment:
+            - TZ=${TZ}
             - LOG_FILE=/data/bitwarden.log
             - SIGNUPS_ALLOWED=true
         image: bitwardenrs/server:latest
@@ -107,12 +108,34 @@ services:
     #         - /firefly-iii-export:${CONFIG}/firefly-iii-export
     #         - /firefly-iii-upload:${CONFIG}/firefly-iii-upload
 
+    # Frigate
+    frigate:
+        container_name: frigate
+        devices:
+            # - /dev/bus/usb:/dev/bus/usb # usb coral
+            - /dev/dri/renderD128
+        environment:
+            - TZ=${TZ}
+            - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
+        image: blakeblackshear/frigate:latest
+        ports:
+            - "5000:5000"
+            - "1935:1935" # RTMP feeds
+        privileged: true # this may not be necessary for all setups
+        restart: ${US}
+        shm_size: "64mb"
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ${CONFIG}/frigate:/config:rw
+            - /home/alex/frigate/storage:/media/frigate
+
     # Gitea
     gitea:
         container_name: gitea
         environment:
             - USER_UID=${UID}
             - USER_GID=${GID}
+            - TZ=${TZ}
             - DB_TYPE={GITEA_DB_TYPE}
             - DB_HOST=${GITEA_DB_HOST}
             - DB_NAME=${GITEA_DB_DATABASE}
@@ -134,8 +157,8 @@ services:
             - NET_ADMIN
         container_name: gluetun
         environment:
-#            - PUID=${UID}
-#            - PGID=${GID}
+            - PUID=${UID}
+            - PGID=${GID}
             - VPNSP=nordvpn
             - OPENVPN_USER=${NORD_USER}
             - OPENVPN_PASSWORD=${NORD_PW}
@@ -189,6 +212,7 @@ services:
     mariadb:
         container_name: mariadb
         environment:
+            - TZ=${TZ}
             - MYSQL_ROOT_PASSWORD=nginxproxymanager
             - MYSQL_DATABASE=nginxproxymanager
             - MYSQL_USER=nginxproxymanager
@@ -219,6 +243,7 @@ services:
         environment:
             - PUID=${UID}
             - GUID=${GID}
+            - TZ=${TZ}
         image: jc21/nginx-proxy-manager:latest
         ports:
             - "8181:81"
