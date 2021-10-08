@@ -82,7 +82,7 @@ services:
         environment:
             - TZ=${TZ}
             - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
-        image: blakeblackshear/frigate:latest
+        image: blakeblackshear/frigate:stable-amd64
         ports:
             - "5000:5000"
             - "1935:1935" # RTMP feeds
