@@ -173,16 +173,16 @@ services:
             - /home/alex/downloads/jackett:/downloads:rw
             - /etc/localtime:/etc/localtime:ro
 
-    # Maria DB
+    # Nginx proxy manager DB
     mariadb:
-        container_name: mariadb
+        container_name: npm_db
         environment:
             - TZ=${TZ}
-            - MYSQL_ROOT_PASSWORD=nginxproxymanager
-            - MYSQL_DATABASE=nginxproxymanager
-            - MYSQL_USER=nginxproxymanager
-            - MYSQL_PASSWORD=nginxproxymanager
-        image: mariadb
+            - MYSQL_ROOT_PASSWORD=${NPM_DB_RPW}
+            - MYSQL_DATABASE=${NPM_DB_NAME}
+            - MYSQL_USER=${NPM_DB_U}
+            - MYSQL_PASSWORD=${NPM_DB_PW}
+        image: mariadb:10.4
         restart: ${US}
         volumes:
             - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
@@ -191,7 +191,7 @@ services:
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
         depends_on: 
-            - mariadb
+            - npm_db
         environment:
             - PUID=${UID}
             - GUID=${GID}
