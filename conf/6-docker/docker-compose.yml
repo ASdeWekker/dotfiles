@@ -174,7 +174,7 @@ services:
             - /etc/localtime:/etc/localtime:ro
 
     # Nginx proxy manager DB
-    mariadb:
+    npm_db:
         container_name: npm_db
         environment:
             - TZ=${TZ}
