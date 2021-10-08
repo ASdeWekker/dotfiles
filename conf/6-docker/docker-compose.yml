@@ -59,21 +59,6 @@ services:
     #         - /usr:/data-usr:rw
     #         - /var:/data-var:rw
 
-    # Emby
-    # emby:
-    #     container_name: emby
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #     image: emby/embyserver:latest
-    #     ports:
-    #         - "8096:8096"
-    #         - "8920:8920"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/emby:/config:rw
-    #         - /mnt/vd0/data/videos:/mnt/share1:rw
-
     # Factorio
 #    factorio:
 #        container_name: factorio
@@ -87,26 +72,6 @@ services:
 #        restart: ${US}
 #        volumes:
 #            - ${CONFIG}/factorio:/factorio:rw
-
-    # Firefly
-    # firefly:
-    #     container_name: firefly
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - TZ=${TZ}
-    #         - APP_KEY=${FIREFLY_APP_KEY}
-    #         - DB_HOST=${FIREFLY_DB_HOST}
-    #         - DB_PORT=${FIREFLY_DB_PORT}
-    #         - DB_DATABASE=${FIREFLY_DB_DATABASE}
-    #         - DB_USERNAME=${FIREFLY_DB_USERNAME}
-    #         - DB_PASSWORD=${FIREFLY_DB_PASSWORD}
-    #     image: jc5x/firefly-iii:latest
-    #     ports:
-    #         - "8222:8080"
-    #     volumes:
-    #         - /firefly-iii-export:${CONFIG}/firefly-iii-export
-    #         - /firefly-iii-upload:${CONFIG}/firefly-iii-upload
 
     # Frigate
     frigate:
@@ -222,19 +187,6 @@ services:
         volumes:
             - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
 
-    # MYSQL for Wordpress
-#    wordpress_db:
-#        container_name: wordpress_db
-#        environment:
-#            - MYSQL_ROOT_PASSWORD=${WP_DB_PASSWORD}
-#            - MYSQL_DATABASE=${WP_DB_NAME}
-#            - MYSQL_USER=alex
-#            - MYSQL_PASSWORD=${WP_DB_PASSWORD}
-#        image: mysql:5.7
-#        restart: ${US}
-#        volumes:
-#            - ${CONFIG}/mariadb/data/mysql:/var/lib/mysql:rw
-
     # Nginx proxy manager
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
@@ -255,19 +207,6 @@ services:
             - ${CONFIG}/nginx-proxy-manager/data:/data:rw
             - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
 
-    # Organizr
-    # organizr:
-    #     container_name: organizr
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #     image: organizrtools/organizr-v2:latest
-    #     ports:
-    #         - "8081:80"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/organizr:/config:rw
-
     # Ouroboros
     ouroboros:
         container_name: ouroboros
@@ -283,32 +222,6 @@ services:
         restart: ${US}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-
-    # PHP
-    # php:
-    #     container_name: php
-    #     environment:
-    #         - TZ=${TZ}
-    #     image: php:7.3-apache
-    #     ports:
-    #         - "84:80"
-    #     restart: ${US}
-    #     volumes:
-    #         - /var/www/html/php73:/var/www/html:rw
-
-    # PHPMyAdmin
-#    phpmyadmin:
-#        container_name: phpmyadmin
-#        depends_on:
-#            - wordpress_db
-#        environment:
-#            - TZ=${TZ}
-#            - PMA_ARBITRARY=1
-#            - PMA_HOST=wordpress_db:3306
-#        image: phpmyadmin/phpmyadmin
-#        ports:
-#            - "83:80"
-#        restart: ${US}
 
     # Plex
     plex:
@@ -392,24 +305,6 @@ services:
             - ${CONFIG}/radarr:/config:rw
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
-
-    # Readarr
-    # readarr:
-    #     container_name: readarr
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - TZ=${TZ}
-    #     image: hotio/readarr:nightly
-    #     ports:
-    #         - "8787:8787"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/readarr:/config
-    #         - /mnt/vd0/data/books:/books
-    #         - /mnt/vd0/data/books/audiobooks:/audiobooks
-    #         - /home/alex/downloads/deluge:/downloads
-    #         - /etc/localtime:/etc/localtime:ro
 
     # Scrutiny
     scrutiny:
@@ -505,22 +400,6 @@ services:
     #         - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
     #         - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
     #         - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
-
-    # Torrents.csv
-    # torrents-csv:
-    #     container_name: torrents-csv
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - TZ=${TZ}
-    #         - TORRENTS_CSV_DB_FILE=/app/torrents.db
-    #         - TORRENTS_CSV_FRONT_END_DIR=/app/dist
-    #     image: dessalines/torrents-csv:v0.0.7.8
-    #     ports:
-    #         - "8902:8080"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/torrents-csv/torrents.db:/app/torrents.db
     
     # Valheim
     # valheim-server:
@@ -538,23 +417,3 @@ services:
     #     restart: ${US}
     #     volumes:
     #         - ${CONFIG}/valheim:/config
-
-    # Wordpress
-#    wordpress:
-#        container_name: wordpress
-#        depends_on:
-#            - wordpress_db
-#        environment:
-#            - PUID=${UID}
-#            - PGID=${GID}
-#            - TZ=${TZ}
-#            - WORDPRESS_DB_NAME=${WP_DB_NAME}
-#            - WORDPRESS_TABLE_PREFIX=${WP_DB_TB_PREFIX}
-#            - WORDPRESS_DB_HOST=wordpress_db:3306
-#            - WORDPRESS_DB_PASSWORD=${WP_DB_PASSWORD}
-#        image: wordpress:5.7.0-php7.3-apache
-#        ports:
-#            - "82:9000"
-#        restart: ${US}
-#        volumes:
-#            - /var/www/html/php72:/var/www/html:rw
