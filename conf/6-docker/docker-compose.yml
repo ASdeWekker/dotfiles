@@ -244,6 +244,78 @@ services:
             - ${CONFIG}/plex:/config:rw
             - /home/alex/downloads/plex/transcode:/transcode:rw
             - /mnt/vd0/data/videos:/data:rw
+        
+    # Photoprism
+    photoprism:
+        container: photoprism
+        depends_on:
+            - photoprism_db
+        devices:
+            - "/dev/dri/renderD128:/dev/dri/renderD128"
+        environment:
+            - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
+            - PHOTOPRISM_ORIGINALS_LIMIT=00
+            - PHOTOPRISM_HTTP_COMPRESSION=gzip
+            - PHOTOPRISM_DEBUG=false
+            - PHOTOPRISM_PUBLIC=false
+            - PHOTOPRISM_READONLY=false
+            - PHOTOPRISM_EXPERIMENTAL=false
+            - PHOTOPRISM_DISABLE_CHOWN=false
+            - PHOTOPRISM_DISABLE_WEBDAV=false
+            - PHOTOPRISM_DISABLE_SETTINGS=false
+            - PHOTOPRISM_DISABLE_TENSORFLOW=false
+            - PHOTOPRISM_DISABLE_FACES=false
+            - PHOTOPRISM_DISABLE_CLASSIFICATION=false
+            - PHOTOPRISM_DARKTABLE_PRESETS=false
+            - PHOTOPRISM_DETECT_NSFW=false
+            - PHOTOPRISM_UPLOAD_NSFW=true
+            # - PHOTOPRISM_DATABASE_DRIVER=sqlite
+            - PHOTOPRISM_DATABASE_DRIVER=mysql
+            - PHOTOPRISM_DATABASE_SERVER=photoprism_db:3306
+            - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
+            - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
+            - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
+            - PHOTOPRISM_SITE_URL=http://serge.local:2342/
+            - PHOTOPRISM_SITE_TITLE=PhotoPrism
+            - PHOTOPRISM_SITE_CAPTION=Browse Your Life
+            - PHOTOPRISM_SITE_DESCRIPTION=Fotoooooo's
+            - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
+            - PHOTOPRISM_UID=${UID}
+            - PHOTOPRISM_GID=${GID}
+            # - PHOTOPRISM_UMASK=0000
+            # Enable TensorFlow AVX2 support for modern Intel CPUs (requires starting the container as root):
+            # - PHOTOPRISM_INIT=tensorflow-amd64-avx2
+            # Hardware video transcoding options:
+            # - PHOTOPRISM_FFMPEG_BUFFERS=64              # FFmpeg capture buffers (default: 32)
+            # - PHOTOPRISM_FFMPEG_BITRATE=32              # FFmpeg encoding bitrate limit in Mbit/s (default: 50)
+            # - PHOTOPRISM_FFMPEG_ENCODER=h264_v4l2m2m    # Use Video4Linux for AVC transcoding (default: libx264)
+            # - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv        # Use Intel Quick Sync Video for AVC transcoding (default: libx264)
+            # - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2 # Enable TensorFlow AVX2 & Intel Graphics support
+            - HOME=/photoprism
+        image: photoprism/photoprism:latest
+        restart: ${US}
+        # Run as a specific, non-root user (see https://docs.docker.com/engine/reference/run/#user):
+        # user: "1000:1000"
+        ports:
+            - "2342:2342"
+        volumes:
+            - "/mnt/vd0/data/backup/photos:/photoprism/originals:rw"
+            - "${CONFIG}/photoprism:/photoprism/storage:rw"
+        working_dir: "/photoprism"
+    
+    # Photoprism DB
+    photoprism_db:
+        command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
+        container: photoprism_db
+        environment:
+            - MYSQL_ROOT_PASSWORD=${PHOTO_DB_RPW} 
+            - MYSQL_DATABASE=${PHOTO_DB_NAME}
+            - MYSQL_USER=${PHOTO_DB_U}
+            - MYSQL_PASSWORD=${PHOTO_DB_PW}
+        image: mariadb:10.5
+        restart: ${US}
+        volumes:
+            - "./database:/var/lib/mysql"
     
     # Portainer
     portainer:
