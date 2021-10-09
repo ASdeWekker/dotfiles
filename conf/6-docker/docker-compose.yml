@@ -247,7 +247,7 @@ services:
         
     # Photoprism
     photoprism:
-        container: photoprism
+        container_name: photoprism
         depends_on:
             - photoprism_db
         devices:
@@ -306,7 +306,7 @@ services:
     # Photoprism DB
     photoprism_db:
         command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
-        container: photoprism_db
+        container_name: photoprism_db
         environment:
             - MYSQL_ROOT_PASSWORD=${PHOTO_DB_RPW} 
             - MYSQL_DATABASE=${PHOTO_DB_NAME}
