@@ -398,12 +398,12 @@ services:
             - SCRUTINY_API_ENDPOINT=http://192.168.1.111:8088
             - SCRUTINY_WEB=true
             - SCRUTINY_COLLECTOR=true
-        image: linuxserver/scrutiny
+        image: linuxserver/scrutiny:latest
         ports:
             - "8088:8080"
         restart: ${US}
         volumes:
-            - /homw/alex/.docker/config/scrutiny:/config
+            - ${CONFIG}/scrutiny:/config
             - /run/udev:/run/udev:ro
 
     # Sky Factory
