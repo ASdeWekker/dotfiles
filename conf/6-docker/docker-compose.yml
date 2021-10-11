@@ -259,7 +259,7 @@ services:
             - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
             - PHOTOPRISM_ORIGINALS_LIMIT=00
             - PHOTOPRISM_HTTP_COMPRESSION=gzip
-            - PHOTOPRISM_HTTP_HOST=192.168.1.111
+            - PHOTOPRISM_HTTP_HOST=http://192.168.1.111
             - PHOTOPRISM_DEBUG=false
             - PHOTOPRISM_PUBLIC=false
             - PHOTOPRISM_READONLY=false
