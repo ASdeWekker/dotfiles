@@ -117,30 +117,30 @@ services:
             - /etc/localtime:/etc/localtime:ro
 
     # Gluetun
-    gluetun:
-        cap_add:
-            - NET_ADMIN
-        container_name: gluetun
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - VPNSP=nordvpn
-            - OPENVPN_USER=${NORD_USER}
-            - OPENVPN_PASSWORD=${NORD_PW}
-            - REGION=${NORD_REGION}
-            - SERVER_HOSTNAME=${NORD_SERVER}
-            - TZ=${TZ}
-        image: qmcgaw/gluetun:latest
-        ports:
-            - "8888:8888/tcp"
-            - "8388:8388/tcp"
-            - "8388:8388/udp"
-            - "6881:6881"
-            - "6881:6881/udp"
-            - "8113:8113"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/gluetun:/gluetun:rw
+    # gluetun:
+    #     cap_add:
+    #         - NET_ADMIN
+    #     container_name: gluetun
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - VPNSP=nordvpn
+    #         - OPENVPN_USER=${NORD_USER}
+    #         - OPENVPN_PASSWORD=${NORD_PW}
+    #         - REGION=${NORD_REGION}
+    #         - SERVER_HOSTNAME=${NORD_SERVER}
+    #         - TZ=${TZ}
+    #     image: qmcgaw/gluetun:latest
+    #     ports:
+    #         - "8888:8888/tcp"
+    #         - "8388:8388/tcp"
+    #         - "8388:8388/udp"
+    #         - "6881:6881"
+    #         - "6881:6881/udp"
+    #         - "8113:8113"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/gluetun:/gluetun:rw
 
     # Heimdall
     heimdall:
@@ -348,19 +348,19 @@ services:
             - ${CONFIG}/prowlarr:/config:rw
 
     # QBittorrent
-    qbittorrent:
-        container_name: qbittorrent
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - WEBUI_PORT=8113
-        image: linuxserver/qbittorrent:latest
-        network_mode: "service:gluetun"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/qbittorrent:/config:rw
-            - /home/alex/downloads/qbittorrent:/downloads:rw
+    # qbittorrent:
+    #     container_name: qbittorrent
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - WEBUI_PORT=8113
+    #     image: linuxserver/qbittorrent:latest
+    #     network_mode: "service:gluetun"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/qbittorrent:/config:rw
+    #         - /home/alex/downloads/qbittorrent:/downloads:rw
 
     # Radarr
     radarr:
