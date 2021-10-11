@@ -253,6 +253,8 @@ services:
         devices:
             - "/dev/dri/renderD128:/dev/dri/renderD128"
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
             - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
             - PHOTOPRISM_ORIGINALS_LIMIT=00
