@@ -291,7 +291,7 @@ services:
             # - PHOTOPRISM_FFMPEG_ENCODER=h264_v4l2m2m    # Use Video4Linux for AVC transcoding (default: libx264)
             # - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv        # Use Intel Quick Sync Video for AVC transcoding (default: libx264)
             # - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2 # Enable TensorFlow AVX2 & Intel Graphics support
-            - HOME=/photoprism
+            # - HOME=/photoprism
         image: photoprism/photoprism:latest
         restart: ${US}
         # Run as a specific, non-root user (see https://docs.docker.com/engine/reference/run/#user):
@@ -301,7 +301,7 @@ services:
         volumes:
             - "/mnt/vd0/data/backup/photos:/photoprism/originals:rw"
             - "${CONFIG}/photoprism:/photoprism/storage:rw"
-        working_dir: "/photoprism"
+        # working_dir: "/photoprism"
     
     # Photoprism DB
     photoprism_db:
