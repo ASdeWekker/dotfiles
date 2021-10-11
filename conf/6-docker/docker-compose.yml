@@ -253,9 +253,11 @@ services:
         devices:
             - "/dev/dri/renderD128:/dev/dri/renderD128"
         environment:
+            - TZ=${TZ}
             - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
             - PHOTOPRISM_ORIGINALS_LIMIT=00
             - PHOTOPRISM_HTTP_COMPRESSION=gzip
+            - PHOTOPRISM_HTTP_HOST=192.168.1.111
             - PHOTOPRISM_DEBUG=false
             - PHOTOPRISM_PUBLIC=false
             - PHOTOPRISM_READONLY=false
@@ -275,7 +277,7 @@ services:
             - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
             - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
             - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
-            - PHOTOPRISM_SITE_URL=http://serge.local:2342/
+            - PHOTOPRISM_SITE_URL=http://192.168.1.111:2342/
             - PHOTOPRISM_SITE_TITLE=PhotoPrism
             - PHOTOPRISM_SITE_CAPTION=Browse Your Life
             - PHOTOPRISM_SITE_DESCRIPTION=Fotoooooo's
