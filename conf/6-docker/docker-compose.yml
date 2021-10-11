@@ -394,8 +394,8 @@ services:
             - /dev/sde:/dev/sde
             - /dev/sdf:/dev/sdf
         environment:
-            - PGID=${UID}
-            - PUID=${GID}
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
             - SCRUTINY_API_ENDPOINT=http://192.168.1.111:8088
             - SCRUTINY_WEB=true
