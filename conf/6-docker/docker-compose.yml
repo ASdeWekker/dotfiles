@@ -85,8 +85,8 @@ services:
         image: blakeblackshear/frigate:stable-amd64
         ports:
             - "5000:5000"
-            - "1935:1935" # RTMP feeds
-        privileged: true # this may not be necessary for all setups
+            - "1935:1935"
+        privileged: true
         restart: ${US}
         shm_size: "64mb"
         volumes:
@@ -259,7 +259,6 @@ services:
             - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
             - PHOTOPRISM_ORIGINALS_LIMIT=00
             - PHOTOPRISM_HTTP_COMPRESSION=gzip
-            # - PHOTOPRISM_HTTP_HOST=http://192.168.1.111
             - PHOTOPRISM_DEBUG=false
             - PHOTOPRISM_PUBLIC=false
             - PHOTOPRISM_READONLY=false
@@ -273,7 +272,6 @@ services:
             - PHOTOPRISM_DARKTABLE_PRESETS=false
             - PHOTOPRISM_DETECT_NSFW=false
             - PHOTOPRISM_UPLOAD_NSFW=true
-            # - PHOTOPRISM_DATABASE_DRIVER=sqlite
             - PHOTOPRISM_DATABASE_DRIVER=mysql
             - PHOTOPRISM_DATABASE_SERVER=photoprism_db:3306
             - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
@@ -286,20 +284,14 @@ services:
             - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
             - PHOTOPRISM_UID=${UID}
             - PHOTOPRISM_GID=${GID}
-            # - PHOTOPRISM_UMASK=0000
-            # Enable TensorFlow AVX2 support for modern Intel CPUs (requires starting the container as root):
             - PHOTOPRISM_INIT=tensorflow-amd64-avx2
-            # Hardware video transcoding options:
-            - PHOTOPRISM_FFMPEG_BUFFERS=64              # FFmpeg capture buffers (default: 32)
-            - PHOTOPRISM_FFMPEG_BITRATE=64              # FFmpeg encoding bitrate limit in Mbit/s (default: 50)
-            # - PHOTOPRISM_FFMPEG_ENCODER=h264_v4l2m2m    # Use Video4Linux for AVC transcoding (default: libx264)
-            - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv        # Use Intel Quick Sync Video for AVC transcoding (default: libx264)
-            - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2 # Enable TensorFlow AVX2 & Intel Graphics support
+            - PHOTOPRISM_FFMPEG_BUFFERS=64
+            - PHOTOPRISM_FFMPEG_BITRATE=64
+            - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
+            - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
             - HOME=/mnt/vd0/data/nextcloud/photos/photoprism
         image: photoprism/photoprism:latest
         restart: ${US}
-        # Run as a specific, non-root user (see https://docs.docker.com/engine/reference/run/#user):
-        # user: "1000:1000"
         ports:
             - "2342:2342"
         volumes:
