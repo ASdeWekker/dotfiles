@@ -187,6 +187,43 @@ services:
         volumes:
             - ${CONFIG}/motioneye:/config:rw
 
+    # Nextcloud
+    # nextcloud:
+    #     container_name: nextcloud
+    #     depends_on: 
+    #         - nextcloud_db
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TZ=${TZ}
+    #         - MYSQL_PASSWORD=${NXTCLD_DB_PW}
+    #         - MYSQL_DATABASE=${NXTCLD_DB_NAME}
+    #         - MYSQL_USER=${NXTCLD_DB_U}
+    #         - MYSQL_HOST=nextcloud_db:3306
+    #         - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
+    #         - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
+    #     image: nextcloud
+    #     ports:
+    #         - "8181:80"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/nextcloud/config:/var/www/html/config:rw
+    #         - /mnt/vd0/data/nextcloud:/var/www/html:rw
+    #         - /mnt/vd0/data/nextcloud:/var/www/html/data:rw
+    
+    # # Nextcloud DB
+    # nextcloud_db:
+    #     container_name: nextcloud_db
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=${NXTCLD_DB_RPW} 
+    #         - MYSQL_DATABASE=${NXTCLD_DB_NAME}
+    #         - MYSQL_USER=${NXTCLD_DB_U}
+    #         - MYSQL_PASSWORD=${NXTCLD_DB_PW}
+    #     image: mariadb:10.5
+    #     restart: ${US}
+    #     volumes:
+    #         - "${CONFIG}/nextcloud_db:/var/lib/mysql"
+
     # Nginx proxy manager
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
