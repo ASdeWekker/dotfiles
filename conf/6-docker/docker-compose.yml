@@ -180,6 +180,7 @@ services:
             - PUID=${UID}
             - GUID=${GID}
             - TIMEZONE=${TZ}
+        hostname: motioneye
         image: jshridha/motioneye:latest
         ports:
             - "8765:8765"
