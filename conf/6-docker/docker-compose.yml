@@ -211,8 +211,6 @@ services:
     #         - ${CONFIG}/nextcloud/config:/var/www/html/config:rw
     #         - /mnt/vd0/data/nextcloud:/var/www/html:rw
     #         - /mnt/vd0/data/nextcloud:/var/www/html/data:rw
-    
-    # # Nextcloud DB
     # nextcloud_db:
     #     container_name: nextcloud_db
     #     environment:
@@ -244,8 +242,6 @@ services:
             - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
             - ${CONFIG}/nginx-proxy-manager/data:/data:rw
             - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
-
-    # Nginx proxy manager DB
     npm_db:
         container_name: npm_db
         environment:
@@ -350,8 +346,6 @@ services:
             - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals:rw"
             - "${CONFIG}/photoprism:/photoprism/storage:rw"
         working_dir: "/mnt/vd0/data/nextcloud/photos/photoprism"
-    
-    # Photoprism DB
     photoprism_db:
         command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
         container_name: photoprism_db
@@ -537,3 +531,31 @@ services:
     #     restart: ${US}
     #     volumes:
     #         - ${CONFIG}/valheim:/config
+
+    # Your Spotify
+    your_spotify:
+        container_name: your_spotify
+        environment:
+            - API_ENDPOINT=http://localhost:8888
+            - CLIENT_ENDPOINT=http://localhost:3001
+            - SPOTIFY_PUBLIC=${SPOTIFY_PUBLIC}
+            - SPOTIFY_SECRET=${SPOTIFY_SECRET}
+            - CORS=http://localhost:3001
+        image: yoooooomi/your_spotify_server
+        ports:
+            - "8888:8080"
+        restart: ${US}
+    your_spotify_db:
+        container_name: your_spotify_db
+        image: mongo
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/your_spotify_db:/data/db
+    your_spotify_web:
+        container_name: your_spotify_web
+        environment:
+            - API_ENDPOINT=http://localhost:8888
+        image: yoooooomi/your_spotify_client
+        ports:
+            - "3001:3001"
+        restart: ${US}
