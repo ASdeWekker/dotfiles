@@ -535,13 +535,18 @@ services:
     # Your Spotify
     your_spotify:
         container_name: your_spotify
+        depends_on: 
+            - your_spotify_db
         environment:
             - API_ENDPOINT=http://localhost:8888
             - CLIENT_ENDPOINT=http://localhost:3001
             - SPOTIFY_PUBLIC=${SPOTIFY_PUBLIC}
             - SPOTIFY_SECRET=${SPOTIFY_SECRET}
-            - CORS=http://localhost:3001
-        image: yoooooomi/your_spotify_server
+            - CORS=all
+            - TIMEZONE=${TZ}
+        image: yooooomi/your_spotify_server
+        links: 
+            - your_spotify_db
         ports:
             - "8888:8080"
         restart: ${US}
@@ -555,7 +560,7 @@ services:
         container_name: your_spotify_web
         environment:
             - API_ENDPOINT=http://localhost:8888
-        image: yoooooomi/your_spotify_client
+        image: yooooomi/your_spotify_client
         ports:
-            - "3001:3001"
+            - "3001:3000"
         restart: ${US}
