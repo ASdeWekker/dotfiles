@@ -532,36 +532,3 @@ services:
     #     volumes:
     #         - ${CONFIG}/valheim:/config
 
-    # Your Spotify
-    your_spotify:
-        container_name: your_spotify
-        depends_on: 
-            - your_spotify_db
-        environment:
-            - API_ENDPOINT=http://localhost:8888
-            - CLIENT_ENDPOINT=http://localhost:3001
-            - SPOTIFY_PUBLIC=${SPOTIFY_PUBLIC}
-            - SPOTIFY_SECRET=${SPOTIFY_SECRET}
-            - MONGO_ENDPOINT=mongodb://your_spotify_db:27017/your_spotify
-            - CORS=all
-            - TIMEZONE=${TZ}
-        image: yooooomi/your_spotify_server
-        links: 
-            - your_spotify_db
-        ports:
-            - "8888:8080"
-        restart: ${US}
-    your_spotify_db:
-        container_name: your_spotify_db
-        image: mongo
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/your_spotify_db:/data/db
-    your_spotify_web:
-        container_name: your_spotify_web
-        environment:
-            - API_ENDPOINT=http://localhost:8888
-        image: yooooomi/your_spotify_client
-        ports:
-            - "3001:3000"
-        restart: ${US}
