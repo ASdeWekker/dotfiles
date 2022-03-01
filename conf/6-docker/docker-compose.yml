@@ -419,6 +419,16 @@ services:
             - ${CONFIG}/radarr:/config:rw
             - /mnt/vd0/data/videos:/movies:rw
             - /home/alex/downloads/deluge:/downloads:rw
+    
+    # RTSP restreamer
+    rtsp-relay:
+        container_name: rtsp-relay
+        environment:
+            - SOURCE_URL=http://picam.local:8080?action=stream
+        image: flaviostutz/rtsp-relay
+        ports:
+            - "8554:8554"
+        restart: ${US}
 
     # Scrutiny
     scrutiny:
