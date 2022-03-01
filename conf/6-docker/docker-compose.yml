@@ -174,19 +174,19 @@ services:
             - /etc/localtime:/etc/localtime:ro
     
     # MotionEye
-    motioneye:
-        container_name: motioneye
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TIMEZONE=${TZ}
-        hostname: motioneye
-        image: jshridha/motioneye:latest
-        ports:
-            - "8765:8765"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/motioneye:/config:rw
+    # motioneye:
+    #     container_name: motioneye
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TIMEZONE=${TZ}
+    #     hostname: motioneye
+    #     image: jshridha/motioneye:latest
+    #     ports:
+    #         - "8765:8765"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/motioneye:/config:rw
 
     # Nextcloud
     # nextcloud:
@@ -224,36 +224,36 @@ services:
     #         - "${CONFIG}/nextcloud_db:/var/lib/mysql"
 
     # Nginx proxy manager
-    nginx-proxy-manager:
-        container_name: nginx-proxy-manager
-        depends_on: 
-            - npm_db
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-        image: jc21/nginx-proxy-manager:latest
-        ports:
-            - "8181:81"
-            - "8080:80"
-            - "4443:443"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
-            - ${CONFIG}/nginx-proxy-manager/data:/data:rw
-            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
-    npm_db:
-        container_name: npm_db
-        environment:
-            - TZ=${TZ}
-            - MYSQL_ROOT_PASSWORD=${NPM_DB_RPW}
-            - MYSQL_DATABASE=${NPM_DB_NAME}
-            - MYSQL_USER=${NPM_DB_U}
-            - MYSQL_PASSWORD=${NPM_DB_PW}
-        image: mariadb:10.4
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/nginx-proxy-manager_db/:/var/lib/mysql:rw
+    # nginx-proxy-manager:
+    #     container_name: nginx-proxy-manager
+    #     depends_on: 
+    #         - npm_db
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TZ=${TZ}
+    #     image: jc21/nginx-proxy-manager:latest
+    #     ports:
+    #         - "8181:81"
+    #         - "8080:80"
+    #         - "4443:443"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
+    #         - ${CONFIG}/nginx-proxy-manager/data:/data:rw
+    #         - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+    # npm_db:
+    #     container_name: npm_db
+    #     environment:
+    #         - TZ=${TZ}
+    #         - MYSQL_ROOT_PASSWORD=${NPM_DB_RPW}
+    #         - MYSQL_DATABASE=${NPM_DB_NAME}
+    #         - MYSQL_USER=${NPM_DB_U}
+    #         - MYSQL_PASSWORD=${NPM_DB_PW}
+    #     image: mariadb:10.4
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/nginx-proxy-manager_db/:/var/lib/mysql:rw
 
     # Ouroboros
     ouroboros:
@@ -294,70 +294,70 @@ services:
             - /mnt/vd0/data/videos:/data:rw
         
     # Photoprism
-    photoprism:
-        container_name: photoprism
-        depends_on:
-            - photoprism_db
-        devices:
-            - "/dev/dri/renderD128:/dev/dri/renderD128"
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
-            - PHOTOPRISM_ORIGINALS_LIMIT=00
-            - PHOTOPRISM_HTTP_COMPRESSION=gzip
-            - PHOTOPRISM_DEBUG=false
-            - PHOTOPRISM_PUBLIC=false
-            - PHOTOPRISM_READONLY=false
-            - PHOTOPRISM_EXPERIMENTAL=false
-            - PHOTOPRISM_DISABLE_CHOWN=false
-            - PHOTOPRISM_DISABLE_WEBDAV=false
-            - PHOTOPRISM_DISABLE_SETTINGS=false
-            - PHOTOPRISM_DISABLE_TENSORFLOW=false
-            - PHOTOPRISM_DISABLE_FACES=false
-            - PHOTOPRISM_DISABLE_CLASSIFICATION=false
-            - PHOTOPRISM_DARKTABLE_PRESETS=false
-            - PHOTOPRISM_DETECT_NSFW=false
-            - PHOTOPRISM_UPLOAD_NSFW=true
-            - PHOTOPRISM_DATABASE_DRIVER=mysql
-            - PHOTOPRISM_DATABASE_SERVER=photoprism_db:3306
-            - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
-            - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
-            - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
-            - PHOTOPRISM_SITE_URL=http://192.168.1.111:2342/
-            - PHOTOPRISM_SITE_TITLE=PhotoPrism
-            - PHOTOPRISM_SITE_CAPTION=Browse Your Life
-            - PHOTOPRISM_SITE_DESCRIPTION=Fotoooooo's
-            - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
-            - PHOTOPRISM_UID=${UID}
-            - PHOTOPRISM_GID=${GID}
-            - PHOTOPRISM_INIT=tensorflow-amd64-avx2
-            - PHOTOPRISM_FFMPEG_BUFFERS=64
-            - PHOTOPRISM_FFMPEG_BITRATE=64
-            - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
-            - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
-            - HOME=/mnt/vd0/data/nextcloud/photos/photoprism
-        image: photoprism/photoprism:latest
-        restart: ${US}
-        ports:
-            - "2342:2342"
-        volumes:
-            - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals:rw"
-            - "${CONFIG}/photoprism:/photoprism/storage:rw"
-        working_dir: "/mnt/vd0/data/nextcloud/photos/photoprism"
-    photoprism_db:
-        command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
-        container_name: photoprism_db
-        environment:
-            - MYSQL_ROOT_PASSWORD=${PHOTO_DB_RPW} 
-            - MYSQL_DATABASE=${PHOTO_DB_NAME}
-            - MYSQL_USER=${PHOTO_DB_U}
-            - MYSQL_PASSWORD=${PHOTO_DB_PW}
-        image: mariadb:10.5
-        restart: ${US}
-        volumes:
-            - "${CONFIG}/photoprism_db:/var/lib/mysql"
+    # photoprism:
+    #     container_name: photoprism
+    #     depends_on:
+    #         - photoprism_db
+    #     devices:
+    #         - "/dev/dri/renderD128:/dev/dri/renderD128"
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
+    #         - PHOTOPRISM_ORIGINALS_LIMIT=00
+    #         - PHOTOPRISM_HTTP_COMPRESSION=gzip
+    #         - PHOTOPRISM_DEBUG=false
+    #         - PHOTOPRISM_PUBLIC=false
+    #         - PHOTOPRISM_READONLY=false
+    #         - PHOTOPRISM_EXPERIMENTAL=false
+    #         - PHOTOPRISM_DISABLE_CHOWN=false
+    #         - PHOTOPRISM_DISABLE_WEBDAV=false
+    #         - PHOTOPRISM_DISABLE_SETTINGS=false
+    #         - PHOTOPRISM_DISABLE_TENSORFLOW=false
+    #         - PHOTOPRISM_DISABLE_FACES=false
+    #         - PHOTOPRISM_DISABLE_CLASSIFICATION=false
+    #         - PHOTOPRISM_DARKTABLE_PRESETS=false
+    #         - PHOTOPRISM_DETECT_NSFW=false
+    #         - PHOTOPRISM_UPLOAD_NSFW=true
+    #         - PHOTOPRISM_DATABASE_DRIVER=mysql
+    #         - PHOTOPRISM_DATABASE_SERVER=photoprism_db:3306
+    #         - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
+    #         - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
+    #         - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
+    #         - PHOTOPRISM_SITE_URL=http://192.168.1.111:2342/
+    #         - PHOTOPRISM_SITE_TITLE=PhotoPrism
+    #         - PHOTOPRISM_SITE_CAPTION=Browse Your Life
+    #         - PHOTOPRISM_SITE_DESCRIPTION=Fotoooooo's
+    #         - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
+    #         - PHOTOPRISM_UID=${UID}
+    #         - PHOTOPRISM_GID=${GID}
+    #         - PHOTOPRISM_INIT=tensorflow-amd64-avx2
+    #         - PHOTOPRISM_FFMPEG_BUFFERS=64
+    #         - PHOTOPRISM_FFMPEG_BITRATE=64
+    #         - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
+    #         - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
+    #         - HOME=/mnt/vd0/data/nextcloud/photos/photoprism
+    #     image: photoprism/photoprism:latest
+    #     restart: ${US}
+    #     ports:
+    #         - "2342:2342"
+    #     volumes:
+    #         - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals:rw"
+    #         - "${CONFIG}/photoprism:/photoprism/storage:rw"
+    #     working_dir: "/mnt/vd0/data/nextcloud/photos/photoprism"
+    # photoprism_db:
+    #     command: mysqld --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
+    #     container_name: photoprism_db
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=${PHOTO_DB_RPW} 
+    #         - MYSQL_DATABASE=${PHOTO_DB_NAME}
+    #         - MYSQL_USER=${PHOTO_DB_U}
+    #         - MYSQL_PASSWORD=${PHOTO_DB_PW}
+    #     image: mariadb:10.5
+    #     restart: ${US}
+    #     volumes:
+    #         - "${CONFIG}/photoprism_db:/var/lib/mysql"
     
     # Portainer
     portainer:
