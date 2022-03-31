@@ -389,21 +389,26 @@ services:
         volumes:
             - ${CONFIG}/prowlarr:/config:rw
 
-    # QBittorrent
-    qbittorrent:
-        container_name: qbittorrent
+    # QBittorrentVPN
+    qbittorrentvpn:
+        container_name: qbittorrentvpn
         environment:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - WEBUI_PORT=8113
-        image: linuxserver/qbittorrent:latest
+            - WEBUI_PORT_ENV=8113
+            - VPN_ENABLED=yes
+            - VPN_USERNAME=${VPN_USERNAME}
+            - VPN_PASSWORD=${VPN_PASSWORD}
+            - LAN_NETWORK=192.168.1.0/24
+            - NAME_SERVERS=1.1.1.1,8.8.8.8
+        image: markusmcnugen/qbittorrentvpn:latest
         ports:
             - "8113:8113"
         restart: ${US}
         volumes:
             - ${CONFIG}/qbittorrent:/config:rw
-            - /home/alex/downloads/qbittorrent:/downloads:rw
+            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
 
     # Radarr
     radarr:
