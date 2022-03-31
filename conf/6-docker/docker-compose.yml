@@ -390,19 +390,20 @@ services:
             - ${CONFIG}/prowlarr:/config:rw
 
     # QBittorrent
-    # qbittorrent:
-    #     container_name: qbittorrent
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - TZ=${TZ}
-    #         - WEBUI_PORT=8113
-    #     image: linuxserver/qbittorrent:latest
-    #     network_mode: "service:gluetun"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/qbittorrent:/config:rw
-    #         - /home/alex/downloads/qbittorrent:/downloads:rw
+    qbittorrent:
+        container_name: qbittorrent
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - WEBUI_PORT=8113
+        image: linuxserver/qbittorrent:latest
+        ports:
+            - "8113:8113"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/qbittorrent:/config:rw
+            - /home/alex/downloads/qbittorrent:/downloads:rw
 
     # Radarr
     radarr:
