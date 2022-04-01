@@ -116,32 +116,6 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
 
-    # Gluetun
-    # gluetun:
-    #     cap_add:
-    #         - NET_ADMIN
-    #     container_name: gluetun
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - VPNSP=nordvpn
-    #         - OPENVPN_USER=${NORD_USER}
-    #         - OPENVPN_PASSWORD=${NORD_PW}
-    #         - REGION=${NORD_REGION}
-    #         - SERVER_HOSTNAME=${NORD_SERVER}
-    #         - TZ=${TZ}
-    #     image: qmcgaw/gluetun:latest
-    #     ports:
-    #         - "8888:8888/tcp"
-    #         - "8388:8388/tcp"
-    #         - "8388:8388/udp"
-    #         - "6881:6881"
-    #         - "6881:6881/udp"
-    #         - "8113:8113"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/gluetun:/gluetun:rw
-
     # Heimdall
     heimdall:
         container_name: heimdall
@@ -235,7 +209,7 @@ services:
     #     image: jc21/nginx-proxy-manager:latest
     #     ports:
     #         - "8181:81"
-    #         - "8080:80"
+    #         - "8081:80"
     #         - "4443:443"
     #     restart: ${US}
     #     volumes:
@@ -393,10 +367,8 @@ services:
     qbittorrentvpn:
         container_name: qbittorrentvpn
         environment:
-            - PUID=${UID}
-            - PGID=${GID}
             - TZ=${TZ}
-            - WEBUI_PORT_ENV=8113
+              #- WEBUI_PORT_ENV=8113
             - VPN_ENABLED=yes
             - VPN_USERNAME=${VPN_USERNAME}
             - VPN_PASSWORD=${VPN_PASSWORD}
@@ -404,7 +376,10 @@ services:
             - NAME_SERVERS=1.1.1.1,8.8.8.8
         image: markusmcnugen/qbittorrentvpn:latest
         ports:
-            - "8113:8113"
+            - "8080:8080"
+            - "8999:8999"
+            - "8999:8999/udp"
+        privileged: true
         restart: ${US}
         volumes:
             - ${CONFIG}/qbittorrent:/config:rw
