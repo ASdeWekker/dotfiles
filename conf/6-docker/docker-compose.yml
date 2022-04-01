@@ -399,7 +399,7 @@ services:
         volumes:
             - ${CONFIG}/radarr:/config:rw
             - /mnt/vd0/data/videos:/movies:rw
-            - /home/alex/downloads/deluge:/downloads:rw
+            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
 
     # Scrutiny
     scrutiny:
@@ -461,7 +461,7 @@ services:
         volumes:
             - ${CONFIG}/sonarr:/config:rw
             - /mnt/vd0/data/videos:/tv:rw
-            - /home/alex/downloads/deluge:/downloads:rw
+            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
 
     # Tautulli
     tautulli:
