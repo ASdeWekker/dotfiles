@@ -115,6 +115,20 @@ services:
             - ${CONFIG}/gitea:/data
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
+    
+    # Grocy
+    grocy:
+        container_name: grocy
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: linuxserver/grocy
+        ports:
+            - "9283:80"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/grocy:/config
 
     # Heimdall
     heimdall:
@@ -373,7 +387,7 @@ services:
             - VPN_USERNAME=${VPN_USERNAME}
             - VPN_PASSWORD=${VPN_PASSWORD}
             - LAN_NETWORK=192.168.1.0/24
-            - NAME_SERVERS=1.1.1.1,8.8.8.8
+            - NAME_SERVERS=192.168.1.90,1.1.1.1
         image: markusmcnugen/qbittorrentvpn:latest
         ports:
             - "8080:8080"
