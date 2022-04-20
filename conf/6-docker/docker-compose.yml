@@ -470,6 +470,34 @@ services:
             - ${CONFIG}/tautulli:/config:rw
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
+    # Tdarr
+    tdarr:
+        container_name: tdarr
+        devices:
+            - "/dev/dri:/dev/dri"
+        environment:
+            - TZ=${TZ}
+            - PUID=${UID}
+            - PGID=${GID}
+            - UMASK_SET=002
+            - serverIP=192.168.1.111
+            - serverPort=8266
+            - webUIPort=8265
+            - internalNode=true
+            - nodeID=SergeNode
+        image: haveagitgat/tdarr:latest
+        ports:
+            - "8265:8265"
+            - "8266:8266"
+            - "8267:8267"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/tdarr/server:/app/server
+            - ${CONFIG}/tdarr/configs:/app/configs
+            - ${CONFIG}/tdarr/logs:/app/logs
+            - /mnt/vd0:/media
+            - ${CONFIG}/tdarr/cache:/temp
+    
     # Tekkit
 #    tekkit:
 #        container_name: tekkit
