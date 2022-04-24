@@ -495,8 +495,8 @@ services:
             - ${CONFIG}/tdarr/server:/app/server
             - ${CONFIG}/tdarr/configs:/app/configs
             - ${CONFIG}/tdarr/logs:/app/logs
-            - /mnt/vd0:/media
-            - ${CONFIG}/tdarr/cache:/temp
+            - /mnt/vd0/data:/media
+            - ${CONFIG}/../../downloads/tdarr/cache:/temp
     
     # Tekkit
     # tekkit:
