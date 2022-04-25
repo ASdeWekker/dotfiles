@@ -249,7 +249,7 @@ services:
             - PLEX_GID=${GID}
             - TZ=${TZ}
             - PLEX_CLAIM=${PLEX_CLAIM}
-              NVIDIA_DRIVER_CAPIBILITIES=compute,video,utility
+            - NVIDIA_DRIVER_CAPIBILITIES=compute,video,utility
             - NVIDIA_VISIBLE_DEVICES=all
         image: plexinc/pms-docker:latest
         ports:
