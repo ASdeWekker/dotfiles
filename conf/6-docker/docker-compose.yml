@@ -37,23 +37,6 @@ services:
         volumes:
             - ${CONFIG}/bitwarden:/data:rw
 
-    # Deluge
-    # deluge:
-    #     container_name: deluge
-    #     environment:
-    #         - PUID=${UID}
-    #         - PGID=${GID}
-    #         - TZ=${TZ}
-    #     image: linuxserver/deluge:latest
-    #     ports:
-    #         - "58846:58846"
-    #         - "58946:58946"
-    #         - "8112:8112"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/deluge:/config:rw
-    #         - /home/alex/downloads/deluge:/downloads:rw
-
     # Factorio
     # factorio:
     #     container_name: factorio
