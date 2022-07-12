@@ -7,6 +7,22 @@ version: "3.9"
 # Services.
 services:
 
+    # Bazarr
+    bazarr:
+        container_name: bazarr
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: linuxserver/bazarr:latest
+        ports:
+        - "6767:6767"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/bazarr:/config
+            - /mnt/vd0/data/videos/movies:/movies
+            - /mnt/vd0/data/videos/series:/tv
+
     # Bitwarden
     bitwarden:
         container_name: bitwarden
@@ -44,13 +60,27 @@ services:
     #     environment:
     #         - PUID=${UID}
     #         - PGID=${GID}
-    #     image: factoriotools/factorio:latest
+    #     image: factoriotools/factorio:stable
     #     ports:
-    #         - "34197:34197/udp"
-    #         - "27015:27015"
+    #         - "34198:34198/udp"
+    #         - "27016:27016"
     #     restart: ${US}
     #     volumes:
     #         - ${CONFIG}/factorio:/factorio:rw
+    
+    # Factorio 2
+    factorio2:
+        container_name: factorio2
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+        image: factoriotools/factorio:stable
+        ports:
+            - "34197:34197/udp"
+            - "27015:27015"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/factorio2:/factorio:rw
 
     # Frigate
     # frigate:
