@@ -374,6 +374,8 @@ services:
         container_name: qbittorrentvpn
         environment:
             - TZ=${TZ}
+            - PUID=${UID}
+            - PGID=${GID}
             - VPN_ENABLED=yes
             - VPN_USERNAME=${VPN_USERNAME}
             - VPN_PASSWORD=${VPN_PASSWORD}
