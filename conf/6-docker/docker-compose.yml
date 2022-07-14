@@ -222,18 +222,6 @@ services:
     #         - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
     #         - ${CONFIG}/nginx-proxy-manager/data:/data:rw
     #         - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
-    # npm_db:
-    #     container_name: npm_db
-    #     environment:
-    #         - TZ=${TZ}
-    #         - MYSQL_ROOT_PASSWORD=${NPM_DB_RPW}
-    #         - MYSQL_DATABASE=${NPM_DB_NAME}
-    #         - MYSQL_USER=${NPM_DB_U}
-    #         - MYSQL_PASSWORD=${NPM_DB_PW}
-    #     image: mariadb:10.4
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/nginx-proxy-manager_db/:/var/lib/mysql:rw
 
     # Ouroboros
     ouroboros:
