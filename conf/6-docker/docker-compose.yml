@@ -204,24 +204,27 @@ services:
     #         - "${CONFIG}/nextcloud_db:/var/lib/mysql"
 
     # Nginx proxy manager
-    # nginx-proxy-manager:
-    #     container_name: nginx-proxy-manager
-    #     depends_on: 
-    #         - npm_db
-    #     environment:
-    #         - PUID=${UID}
-    #         - GUID=${GID}
-    #         - TZ=${TZ}
-    #     image: jc21/nginx-proxy-manager:latest
-    #     ports:
-    #         - "8181:81"
-    #         - "8081:80"
-    #         - "4443:443"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
-    #         - ${CONFIG}/nginx-proxy-manager/data:/data:rw
-    #         - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+    nginx-proxy-manager:
+        container_name: nginx-proxy-manager
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - DB_MYSQL_HOST=${NPM_DB_HOST}
+            - DB_MYSQL_PORT=${NPM_DB_PORT}
+            - DB_MYSQL_USER=${NPM_DB_USER}
+            - DB_MYSQL_PASSWORD=${NPM_DB_PW}
+            - DB_MYSQL_NAME=${NPM_DB_NAME}
+        image: jc21/nginx-proxy-manager:latest
+        ports:
+            - "8181:81"
+            - "8081:80"
+            - "4443:443"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
+            - ${CONFIG}/nginx-proxy-manager/data:/data:rw
+            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
 
     # Ouroboros
     ouroboros:
