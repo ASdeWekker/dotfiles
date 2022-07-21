@@ -37,6 +37,25 @@ services:
         volumes:
             - ${CONFIG}/bitwarden:/data:rw
 
+    # Bookstack
+    bookstack:
+        container_name: bookstack
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - APP_URL=${BKSTCK_APP_URL}
+            - DB_HOST=${BKSTCK_DB_HOST}
+            - DB_USER=${BKSTCK_DB_USER}
+            - DB_PASS=${BKSTCK_DB_PASS}
+            - DB_DATABASE=${BKSTCK_DB_DATABASE}
+        image: linuxserver/bookstack:latest
+        ports:
+            - "6875:80"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/bookstack:/config:rw
+
     # Factorio
     # factorio:
     #     container_name: factorio
