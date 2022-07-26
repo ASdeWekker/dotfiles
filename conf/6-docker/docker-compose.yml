@@ -85,25 +85,25 @@ services:
             - ${CONFIG}/factorio2:/factorio:rw
 
     # Frigate
-    # frigate:
-    #     container_name: frigate
-    #     devices:
-    #         # - /dev/bus/usb:/dev/bus/usb # usb coral
-    #         - /dev/dri/renderD128
-    #     environment:
-    #         - TZ=${TZ}
-    #         - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
-    #     image: blakeblackshear/frigate:stable-amd64
-    #     ports:
-    #         - "5000:5000"
-    #         - "1935:1935"
-    #     privileged: true
-    #     restart: ${US}
-    #     shm_size: "64mb"
-    #     volumes:
-    #         - /etc/localtime:/etc/localtime:ro
-    #         - ${CONFIG}/frigate/config.yml:/config/config.yml
-    #         - /home/alex/frigate/storage:/media/frigate
+    frigate:
+        container_name: frigate
+        devices:
+            # - /dev/bus/usb:/dev/bus/usb # usb coral
+            - /dev/dri/renderD128
+        environment:
+            - TZ=${TZ}
+            - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
+        image: blakeblackshear/frigate:stable-amd64
+        ports:
+            - "5000:5000"
+            - "1935:1935"
+        privileged: true
+        restart: ${US}
+        shm_size: "64mb"
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ${CONFIG}/frigate/config.yml:/config/config.yml
+            - /home/alex/frigate/storage:/media/frigate
 
     # Gitea
     gitea:
