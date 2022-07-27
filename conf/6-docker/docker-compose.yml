@@ -286,8 +286,6 @@ services:
     # Photoprism
     photoprism:
         container_name: photoprism
-        depends_on:
-            - photoprism_db
         devices:
             - "/dev/dri/renderD128:/dev/dri/renderD128"
         environment:
