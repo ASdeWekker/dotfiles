@@ -84,6 +84,27 @@ services:
         volumes:
             - ${CONFIG}/factorio2:/factorio:rw
 
+    # Firefly
+    firefly:
+        container_name: firefly
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - APP_KEY=${FRFL_APP_KEY}
+            - DB_CONNECTION=${FRFL_DB_CONNECTION}
+            - DB_HOST=${FRFL_DB_HOST}
+            - DB_PORT=${FRFL_DB_PORT}
+            - DB_DATABASE=${FRFL_DB_DATABASE}
+            - DB_USERNAME=${FRFL_DB_USERNAME}
+            - DB_PASSWORD=${FRFL_DB_PASSWORD}
+        image: fireflyiii/core:latest
+        ports:
+            - "8082:8080"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/firefly/upload:/var/www/html/storage/upload
+
     # Frigate
     frigate:
         container_name: frigate
