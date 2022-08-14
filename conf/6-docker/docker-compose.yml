@@ -186,11 +186,24 @@ services:
             - TZ=${TZ}
         image: linuxserver/heimdall:latest
         ports:
-            - "9009:80"
-            - "9010:443"
+            - "9010:80"
         restart: ${US}
         volumes:
             - ${CONFIG}/heimdall:/config:rw
+
+    # Homer
+    homer:
+        container_name: homer
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+        image: b4bz/homer:latest
+        ports:
+            - "9009:8080"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/homer/assets:/www/assets
 
     # Jackett
     jackett:
