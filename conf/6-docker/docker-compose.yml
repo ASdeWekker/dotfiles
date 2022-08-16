@@ -177,20 +177,6 @@ services:
         volumes:
             - ${CONFIG}/grocy:/config
 
-    # Heimdall
-    heimdall:
-        container_name: heimdall
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-        image: linuxserver/heimdall:latest
-        ports:
-            - "9010:80"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/heimdall:/config:rw
-
     # Homer
     homer:
         container_name: homer
