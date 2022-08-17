@@ -472,8 +472,8 @@ services:
     # skyfactory:
     #     container_name: skyfactory
     #     environment:
-    #         - PGID=${UID}
-    #         - PUID=${GID}
+    #         - PUID=${UID}
+    #         - PGID=${GID}
     #         - TZ=${TZ}
     #         # - SERVER_OP=Niles018
     #     image: cochief/skyfactory4
