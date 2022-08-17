@@ -444,7 +444,6 @@ services:
     scrutiny:
         cap_add:
             - SYS_RAWIO
-            - SYS_ADMIN
         container_name: scrutiny
         devices:
             - /dev/sda:/dev/sda
@@ -453,20 +452,16 @@ services:
             - /dev/sdd:/dev/sdd
             - /dev/sde:/dev/sde
             - /dev/sdf:/dev/sdf
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - SCRUTINY_API_ENDPOINT=http://192.168.1.111:8088
-            - SCRUTINY_WEB=true
-            - SCRUTINY_COLLECTOR=true
-        image: linuxserver/scrutiny:latest
+        image: ghcr.io/analogj/scrutiny:master-omnibus
         ports:
             - "8088:8080"
+            - "8086:8086"
         restart: ${US}
         volumes:
-            - ${CONFIG}/scrutiny:/config
+            - ${CONFIG}/scrutiny:/opt/scrutiny/config
+            - ${CONFIG}/influxdb2:/opt/scrutiny/influxdb
             - /run/udev:/run/udev:ro
+
 
     # Sky Factory
     # skyfactory:
