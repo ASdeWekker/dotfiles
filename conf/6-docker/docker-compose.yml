@@ -223,39 +223,27 @@ services:
             - ${CONFIG}/motioneye:/config:rw
 
     # Nextcloud
-    # nextcloud:
-    #     container_name: nextcloud
-    #     depends_on: 
-    #         - nextcloud_db
-    #     environment:
-    #         - PUID=${UID}
-    #         - GUID=${GID}
-    #         - TZ=${TZ}
-    #         - MYSQL_PASSWORD=${NXTCLD_DB_PW}
-    #         - MYSQL_DATABASE=${NXTCLD_DB_NAME}
-    #         - MYSQL_USER=${NXTCLD_DB_U}
-    #         - MYSQL_HOST=nextcloud_db:3306
-    #         - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
-    #         - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
-    #     image: nextcloud
-    #     ports:
-    #         - "8181:80"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/nextcloud/config:/var/www/html/config:rw
-    #         - /mnt/vd0/data/nextcloud:/var/www/html:rw
-    #         - /mnt/vd0/data/nextcloud:/var/www/html/data:rw
-    # nextcloud_db:
-    #     container_name: nextcloud_db
-    #     environment:
-    #         - MYSQL_ROOT_PASSWORD=${NXTCLD_DB_RPW} 
-    #         - MYSQL_DATABASE=${NXTCLD_DB_NAME}
-    #         - MYSQL_USER=${NXTCLD_DB_U}
-    #         - MYSQL_PASSWORD=${NXTCLD_DB_PW}
-    #     image: mariadb:10.5
-    #     restart: ${US}
-    #     volumes:
-    #         - "${CONFIG}/nextcloud_db:/var/lib/mysql"
+    nextcloud:
+        container_name: nextcloud
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - MYSQL_PASSWORD=${NXTCLD_DB_PW}
+            - MYSQL_DATABASE=${NXTCLD_DB_NAME}
+            - MYSQL_USER=${NXTCLD_DB_U}
+            - MYSQL_HOST=${NXTCLD_DB_HOST}
+            - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
+            - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
+            - REDIS_HOST=${NXTCLD_REDIS_HOST}
+        image: nextcloud
+        ports:
+            - "3333:80"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/nextcloud:/var/www/html
+            - /mnt/vd0/data/nextcloud:/mrgrfsdata
+            - ${CONFIG}/../../upload/nextcloud:/uploads
 
     # Nginx proxy manager
     nginx-proxy-manager:
@@ -459,9 +447,8 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/scrutiny:/opt/scrutiny/config
-            - ${CONFIG}/influxdb2:/opt/scrutiny/influxdb
+            - ${CONFIG}/scrutiny/influxdb2:/opt/scrutiny/influxdb
             - /run/udev:/run/udev:ro
-
 
     # Sky Factory
     # skyfactory:
@@ -574,4 +561,3 @@ services:
     #     restart: ${US}
     #     volumes:
     #         - ${CONFIG}/valheim:/config
-
