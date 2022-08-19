@@ -191,6 +191,87 @@ services:
         volumes:
             - ${CONFIG}/homer/assets:/www/assets
 
+    immich-server:
+        container_name: immich-server
+        depends_on:
+            - immich-db
+        entrypoint: ["/bin/sh", "./start-server.sh"]
+        environment:
+            - NODE_ENV=production
+            - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
+            - DB_HOSTNAME=${IMMICH_DB_HOST}
+            - DB_DATABASE_NAME=${IMMICH_DB_NAME}
+            - DB_PASSWORD=${IMMICH_DB_PASSWD}
+            - DB_USERNAME=${IMMICH_DB_USER}
+            - ENABLE_MAPBOX=false
+            - JWT_SECRET=${IMMICH_JWT}
+        image: altran1502/immich-server:release
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/../../uploads/immich:/usr/src/app/upload
+    immich-microservices:
+        container_name: immich-microservices
+        depends_on:
+            - immich-db
+        entrypoint: ["/bin/sh", "./start-microservices.sh"]
+        environment:
+            - NODE_ENV=production
+            - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
+            - DB_HOSTNAME=${IMMICH_DB_HOST}
+            - DB_DATABASE_NAME=${IMMICH_DB_NAME}
+            - DB_PASSWORD=${IMMICH_DB_PASSWD}
+            - DB_USERNAME=${IMMICH_DB_USER}
+            - ENABLE_MAPBOX=false
+            - JWT_SECRET=${IMMICH_JWT}
+            - VITE_LOGIN_PAGE_MESSAGE=welkom
+        image: altran1502/immich-server:release
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/../../uploads/immich:/usr/src/app/upload
+    immich-ml:
+        container_name: immich-ml
+        depends_on:
+            - immich-db
+        entrypoint: ["/bin/sh", "./entrypoint.sh"]
+        environment:
+            - NODE_ENV=production
+            - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
+            - DB_HOSTNAME=${IMMICH_DB_HOST}
+            - DB_DATABASE_NAME=${IMMICH_DB_NAME}
+            - DB_PASSWORD=${IMMICH_DB_PASSWD}
+            - DB_USERNAME=${IMMICH_DB_USER}
+            - ENABLE_MAPBOX=false
+            - JWT_SECRET=${IMMICH_JWT}
+        image: altran1502/immich-machine-learning:release
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/../../uploads/immich:/usr/src/app/upload
+    immich-web:
+        container_name: immich-web
+        entrypoint: ["/bin/sh", "./entrypoint.sh"]
+        image: altran1502/immich-web:release
+        restart: ${US}
+    immich-db:
+        container_name: immich-db
+        environment:
+            - POSTGRES_HOSTNAME=${IMMICH_DB_HOST}
+            - POSTGRES_PASSWORD=${IMMICH_DB_PASSWD}
+            - POSTGRES_USER=${IMMICH_DB_USER}
+            - POSTGRES_DB=${IMMICH_DB_NAME}
+            - PG_DATA=/var/lib/postgresql/data
+        image: postgres:14
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/immich/pgdata:/var/lib/postgresql/data
+    immich-proxy:
+        container_name: immich-proxy
+        depends_on:
+            - immich-server
+        image: altran1502/immich-proxy:release
+        ports:
+            - "2283:80"
+        restart: ${US}
+
     # Jackett
     jackett:
         container_name: jackett
