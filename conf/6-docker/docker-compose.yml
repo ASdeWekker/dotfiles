@@ -324,7 +324,7 @@ services:
         volumes:
             - ${CONFIG}/nextcloud:/var/www/html
             - /mnt/vd0/data/nextcloud:/mrgrfsdata
-            - ${CONFIG}/../../upload/nextcloud:/uploads
+            - ${CONFIG}/../../uploads/nextcloud:/uploads
 
     # Nginx proxy manager
     nginx-proxy-manager:
