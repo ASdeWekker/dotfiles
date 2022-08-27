@@ -271,22 +271,6 @@ services:
         ports:
             - "2283:80"
         restart: ${US}
-
-    # Jackett
-    jackett:
-        container_name: jackett
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-        image: linuxserver/jackett:latest
-        ports:
-            - "9117:9117"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/jackett:/config:rw
-            - /home/alex/downloads/jackett:/downloads:rw
-            - /etc/localtime:/etc/localtime:ro
     
     # MotionEye
     motioneye:
