@@ -27,6 +27,8 @@ services:
     bitwarden:
         container_name: bitwarden
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
             - LOG_FILE=/data/bitwarden.log
             - SIGNUPS_ALLOWED=true
@@ -127,6 +129,8 @@ services:
             # - /dev/bus/usb:/dev/bus/usb # usb coral
             - /dev/dri/renderD128
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
             - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
         image: blakeblackshear/frigate:stable-amd64
@@ -147,6 +151,8 @@ services:
         environment:
             - USER_UID=${UID}
             - USER_GID=${GID}
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
             - DB_TYPE={GITEA_DB_TYPE}
             - DB_HOST=${GITEA_DB_HOST}
@@ -197,6 +203,9 @@ services:
             - immich-db
         entrypoint: ["/bin/sh", "./start-server.sh"]
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
             - NODE_ENV=production
             - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
             - DB_HOSTNAME=${IMMICH_DB_HOST}
@@ -215,6 +224,9 @@ services:
             - immich-db
         entrypoint: ["/bin/sh", "./start-microservices.sh"]
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
             - NODE_ENV=production
             - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
             - DB_HOSTNAME=${IMMICH_DB_HOST}
@@ -234,6 +246,9 @@ services:
             - immich-db
         entrypoint: ["/bin/sh", "./entrypoint.sh"]
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
             - NODE_ENV=production
             - REDIS_HOSTNAME=${IMMICH_REDIS_HOST}
             - DB_HOSTNAME=${IMMICH_DB_HOST}
@@ -254,6 +269,9 @@ services:
     immich-db:
         container_name: immich-db
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
             - POSTGRES_HOSTNAME=${IMMICH_DB_HOST}
             - POSTGRES_PASSWORD=${IMMICH_DB_PASSWD}
             - POSTGRES_USER=${IMMICH_DB_USER}
@@ -267,6 +285,10 @@ services:
         container_name: immich-proxy
         depends_on:
             - immich-server
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: altran1502/immich-proxy:release
         ports:
             - "2283:80"
@@ -429,6 +451,8 @@ services:
         command: -H unix:///var/run/docker.sock
         container_name: portainer
         environment:
+            - PUID=${UID}
+            - PGID=${GID}
             - TZ=${TZ}
         image: portainer/portainer-ce:latest
         ports:
@@ -458,9 +482,9 @@ services:
     qbittorrentvpn:
         container_name: qbittorrentvpn
         environment:
-            - TZ=${TZ}
             - PUID=${UID}
             - PGID=${GID}
+            - TZ=${TZ}
             - VPN_ENABLED=yes
             - VPN_USERNAME=${VPN_USERNAME}
             - VPN_PASSWORD=${VPN_PASSWORD}
@@ -505,6 +529,10 @@ services:
             - /dev/sdd:/dev/sdd
             - /dev/sde:/dev/sde
             - /dev/sdf:/dev/sdf
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
         image: ghcr.io/analogj/scrutiny:master-omnibus
         ports:
             - "8088:8080"
@@ -570,10 +598,9 @@ services:
         devices:
             - "/dev/dri:/dev/dri"
         environment:
-            - TZ=${TZ}
             - PUID=${UID}
             - PGID=${GID}
-            - UMASK_SET=002
+            - TZ=${TZ}
             - serverIP=192.168.1.111
             - serverPort=8266
             - webUIPort=8265
