@@ -37,7 +37,7 @@ services:
             - "8000:80"
         restart: ${US}
         volumes:
-            - ${CONFIG}/bitwarden:/data:rw
+            - ${CONFIG}/bitwarden:/data
 
     # Bookstack
     bookstack:
@@ -56,7 +56,7 @@ services:
             - "6875:80"
         restart: ${US}
         volumes:
-            - ${CONFIG}/bookstack:/config:rw
+            - ${CONFIG}/bookstack:/config
 
     # Factorio
     # factorio:
@@ -70,7 +70,7 @@ services:
     #         - "27016:27016"
     #     restart: ${US}
     #     volumes:
-    #         - ${CONFIG}/factorio:/factorio:rw
+    #         - ${CONFIG}/factorio:/factorio
     
     # Factorio 2
     factorio2:
@@ -84,7 +84,7 @@ services:
             - "27015:27015"
         restart: ${US}
         volumes:
-            - ${CONFIG}/factorio2:/factorio:rw
+            - ${CONFIG}/factorio2:/factorio
 
     # Firefly
     firefly:
@@ -210,7 +210,7 @@ services:
             - "8765:8765"
         restart: ${US}
         volumes:
-            - ${CONFIG}/motioneye:/config:rw
+            - ${CONFIG}/motioneye:/config
 
     # Nextcloud
     nextcloud:
@@ -254,9 +254,9 @@ services:
             - "4443:443"
         restart: ${US}
         volumes:
-            - ${CONFIG}/nginx-proxy-manager/config:/app/config:rw
-            - ${CONFIG}/nginx-proxy-manager/data:/data:rw
-            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+            - ${CONFIG}/nginx-proxy-manager/config:/app/config
+            - ${CONFIG}/nginx-proxy-manager/data:/data
+            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
 
     # Ouroboros
     ouroboros:
@@ -292,9 +292,9 @@ services:
             - "32400:32400"
         restart: ${US}
         volumes:
-            - ${CONFIG}/plex:/config:rw
-            - /home/alex/downloads/plex/transcode:/transcode:rw
-            - /mnt/vd0/data/videos:/data:rw
+            - ${CONFIG}/plex:/config
+            - /home/alex/downloads/plex/transcode:/transcode
+            - /mnt/vd0/data/videos:/data
         
     # Photoprism
     photoprism:
@@ -345,8 +345,8 @@ services:
         ports:
             - "2342:2342"
         volumes:
-            - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals:rw"
-            - "${CONFIG}/photoprism:/photoprism/storage:rw"
+            - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals"
+            - "${CONFIG}/photoprism:/photoprism/storage"
         working_dir: "/mnt/vd0/data/nextcloud/photos/photoprism"
  
     # Portainer
@@ -362,10 +362,10 @@ services:
             - "9000:9000"
         restart: ${US}
         volumes:
-            - ${CONFIG}/portainer:/data:rw
+            - ${CONFIG}/portainer:/data
             - /etc/localtime:/etc/localtime:ro
-            - /home/alex/.docker/shared:/shared:rw
-            - /var/run/docker.sock:/var/run/docker.sock:rw
+            - /home/alex/.docker/shared:/shared
+            - /var/run/docker.sock:/var/run/docker.sock
 
     # Prowlarr
     prowlarr:
@@ -379,7 +379,7 @@ services:
             - "9696:9696"
         restart: ${US}
         volumes:
-            - ${CONFIG}/prowlarr:/config:rw
+            - ${CONFIG}/prowlarr:/config
 
     # QBittorrentVPN
     qbittorrentvpn:
@@ -401,8 +401,8 @@ services:
         privileged: true
         restart: ${US}
         volumes:
-            - ${CONFIG}/qbittorrent:/config:rw
-            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
+            - ${CONFIG}/qbittorrent:/config
+            - /home/alex/downloads/qbittorrentvpn:/downloads
 
     # Radarr
     radarr:
@@ -416,9 +416,9 @@ services:
             - "7878:7878"
         restart: ${US}
         volumes:
-            - ${CONFIG}/radarr:/config:rw
-            - /mnt/vd0/data/videos:/movies:rw
-            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
+            - ${CONFIG}/radarr:/config
+            - /mnt/vd0/data/videos:/movies
+            - /home/alex/downloads/qbittorrentvpn:/downloads
 
     # Scrutiny
     scrutiny:
@@ -476,9 +476,9 @@ services:
             - "8989:8989"
         restart: ${US}
         volumes:
-            - ${CONFIG}/sonarr:/config:rw
-            - /mnt/vd0/data/videos:/tv:rw
-            - /home/alex/downloads/qbittorrentvpn:/downloads:rw
+            - ${CONFIG}/sonarr:/config
+            - /mnt/vd0/data/videos:/tv
+            - /home/alex/downloads/qbittorrentvpn:/downloads
 
     # Tautulli
     tautulli:
@@ -492,7 +492,7 @@ services:
             - "8182:8181"
         restart: ${US}
         volumes:
-            - ${CONFIG}/tautulli:/config:rw
+            - ${CONFIG}/tautulli:/config
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
     
     # Tdarr
