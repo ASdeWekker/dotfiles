@@ -323,14 +323,14 @@ services:
             - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
             - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
             - REDIS_HOST=${NXTCLD_REDIS_HOST}
-        image: nextcloud
+        image: linuxserver/nextcloud:latest
         ports:
-            - "3333:80"
+            - "3333:443"
         restart: ${US}
         volumes:
-            - ${CONFIG}/nextcloud:/var/www/html
+            - ${CONFIG}/nextcloud:/config
+            - /media/nextcloud/data:/data
             - /mnt/vd0/data/nextcloud:/mrgrfsdata
-            - ${CONFIG}/../../uploads/nextcloud:/uploads
 
     # Nginx proxy manager
     nginx-proxy-manager:
