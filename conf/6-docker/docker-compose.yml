@@ -339,15 +339,16 @@ services:
             - PHOTOPRISM_FFMPEG_BITRATE=64
             - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
             - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
-            - HOME=/mnt/vd0/data/nextcloud/photos/photoprism
+            - HOME=/mnt/vd0/data/nextcloud/Photos/photoprism
         image: photoprism/photoprism:latest
         restart: ${US}
         ports:
             - "2342:2342"
         volumes:
-            - "/mnt/vd0/data/nextcloud/photos:/photoprism/originals"
+            - "/mnt/vd0/data/nextcloud/Photos/other:/photoprism/originals/other"
+            - "/media/nextcloud/data/woekoe/files/InstantUpload:/photoprism/originals/nextcloud"
             - "${CONFIG}/photoprism:/photoprism/storage"
-        working_dir: "/mnt/vd0/data/nextcloud/photos/photoprism"
+        working_dir: "/mnt/vd0/data/nextcloud/Photos/photoprism"
  
     # Portainer
     portainer:
