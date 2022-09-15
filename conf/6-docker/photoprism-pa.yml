@@ -1,0 +1,61 @@
+#                                 #
+# This is my docker compose file. #
+#                                 #
+
+version: "3.9"
+
+# Services.
+services:
+        
+    # Photoprism
+    photoprism-pa:
+        container_name: photoprism-pa
+        devices:
+            - "/dev/dri/renderD128:/dev/dri/renderD128"
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
+            - PHOTOPRISM_ORIGINALS_LIMIT=00
+            - PHOTOPRISM_HTTP_COMPRESSION=gzip
+            - PHOTOPRISM_DEBUG=false
+            - PHOTOPRISM_PUBLIC=false
+            - PHOTOPRISM_READONLY=false
+            - PHOTOPRISM_EXPERIMENTAL=false
+            - PHOTOPRISM_DISABLE_CHOWN=false
+            - PHOTOPRISM_DISABLE_WEBDAV=false
+            - PHOTOPRISM_DISABLE_SETTINGS=false
+            - PHOTOPRISM_DISABLE_TENSORFLOW=false
+            - PHOTOPRISM_DISABLE_FACES=false
+            - PHOTOPRISM_DISABLE_CLASSIFICATION=false
+            - PHOTOPRISM_DARKTABLE_PRESETS=false
+            - PHOTOPRISM_DETECT_NSFW=true
+            - PHOTOPRISM_UPLOAD_NSFW=true
+            - PHOTOPRISM_DATABASE_DRIVER=mysql
+            - PHOTOPRISM_DATABASE_SERVER=${PHOTO_DB_HOST}
+            - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
+            - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
+            - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
+            - PHOTOPRISM_SITE_URL=http://192.168.1.111:2343/
+            - PHOTOPRISM_SITE_TITLE=PhotoPrism
+            - PHOTOPRISM_SITE_CAPTION=Browse Your Life
+            - PHOTOPRISM_SITE_DESCRIPTION=Fotoooo's
+            - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
+            - PHOTOPRISM_UID=${UID}
+            - PHOTOPRISM_GID=${GID}
+            - PHOTOPRISM_UMASK=0000
+            - PHOTOPRISM_INIT=tensorflow-amd64-avx2
+            - PHOTOPRISM_FFMPEG_BUFFERS=64
+            - PHOTOPRISM_FFMPEG_BITRATE=64
+            - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
+            - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
+            - HOME=/mnt/vd0/data/nextcloud/Foto's Papa/photoprism
+        image: photoprism/photoprism:latest
+        restart: ${US}
+        ports:
+            - "2343:2342"
+        volumes:
+            - "/mnt/vd0/data/nextcloud/Foto's Papa:/photoprism/originals"
+            - "${CONFIG}/photoprism-pa:/photoprism/storage"
+        working_dir: "/mnt/vd0/data/nextcloud/Foto's Papa/photoprism"
