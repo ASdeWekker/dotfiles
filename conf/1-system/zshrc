@@ -16,7 +16,7 @@ source /home/alex/dotfiles/conf/1-system/.alias
 #source ~/.bin/tmuxinator.bash
 
 # export TERM for urxvt, neovim and ampy
-TERM=xterm-256color
+TERM=tmux-256color
 EDITOR=nvim
 VISUAL=nvim
 AMPY_PORT=/dev/ttyUSB0
