@@ -1,5 +1,6 @@
 """
 Check if there are updates and notify.
+File will be executed via cronjob.
 """
 
 
