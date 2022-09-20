@@ -17,8 +17,8 @@ chat_id = os.getenv("CHAT_ID")
 appr = apprise.Apprise()
 appr.add(f"tgram://{bot_token}/{chat_id}?silent=yes")
 
-cupdates = subprocess.run(["checkupdates"], capture_output=True)
-updates = int(subprocess.run(["wc", "-l"], input=cupdates.stdout, capture_output=True).stdout)
+pre_updates = subprocess.run(["checkupdates"], capture_output=True)
+updates = int(subprocess.run(["wc", "-l"], input=pre_updates.stdout, capture_output=True).stdout)
 print(updates)
 
 if updates == 1:
