@@ -22,6 +22,6 @@ updates = int(subprocess.run(["wc", "-l"], input=pre_updates.stdout, capture_out
 print(updates)
 
 if updates == 1:
-    appr.notify(body="There's 1 new update", title="Update")
+    appr.notify(body="Serge has 1 new update")
 elif updates > 0:
-    appr.notify(body=f"There are {updates} new updates", title="Updates")
+    appr.notify(body=f"Serge has {updates} new updates")
