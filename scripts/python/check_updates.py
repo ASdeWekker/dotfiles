@@ -15,7 +15,7 @@ load_dotenv()
 bot_token = os.getenv("BOT_TOKEN")
 chat_id = os.getenv("CHAT_ID")
 appr = apprise.Apprise()
-appr.add(f"tgram://{bot_token}/{chat_id}?silent=yes")
+appr.add(f"tgram://{bot_token}/{chat_id}")
 
 pre_updates = subprocess.run(["checkupdates"], capture_output=True)
 updates = int(subprocess.run(["wc", "-l"], input=pre_updates.stdout, capture_output=True).stdout)
