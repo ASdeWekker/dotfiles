@@ -246,6 +246,27 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
+    #Paperless NGX
+    paperless-ngx:
+        container_name: paperless-ngx
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - PAPERLESS_REDIS=
+            - PAPERLESS_DBHOST=
+            - USERMAP_UID=${UID}
+            - USERMAP_GID=${GID}
+        image: paperless-ngx:latest
+        ports:
+            - "8010:8000"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/paperless-ngx/data:/usr/src/paperless/data
+            - ${CONFIG}/paperless-ngx/media:/usr/src/paperless/media
+            - ${CONFIG}/paperless-ngx/export:/usr/src/paperless/export
+            - ${CONFIG}/paperless-ngx/consume:/usr/src/paperless/consume
+
     # Plex
     plex:
         container_name: plex
