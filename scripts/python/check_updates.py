@@ -22,11 +22,24 @@ appr = apprise.Apprise()
 appr.add(f"tgram://{bot_token}/{chat_id}")
 
 if host == "serge":
-    command = "checkupdates"
+    command = ["checkupdates"]
 elif host == "piet":
-    command = "aptitude search \"~U\""
+    command = ["apt-get",
+               "-q",
+               "-y",
+               "--ignore-hold",
+               "--allow-change-held-packages",
+               "--allow-unauthenticated",
+               "-s",
+               "dist-upgrade"]
 
-pre_updates = subprocess.run([command], capture_output=True)
+pre_updates = subprocess.run(command, capture_output=True)
+if host == "piet":
+    pre_updates = subprocess.run(
+        ["/bin/grep",  "^Inst"],
+        input=pre_updates.stdout,
+        capture_output=True
+    )
 updates = int(subprocess.run(
     ["wc", "-l"],
     input=pre_updates.stdout,
