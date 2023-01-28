@@ -126,7 +126,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - DB_TYPE={GITEA_DB_TYPE}
+            - DB_TYPE=${GITEA_DB_TYPE}
             - DB_HOST=${GITEA_DB_HOST}
             - DB_NAME=${GITEA_DB_DATABASE}
             - DB_USER=${GITEA_DB_USERNAME}
