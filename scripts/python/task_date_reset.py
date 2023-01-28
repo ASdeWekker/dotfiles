@@ -20,8 +20,6 @@ try:
 except Exception as error:
     print(error)
 
-# print(ids)
-
 for task_id in task_ids:
     try:
         update = api.update_task(task_id=task_id, due_string="Today")
