@@ -89,3 +89,20 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/valheim:/config
+    
+    # Valheim
+    valheim-server2:
+        container_name: valheim-server2
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - SERVER_NAME=${VLHM2_SERVER_NAME}
+            - WORLD_NAME=${VLHM2_WORLD_NAME}
+            - SERVER_PASS=${VLHM2_SERVER_PASS}
+        image: lloesche/valheim-server
+        ports:
+            - "2459-2461:2456-2458/udp"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/valheim2:/config
