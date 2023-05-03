@@ -8,3 +8,4 @@ bin/
 include/
 share/
 geckodriver.log
+.DS_Store
