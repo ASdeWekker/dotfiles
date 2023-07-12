@@ -105,7 +105,7 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
             - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
-        image: blakeblackshear/frigate:stable-amd64
+        image: ghcr.io/blakeblackshear/frigate:stable
         ports:
             - "5000:5000"
             - "1935:1935"
@@ -198,7 +198,7 @@ services:
             - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
             - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
             - REDIS_HOST=${NXTCLD_REDIS_HOST}
-        image: linuxserver/nextcloud:latest
+        image: linuxserver/nextcloud:26.0.2-ls246
         ports:
             - "3333:443"
         restart: ${US}
