@@ -306,6 +306,7 @@ services:
             - ${CONFIG}/plex:/config
             - /home/alex/downloads/plex/transcode:/transcode
             - /mnt/vd0/data/videos:/data
+            - /mnt/vd0/data/music:/music
         
     # Photoprism
     photoprism:
