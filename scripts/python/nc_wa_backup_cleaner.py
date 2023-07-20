@@ -1,5 +1,6 @@
 """
-This script will remove old WhatsApp backup that are uploaded to Nextcloud.
+    This script will remove old WhatsApp backups
+    that are uploaded to Nextcloud.
 """
 
 
@@ -13,5 +14,5 @@ def main():
     print(nc_wa_backup_path)
 
 
-if __name__ == "__main__":
+if __name__ is "__main__":
     main()
