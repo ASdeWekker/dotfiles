@@ -1,0 +1,13 @@
+#
+#  Extra .bashrc for Arch Linux
+#
+
+# default bashrc
+source ~/dotfiles/conf/1-system/.bashrcstd
+
+# alias
+source ~/dotfiles/conf/1-system/.alias
+source ~/dotfiles/conf/1-system/.alias-ubundu
+
+# Tmuxinator
+source ~/.bin/tmuxinator.bash
