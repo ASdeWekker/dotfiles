@@ -2,11 +2,10 @@
 #  Alias file for, you guessed it, aliases.
 #
 
-# alias for using pacman and yay
-alias i='yay -S'
-alias ui='sudo pacman -Rns'
-alias clean='sudo pacman -Sc;yay -Yc'
-alias updaats='yay'
+# vcgencmd stuff
+alias vctemp='/opt/vc/bin/vcgencmd measure_temp'
+alias wtemp='watch /opt/vc/bin/vcgencmd measure_temp'
+alias vccore='/opt/vc/bin/vcgencmd measure_clock'
 
 # some ls aliases
 alias ls='ls -hF --color=auto'
