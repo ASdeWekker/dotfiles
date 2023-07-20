@@ -43,12 +43,12 @@ alias willem='ssh willem'
 alias oscar='ssh oscar'
 
 # shortcut for checking systemctl status.
-alias syss='sudo systemctl' turned off because of ohmyzsh
+alias syss='sudo systemctl'
 
 # how to git gud and other helpful git things.
 alias git-gud='git push'
 alias gs='git status'
-#alias ga='git add -A' using the ga alias supplied by the ohmyzsh git plugin
+alias ga='git add -A'
 alias gc='git commit -m'
 alias gp='git pull'
 
@@ -83,11 +83,11 @@ alias cat='bat'
 alias catt='/usr/bin/cat'
 
 # libvirt and what not.
-alias suvi='sudo virsh'
-alias suviw1='sudo virsh start win10'
-alias suvil='sudo virsh list'
-alias suvid='sudo virsh destroy'
-alias suvip='sudo virsh poweroff'
+# alias suvi='sudo virsh'
+# alias suviw1='sudo virsh start win10'
+# alias suvil='sudo virsh list'
+# alias suvid='sudo virsh destroy'
+# alias suvip='sudo virsh poweroff'
 
 # suspend the system and then exit the ssh connection.
 # doei and doeii.
@@ -117,11 +117,11 @@ alias vim='nvim'
 alias vimm='/usr/bin/vim'
 
 # sublime text.
-alias subl='subl3'
+# alias subl='subl3'
 
 # new pm2 environments.
-alias pm2o='PM2_HOME=$HOME/.pm2o pm2'
-alias pm2p='PM2_HOME=$HOME/.pm2p pm2'
+# alias pm2o='PM2_HOME=$HOME/.pm2o pm2'
+# alias pm2p='PM2_HOME=$HOME/.pm2p pm2'
 
 # docker.
 alias dok='sudo docker'
@@ -131,21 +131,13 @@ alias ctop='sudo ctop'
 alias weer='curl wttr.in'
 
 # picocom.
-alias pico='picocom /dev/ttyUSB0 -b115200'
+# alias pico='picocom /dev/ttyUSB0 -b115200'
 
 # LEDje.
-alias ledon='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p on'
-alias ledoff='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p off'
-alias ledtog='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
-alias ledtoggle='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
-
-# echo the command for looking up service files
-alias qql='echo "sudo pacman -Qql package | grep -Fe .service -e .socket"'
-
-# vcgencmd stuff
-alias vctemp='/opt/vc/bin/vcgencmd measure_temp'
-alias wtemp='watch /opt/vc/bin/vcgencmd measure_temp'
-alias vccore='/opt/vc/bin/vcgencmd measure_clock'
+# alias ledon='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p on'
+# alias ledoff='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p off'
+# alias ledtog='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
+# alias ledtoggle='/bin/python /home/alex/dotfiles/scripts/python/ledstrip.py -p toggle'
 
 # make spotify bigger on my 4k monitor
-alias spotify='/usr/bin/spotify --force-device-scale-factor=1.5'
+# alias spotify='/usr/bin/spotify --force-device-scale-factor=1.5'
