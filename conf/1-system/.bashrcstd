@@ -4,7 +4,7 @@
 
 # source the tmuxinator and alias file
 source ~/.bin/tmuxinator.bash
-source ~/shn/.alias
+source ~/dotfiles/conf/1-system/.alias
 
 # function for easy git
 gitt () {
@@ -41,6 +41,3 @@ export TERM=xterm-256color
 # export neovim
 export EDITOR=nvim
 export VISUAL=nvim
-# ampy
-export AMPY_PORT=/dev/ttyUSB0
-export AMPY_BAUD=115200
