@@ -2,8 +2,7 @@
 #  Bashrc for Arch Linux on my Servertjih
 #
 
-# some exports
-export TERM=xterm-256color
+source ~/dotfiles/conf/1-system/.bashrcarch
 
 # Customize the prompt, this is not final.
 green="\[$(tput setaf 2)\]"

@@ -3,17 +3,7 @@
 #  Bashrc file for Arch Linux on the Raspberry Pi
 #
 
-# vcgencmd stuff
-alias vctemp='/opt/vc/bin/vcgencmd measure_temp'
-alias wtemp='watch /opt/vc/bin/vcgencmd measure_temp'
-alias vccore='/opt/vc/bin/vcgencmd measure_clock'
-
-# some exports
-# export TERM to use the rpi in urxvt
-export TERM=xterm-256color
-# visual and editor
-#export EDITOR=vim
-#export VISUAL=vim
+source ~/dotfiles/conf/1-system/.bashrcarch
 
 # customize the prompt
 green="\[$(tput setaf 2)\]"

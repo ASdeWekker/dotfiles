@@ -2,6 +2,8 @@
 #  Bashrc for Arch Linux on the Desktop x86/64
 #
 
+source ~/dotfiles/conf/1-system/.bashrcarch
+
 # customize the prompt
 green="\[$(tput setaf 2)\]"
 blue="\[$(tput setaf 4)\]"
