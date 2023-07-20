@@ -1,0 +1,10 @@
+#
+#  Alias file for, you guessed it, aliases.
+#  Specifically for Arch.
+#
+
+# alias for using pacman and yay
+alias i='yay -S'
+alias ui='sudo pacman -Rns'
+alias clean='sudo pacman -Sc;yay -Yc'
+alias updaats='yay'

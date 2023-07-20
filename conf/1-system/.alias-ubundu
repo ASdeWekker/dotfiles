@@ -1,0 +1,9 @@
+#
+#  Alias file for, you guessed it, aliases.
+#  Specifically for Arch.
+#
+
+# alias for using apt
+alias i='sudo apt install -y'
+alias ui='sudo apt purge -y'
+alias updaats='sudo apt update;sudo apt upgrade -y;sudo apt dist-upgrade -y;sudo apt autoclean -y;sudo apt autoremove -y'

@@ -1,8 +1,9 @@
 #
 #  Alias file for, you guessed it, aliases.
+#  Specifically for Fedora.
 #
 
-# alias for using pacman and yay
+# alias for using dnf.
 alias i='sudo dnf install'
 alias ui='sudo dnf remove'
 alias clean='sudo dnf clean'
