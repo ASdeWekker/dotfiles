@@ -331,7 +331,7 @@ services:
             - PHOTOPRISM_DISABLE_FACES=false
             - PHOTOPRISM_DISABLE_CLASSIFICATION=false
             - PHOTOPRISM_DARKTABLE_PRESETS=false
-            - PHOTOPRISM_DETECT_NSFW=true
+            - PHOTOPRISM_DETECT_NSFW=false
             - PHOTOPRISM_UPLOAD_NSFW=true
             - PHOTOPRISM_DATABASE_DRIVER=mysql
             - PHOTOPRISM_DATABASE_SERVER=${PHOTO_DB_HOST}
@@ -346,11 +346,12 @@ services:
             - PHOTOPRISM_UID=${UID}
             - PHOTOPRISM_GID=${GID}
             - PHOTOPRISM_UMASK=0000
-            - PHOTOPRISM_INIT=tensorflow-amd64-avx2
             - PHOTOPRISM_FFMPEG_BUFFERS=64
             - PHOTOPRISM_FFMPEG_BITRATE=64
-            - PHOTOPRISM_FFMPEG_ENCODER=h264_qsv
             - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
+            - PHOTOPRISM_FACE_CLUSTER_SCORE=5
+            - PHOTOPRISM_FACE_CLUSTER_CORE=1
+            - PHOTOPRISM_FACE_SCORE=5
             - HOME=/mnt/vd0/data/nextcloud/Photos/photoprism
         image: photoprism/photoprism:latest
         restart: ${US}
