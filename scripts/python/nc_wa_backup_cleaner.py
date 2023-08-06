@@ -14,5 +14,5 @@ def main():
     print(nc_wa_backup_path)
 
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     main()

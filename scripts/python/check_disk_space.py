@@ -52,5 +52,5 @@ def main():
             the download speed has been set to 500 KB/s")
 
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     main()
