@@ -198,7 +198,7 @@ services:
             - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
             - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
             - REDIS_HOST=${NXTCLD_REDIS_HOST}
-        image: linuxserver/nextcloud:26.0.2-ls246
+        image: linuxserver/nextcloud:27.0.1
         ports:
             - "3333:443"
         restart: ${US}
@@ -312,7 +312,7 @@ services:
     photoprism:
         container_name: photoprism
         devices:
-            - "/dev/dri/renderD128:/dev/dri/renderD128"
+            - "/dev/dri:/dev/dri"
         environment:
             - PUID=${UID}
             - PGID=${GID}
@@ -338,7 +338,7 @@ services:
             - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
             - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
             - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
-            - PHOTOPRISM_SITE_URL=http://192.168.1.111:2342/
+            - PHOTOPRISM_SITE_URL=http://serge.local:2342/
             - PHOTOPRISM_SITE_TITLE=PhotoPrism
             - PHOTOPRISM_SITE_CAPTION=Browse Your Life
             - PHOTOPRISM_SITE_DESCRIPTION=Fotoooo's
@@ -348,7 +348,8 @@ services:
             - PHOTOPRISM_UMASK=0000
             - PHOTOPRISM_FFMPEG_BUFFERS=64
             - PHOTOPRISM_FFMPEG_BITRATE=64
-            - PHOTOPRISM_INIT=intel-graphics tensorflow-amd64-avx2
+            - PHOTOPRISM_FFMPEG_ENCODER=intel
+            - PHOTOPRISM_INIT=intel tensorflow
             - PHOTOPRISM_FACE_CLUSTER_SCORE=5
             - PHOTOPRISM_FACE_CLUSTER_CORE=1
             - PHOTOPRISM_FACE_SCORE=5
