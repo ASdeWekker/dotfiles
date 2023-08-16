@@ -198,7 +198,7 @@ services:
             - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
             - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
             - REDIS_HOST=${NXTCLD_REDIS_HOST}
-        image: linuxserver/nextcloud:27.0.1
+        image: linuxserver/nextcloud:latest
         ports:
             - "3333:443"
         restart: ${US}
