@@ -54,6 +54,8 @@ def main():
         appr.notify(body=f"{host.capitalize()} has 1 new update 🥸")
     elif updates > 0:
         appr.notify(body=f"{host.capitalize()} has {updates} new updates 🥸")
+    elif updates == 0:
+        appr.notify(body="No new updates today 😢")
 
 
 if __name__ == "__main__":
