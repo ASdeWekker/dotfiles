@@ -1,8 +1,8 @@
 """
-Check if there are updates and notify.
-File will be executed via a cronjob.
+    Check if there are updates and notify.
+    File will be executed via a cronjob.
 
-Currently works on: serge, piet
+    Currently works on: serge, piet
 """
 
 
