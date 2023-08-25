@@ -6,20 +6,15 @@
 """
 
 
-import apprise
 import os
 import subprocess
-from dotenv import load_dotenv
+import sys
+# Service
+import services.telegram_apprise as telmes
 
 
-load_dotenv()
-
-bot_token = os.getenv("BOT_TOKEN")
-chat_id = os.getenv("CHAT_ID")
 host = os.uname()[1]
 command = ""
-appr = apprise.Apprise()
-appr.add(f"tgram://{bot_token}/{chat_id}")
 
 
 def main():
@@ -48,14 +43,14 @@ def main():
         capture_output=True
     ).stdout)
 
-    print(updates)
+    print(f"There is/are {updates} update(s) available.")
 
     if updates == 1:
-        appr.notify(body=f"{host.capitalize()} has 1 new update 🥸")
+        telmes.message(f"{host.capitalize()} has 1 new update 🥸")
     elif updates > 0:
-        appr.notify(body=f"{host.capitalize()} has {updates} new updates 🥸")
+        telmes.message(f"{host.capitalize()} has {updates} new updates 🥸")
     elif updates == 0:
-        appr.notify(body="No new updates today 😢")
+        telmes.message("No new updates today 😢")
 
 
 if __name__ == "__main__":
