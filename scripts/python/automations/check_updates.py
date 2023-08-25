@@ -8,7 +8,6 @@
 
 import os
 import subprocess
-import sys
 # Service
 import services.telegram_apprise as telmes
 
