@@ -7,6 +7,8 @@
 import os
 from dotenv import load_dotenv
 from todoist_api_python.api import TodoistAPI
+# Service
+import services.telegram_apprise as telmes
 
 
 load_dotenv()
@@ -28,6 +30,7 @@ def main():
             print(f"Task: {task_id} is updated")
         except Exception as error:
             print(error)
+    telmes.message("All the tasks have been updated!")
 
 
 if __name__ == "__main__":
