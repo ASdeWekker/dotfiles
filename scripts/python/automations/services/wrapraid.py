@@ -5,14 +5,15 @@
 """
 
 
-import os
+import subprocess
 
 
-snapraid = "snapraid"
+command = "snapraid status".split()
 
 
 def main():
-    print(snapraid)
+    proc = str(subprocess.run(command, capture_output=True).stdout).split("\\n")
+    print(proc[len(proc)-2])
 
 
 if __name__ == "__main__":
