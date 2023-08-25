@@ -20,24 +20,18 @@ def main():
     if host == "serge":
         command = ["checkupdates"]
     elif host == "piet":
-        command = ["apt-get",
-                "-q",
-                "-y",
-                "--ignore-hold",
-                "--allow-change-held-packages",
-                "--allow-unauthenticated",
-                "-s",
-                "dist-upgrade"]
+        command = "apt-get -q -y --ignore-hold --allow-change-held-packages \
+            --allow-unauthenticated -s dist-upgrade".split()
 
     pre_updates = subprocess.run(command, capture_output=True)
     if host == "piet":
         pre_updates = subprocess.run(
-            ["/bin/grep",  "^Inst"],
+            "/bin/grep ^Inst".split(),
             input=pre_updates.stdout,
             capture_output=True
         )
     updates = int(subprocess.run(
-        ["wc", "-l"],
+        "wc -l".split(),
         input=pre_updates.stdout,
         capture_output=True
     ).stdout)
