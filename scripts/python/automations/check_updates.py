@@ -12,19 +12,19 @@ import subprocess
 import services.telegram_apprise as telmes
 
 
-host = os.uname()[1]
+host = os.uname()[1].capitalize()
 command = ""
 
 
 def main():
-    if host == "serge":
+    if host == "Serge":
         command = ["checkupdates"]
-    elif host == "piet":
+    elif host == "Piet":
         command = "apt-get -q -y --ignore-hold --allow-change-held-packages \
             --allow-unauthenticated -s dist-upgrade".split()
 
     pre_updates = subprocess.run(command, capture_output=True)
-    if host == "piet":
+    if host == "Piet":
         pre_updates = subprocess.run(
             "/bin/grep ^Inst".split(),
             input=pre_updates.stdout,
@@ -39,11 +39,11 @@ def main():
     print(f"There is/are {updates} update(s) available.")
 
     if updates == 1:
-        telmes.message(f"{host.capitalize()} has 1 new update 🥸")
+        telmes.message(f"{host} has 1 new update 🥸")
     elif updates > 0:
-        telmes.message(f"{host.capitalize()} has {updates} new updates 🥸")
+        telmes.message(f"{host} has {updates} new updates 🥸")
     elif updates == 0:
-        telmes.message("No new updates today 😢")
+        telmes.message(f"No new updates for {host} today 😢")
 
 
 if __name__ == "__main__":
