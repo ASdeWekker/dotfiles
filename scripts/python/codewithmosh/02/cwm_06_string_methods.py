@@ -15,5 +15,6 @@ def main():
     print("pro" in course.upper())
     print("swift" not in course)
 
+
 if __name__ == "__main__":
     main()
