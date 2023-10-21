@@ -9,4 +9,4 @@ include/
 share/
 geckodriver.log
 .DS_Store
-Scripts/
+scripts/python/Scripts/
