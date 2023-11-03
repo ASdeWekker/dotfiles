@@ -11,3 +11,4 @@ geckodriver.log
 .DS_Store
 scripts/python/Scripts/
 __pycache__/
+*.pyc
