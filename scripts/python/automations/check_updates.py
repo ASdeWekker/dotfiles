@@ -17,7 +17,7 @@ command = ""
 
 
 def main():
-    if host == "Serge":
+    if host == "Serge" or host == "Arnold":
         command = ["checkupdates"]
     elif host == "Piet":
         command = "apt-get -q -y --ignore-hold --allow-change-held-packages \
