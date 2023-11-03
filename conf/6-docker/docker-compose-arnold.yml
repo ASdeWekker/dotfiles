@@ -1,0 +1,43 @@
+#                                            #
+# This is my docker compose file for Arnold. #
+#                                            #
+
+version: "3.9"
+
+# Services.
+services:
+
+    # Esphome
+    esphome:
+        container_name: esphome
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - USERNAME=${ESPHOME_USER}
+            - PASSWORD=${ESPHOME_PW}
+        image: ghcr.io/esphome/esphome:latest
+        ports:
+            - "6052:6052"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/esphome:/config
+            - /etc/localtime:/etc/localtime:ro
+
+    # Portainer
+    portainer:
+        command: -H unix:///var/run/docker.sock
+        container_name: portainer
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: portainer/portainer-ce:latest
+        ports:
+            - "9000:9000"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/portainer:/data
+            - /etc/localtime:/etc/localtime:ro
+            - /home/alex/.docker/shared:/shared
+            - /var/run/docker.sock:/var/run/docker.sock
