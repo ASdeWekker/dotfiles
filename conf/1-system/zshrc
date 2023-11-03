@@ -57,7 +57,7 @@ setprompt() {
 		p_host=' %F{yellow}%M'
 	elif [[ "$(hostname)" == "serge" ]]; then
 		p_host=' %F{green}%M'
-	elif [[ "$(hostname)" == "oscar" ]]; then
+	elif [[ "$(hostname)" == "arnold" ]]; then
 		p_host=' %F{cyan}%M'
 	else
 		p_host=' %M'
