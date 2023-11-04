@@ -16,7 +16,7 @@ services:
             - TZ=${TZ}
         image: linuxserver/bazarr:latest
         ports:
-        - "6767:6767"
+            - "6767:6767"
         restart: ${US}
         volumes:
             - ${CONFIG}/bazarr:/config
@@ -140,7 +140,7 @@ services:
             - ${CONFIG}/gitea:/data
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
-    
+
     # Grocy
     grocy:
         container_name: grocy
@@ -168,7 +168,7 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/homer/assets:/www/assets
-    
+
     # MotionEye
     motioneye:
         container_name: motioneye
@@ -238,7 +238,6 @@ services:
             - CRON=0 4 * * *
             - LOG_LEVEL=info
             - SELF_UPDATE=true
-            - IGNORE=mariadb
             - NOTIFIERS=${OUROBOROS_NOTIFIERS}
             - TZ=${TZ}
         image: pyouroboros/ouroboros:latest
@@ -307,7 +306,7 @@ services:
             - /home/alex/downloads/plex/transcode:/transcode
             - /mnt/vd0/data/videos:/data
             - /mnt/vd0/data/music:/music
-        
+
     # Photoprism
     photoprism:
         container_name: photoprism
@@ -363,7 +362,7 @@ services:
             - "/media/nextcloud/data/woekoe/files/InstantUpload:/photoprism/originals/nextcloud"
             - "${CONFIG}/photoprism:/photoprism/storage"
         working_dir: "/mnt/vd0/data/nextcloud/Photos/photoprism"
- 
+
     # Portainer
     portainer:
         command: -H unix:///var/run/docker.sock
@@ -491,7 +490,7 @@ services:
         volumes:
             - ${CONFIG}/tautulli:/config
             - ${CONFIG}/plex/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
-    
+
     # Tdarr
     tdarr:
         container_name: tdarr
