@@ -23,6 +23,7 @@ alias pp='cd /var/www/html/penp'
 alias dek='cd /var/www/html/kelder'
 alias ard='cd /home/alex/Arduino'
 alias cdd='cd /mnt/vd0/data'
+alias hdd='cd /mnt/hdd0/data'
 alias dot='cd /home/alex/dotfiles'
 
 # Starting services: pug, npm & compass.
@@ -40,6 +41,7 @@ alias aad='ssh aad'
 alias serge='ssh serge'
 alias willem='ssh willem'
 alias oscar='ssh oscar'
+alias arnold='ssh arnold'
 
 # shortcut for checking systemctl status.
 alias syss='sudo systemctl'
