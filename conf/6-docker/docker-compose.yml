@@ -46,10 +46,10 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - APP_URL=${BKSTCK_APP_URL}
-            - DB_HOST=${BKSTCK_DB_HOST}
+            - APP_URL=http://${SERVER}.local:6875
+            - DB_HOST=${IP}
             - DB_USER=${BKSTCK_DB_USER}
-            - DB_PASS=${BKSTCK_DB_PASS}
+            - DB_PASS=${PW}
             - DB_DATABASE=${BKSTCK_DB_DATABASE}
         image: linuxserver/bookstack:latest
         ports:
@@ -67,11 +67,11 @@ services:
             - TZ=${TZ}
             - APP_KEY=${FRFL_APP_KEY}
             - DB_CONNECTION=${FRFL_DB_CONNECTION}
-            - DB_HOST=${FRFL_DB_HOST}
+            - DB_HOST=${IP}
             - DB_PORT=${FRFL_DB_PORT}
             - DB_DATABASE=${FRFL_DB_DATABASE}
             - DB_USERNAME=${FRFL_DB_USERNAME}
-            - DB_PASSWORD=${FRFL_DB_PASSWORD}
+            - DB_PASSWORD=${PW}
         image: fireflyiii/core:latest
         ports:
             - "8082:8080"
@@ -104,7 +104,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PW}
+            - FRIGATE_RTSP_PASSWORD=${PW}
         image: ghcr.io/blakeblackshear/frigate:stable
         ports:
             - "5000:5000"
@@ -115,7 +115,7 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - ${CONFIG}/frigate/config.yml:/config/config.yml
-            - /home/alex/frigate/storage:/media/frigate
+            - /home/${USER}/frigate/storage:/media/frigate
 
     # Gitea
     gitea:
@@ -127,10 +127,10 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
             - DB_TYPE=${GITEA_DB_TYPE}
-            - DB_HOST=${GITEA_DB_HOST}
+            - DB_HOST=sql://${IP}:3306
             - DB_NAME=${GITEA_DB_DATABASE}
             - DB_USER=${GITEA_DB_USERNAME}
-            - DB_PASSWD=${GITEA_DB_PASSWORD}
+            - DB_PASSWD=${PW}
         image: gitea/gitea:latest
         ports:
             - "3000:3000"
@@ -191,13 +191,13 @@ services:
             - PUID=${UID}
             - GUID=${GID}
             - TZ=${TZ}
-            - MYSQL_PASSWORD=${NXTCLD_DB_PW}
+            - MYSQL_PASSWORD=${PW}
             - MYSQL_DATABASE=${NXTCLD_DB_NAME}
             - MYSQL_USER=${NXTCLD_DB_U}
-            - MYSQL_HOST=${NXTCLD_DB_HOST}
+            - MYSQL_HOST=${IP}
             - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
-            - NEXTCLOUD_ADMIN_PASSWORD=${NXTCLD_A_PW}
-            - REDIS_HOST=${NXTCLD_REDIS_HOST}
+            - NEXTCLOUD_ADMIN_PASSWORD=${PW}
+            - REDIS_HOST=${IP}
         image: linuxserver/nextcloud:latest
         ports:
             - "3333:443"
@@ -214,10 +214,10 @@ services:
             - PUID=${UID}
             - GUID=${GID}
             - TZ=${TZ}
-            - DB_MYSQL_HOST=${NPM_DB_HOST}
+            - DB_MYSQL_HOST=${IP}
             - DB_MYSQL_PORT=${NPM_DB_PORT}
             - DB_MYSQL_USER=${NPM_DB_USER}
-            - DB_MYSQL_PASSWORD=${NPM_DB_PW}
+            - DB_MYSQL_PASSWORD=${PW}
             - DB_MYSQL_NAME=${NPM_DB_NAME}
         image: jc21/nginx-proxy-manager:latest
         ports:
@@ -252,28 +252,28 @@ services:
     #         - PUID=${UID}
     #         - PGID=${GID}
     #         - TZ=${TZ}
-    #         - PAPERLESS_REDIS=${PPRLSS_REDIS}
-    #         # - PAPERLESS_DBHOST=mariadb
+    #         - PAPERLESS_REDIS=redis://${IP}
+    #         - PAPERLESS_DBHOST=mariadb
     #         - USERMAP_UID=${UID}
     #         - USERMAP_GID=${GID}
     #         - PAPERLESS_TIME_ZONE=${TZ}
     #         - PAPERLESS_DBUSER=${PPRLSS_DB_USER}
-    #         - PAPERLESS_DBPASS=${PPRLSS_DB_PW}
+    #         - PAPERLESS_DBPASS=${PW}
     #         - PAPERLESS_SECRET_KEY=${PPRLSS_SECRET_KEY}
     #         - PAPERLESS_AUTO_LOGIN_USERNAME=${PPRLSS_AUTO_LOGIN_USERNAME}
     #         - PAPERLESS_ADMIN_USER=${PPRLSS_ADMIN_USER}
     #         - PAPERLESS_ADMIN_MAIL=${PPRLSS_ADMIN_MAIL}
-    #         - PAPERLESS_ADMIN_PASSWORD=${PPRLSS_ADMIN_PW}
-    #         # - PAPERLESS_OCR_LANGUAGE=nld
-    #         # - PAPERLESS_OCR_LANGUAGES=eng
-    #         # - PAPERLESS_CONVERT_MEMORY_LIMIT=128
-    #         # - PAPERLESS_OPTIMIZE_THUMBNAILS=false
-    #         # - PAPERLESS_WEBSERVER_WORKERS=1
-    #         # - PAPERLESS_OCR_THREADS=1
-    #         # - PAPERLESS_TASK_WORKERS=1
-    #         # - PAPERLESS_THREADS_PER_WORKER=1
-    #         # - PAPERLESS_OCR_CLEAN=none
-    #         # - PAPERLESS_OCR_PAGES=2
+    #         - PAPERLESS_ADMIN_PASSWORD=${PW}
+    #         - PAPERLESS_OCR_LANGUAGE=nld
+    #         - PAPERLESS_OCR_LANGUAGES=eng
+    #         - PAPERLESS_CONVERT_MEMORY_LIMIT=128
+    #         - PAPERLESS_OPTIMIZE_THUMBNAILS=false
+    #         - PAPERLESS_WEBSERVER_WORKERS=1
+    #         - PAPERLESS_OCR_THREADS=1
+    #         - PAPERLESS_TASK_WORKERS=1
+    #         - PAPERLESS_THREADS_PER_WORKER=1
+    #         - PAPERLESS_OCR_CLEAN=none
+    #         - PAPERLESS_OCR_PAGES=2
     #     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     #     ports:
     #         - "8010:8000"
@@ -290,7 +290,7 @@ services:
         devices:
             - "/dev/dri:/dev/dri"
         environment:
-            - ADVERTISE_IP=http://192.168.1.111:32400/
+            - ADVERTISE_IP=http://${IP}:32400/
             - PLEX_UID=${UID}
             - PLEX_GID=${GID}
             - TZ=${TZ}
@@ -303,7 +303,7 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/plex:/config
-            - /home/alex/downloads/plex/transcode:/transcode
+            - /home/${USER}/downloads/plex/transcode:/transcode
             - /mnt/vd0/data/videos:/data
             - /mnt/vd0/data/music:/music
 
@@ -316,7 +316,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - PHOTOPRISM_ADMIN_PASSWORD=${PHOTO_ADMIN_PW}
+            - PHOTOPRISM_ADMIN_PASSWORD=${PW}
             - PHOTOPRISM_ORIGINALS_LIMIT=00
             - PHOTOPRISM_HTTP_COMPRESSION=gzip
             - PHOTOPRISM_DEBUG=false
@@ -333,15 +333,15 @@ services:
             - PHOTOPRISM_DETECT_NSFW=false
             - PHOTOPRISM_UPLOAD_NSFW=true
             - PHOTOPRISM_DATABASE_DRIVER=mysql
-            - PHOTOPRISM_DATABASE_SERVER=${PHOTO_DB_HOST}
+            - PHOTOPRISM_DATABASE_SERVER=${IP}:3306
             - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
             - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
-            - PHOTOPRISM_DATABASE_PASSWORD=${PHOTO_DB_PW}
-            - PHOTOPRISM_SITE_URL=http://serge.local:2342/
+            - PHOTOPRISM_DATABASE_PASSWORD=${PW}
+            - PHOTOPRISM_SITE_URL=http://${SERVER}.local:2342/
             - PHOTOPRISM_SITE_TITLE=PhotoPrism
             - PHOTOPRISM_SITE_CAPTION=Browse Your Life
             - PHOTOPRISM_SITE_DESCRIPTION=Fotoooo's
-            - PHOTOPRISM_SITE_AUTHOR=Alex de Wekker
+            - PHOTOPRISM_SITE_AUTHOR=${USER} de Wekker
             - PHOTOPRISM_UID=${UID}
             - PHOTOPRISM_GID=${GID}
             - PHOTOPRISM_UMASK=0000
@@ -378,7 +378,7 @@ services:
         volumes:
             - ${CONFIG}/portainer:/data
             - /etc/localtime:/etc/localtime:ro
-            - /home/alex/.docker/shared:/shared
+            - /home/${USER}/.docker/shared:/shared
             - /var/run/docker.sock:/var/run/docker.sock
 
     # Prowlarr
@@ -416,7 +416,7 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/qbittorrent:/config
-            - /home/alex/downloads/qbittorrentvpn:/downloads
+            - /home/${USER}/downloads/qbittorrentvpn:/downloads
 
     # Radarr
     radarr:
@@ -432,7 +432,7 @@ services:
         volumes:
             - ${CONFIG}/radarr:/config
             - /mnt/vd0/data/videos:/movies
-            - /home/alex/downloads/qbittorrentvpn:/downloads
+            - /home/${USER}/downloads/qbittorrentvpn:/downloads
 
     # Scrutiny
     scrutiny:
@@ -474,7 +474,7 @@ services:
         volumes:
             - ${CONFIG}/sonarr:/config
             - /mnt/vd0/data/videos:/tv
-            - /home/alex/downloads/qbittorrentvpn:/downloads
+            - /home/${USER}/downloads/qbittorrentvpn:/downloads
 
     # Tautulli
     tautulli:
@@ -500,11 +500,11 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - serverIP=192.168.1.111
+            - serverIP=${IP}
             - serverPort=8266
             - webUIPort=8265
             - internalNode=true
-            - nodeID=SergeNode
+            - nodeID=${SERVER}Node
         image: haveagitgat/tdarr:latest
         ports:
             - "8265:8265"
