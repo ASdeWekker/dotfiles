@@ -14,8 +14,8 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - USERNAME=${ESPHOME_USER}
-            - PASSWORD=${ESPHOME_PW}
+            - USERNAME=${USER}
+            - PASSWORD=${PW}
         image: ghcr.io/esphome/esphome:latest
         ports:
             - "6052:6052"
@@ -23,6 +23,43 @@ services:
         volumes:
             - ${CONFIG}/esphome:/config
             - /etc/localtime:/etc/localtime:ro
+
+    # Nextcloud
+    nextcloud:
+        container_name: nextcloud
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - MYSQL_PASSWORD=${PW}
+            - MYSQL_DATABASE=${NXTCLD_DB_NAME}
+            - MYSQL_USER=${NXTCLD_DB_U}
+            - MYSQL_HOST=${IP}
+            - NEXTCLOUD_ADMIN_USER=${USER}
+            - NEXTCLOUD_ADMIN_PASSWORD=${PW}
+            - REDIS_HOST=${IP}
+        image: linuxserver/nextcloud:latest
+        ports:
+            - "3333:443"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/nextcloud:/config
+            - /mnt/vd0/data/nextcloud:/data
+
+    # Ouroboros
+    ouroboros:
+        container_name: ouroboros
+        environment:
+            - CLEANUP=true
+            - CRON=0 4 * * *
+            - LOG_LEVEL=info
+            - SELF_UPDATE=true
+            - NOTIFIERS=${OUROBOROS_NOTIFIERS}
+            - TZ=${TZ}
+        image: pyouroboros/ouroboros:latest
+        restart: ${US}
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
 
     # Portainer
     portainer:
