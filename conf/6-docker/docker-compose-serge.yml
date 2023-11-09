@@ -305,7 +305,8 @@ services:
             - ${CONFIG}/plex:/config
             - /home/${USER}/downloads/plex/transcode:/transcode
             - /mnt/vd0/data/videos:/data
-            - /mnt/vd0/data/music:/music
+            - /media/arnold/ssd-data/videos:/arnold-videos
+            - /media/arnold/ssd-data/music:/arnold-music
 
     # Photoprism
     photoprism:
