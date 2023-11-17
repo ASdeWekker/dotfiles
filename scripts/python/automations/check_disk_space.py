@@ -14,50 +14,82 @@ import services.telegram_apprise as telmes
 load_dotenv()
 
 
+url = f"http://{os.uname()[1]}.local:8080/api/v2"
+headers = {"Referer": url}
+
+
 def redis_init():
     """ Initialize Redis and set some variables. """
 
     print("initialize redis")
+
 
 def qbit_get_auth_cookie():
     """ Get the cookie used to authenticate future qbit Api requests. """
 
     user = os.getenv("QBIT_USER")
     pw = os.getenv("QBIT_PASS")
-    url = f"http://{os.uname()[1]}.local:8080"
-
-    print(url) # redis_init()
 
     res = req.post(
-        url=f"{url}/api/v2/auth/login",
+        url=f"{url}/auth/login",
         data={"username": user, "password": pw},
-        headers={"Referer": url}
+        headers=headers
     )
-    print(f"{url}/api/v2/auth/login")
-    return res.headers["set-cookie"].split(";")[0].split("=")[1]
+
+    if res.status_code == 200:
+        print("Logged in!")
+        return res.headers["set-cookie"].split(";")[0].split("=")[1]
+    else:
+        print("Something went wrong while trying to login.")
+
+
+def logout():
+    """ Logout once everything is done. """
+
+    cookies = {"SID": qbit_get_auth_cookie()}
+
+    res = req.post(
+        url=f"{url}/auth/logout",
+        headers=headers,
+        cookies=cookies
+    )
+
+    if res.status_code == 200:
+        print("Logged out again.")
+    else:
+        print("Something went wrong while logging out.")
 
 
 def main():
     """ Everything comes together. """
 
-    min_space = 50 # Minimum amount of space that's acceptable
+    min_space = 50  # Minimum amount of space that's acceptable in GB.
+    speed_limit = 500  # The imposed speedlimit in KB/s.
     space_left = round(psutil.disk_usage("/")[2] / 1024 / 1024 / 1024)
-    
-    print(space_left)
 
-    qbit_cookie = qbit_get_auth_cookie()
-    print(qbit_cookie)
+    if space_left < min_space:
+        cookies = {"SID": qbit_get_auth_cookie()}
 
-    # if space_left < min_space:
-    #     qbit_cookie = qbit_get_auth_cookie()
+        res = req.post(
+            url=f"{url}/transfer/setDownloadLimit",
+            data={"limit": speed_limit * 1024},
+            headers=headers,
+            cookies=cookies
+        )
 
-    #     res = req.post()
-        
-    #     print(f"Not enough space available: {space_left}GB")
-    #     telmes.message(f"Serge has less than {min_space}GB available, \
-    #         the download speed has been set to 500 KB/s")
-    # else:
-    #     print(f"Enough space available: {space_left}GB")
+        if res.status_code == 200:
+            print(f"Not enough space available: {space_left}GB, "
+                  f"limit is set to {min_space}GB.")
+            telmes.message(f"Serge has less than {min_space}GB available, "
+                           f"limit is set to {min_space}GB. The download "
+                           f"speed has been set to {speed_limit} KB/s.")
+        else:
+            print("Something went wrong :(")
+            telmes.message("Something went wrong while trying to limit the "
+                           "download speed.")
+    else:
+        print(f"Enough space available: {space_left}GB, "
+              f"limit is set to {min_space}GB.")
 
 
 if __name__ == "__main__":
