@@ -24,6 +24,20 @@ services:
             - ${CONFIG}/esphome:/config
             - /etc/localtime:/etc/localtime:ro
 
+    # Homer
+    homer:
+        container_name: homer
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+        image: b4bz/homer:latest
+        ports:
+            - "9009:8080"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/homer/assets:/www/assets
+
     # Nextcloud
     nextcloud:
         container_name: nextcloud
@@ -60,6 +74,60 @@ services:
         restart: ${US}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+
+    # Photoprism
+    photoprism:
+        container_name: photoprism
+        devices:
+            - "/dev/dri:/dev/dri"
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - PHOTOPRISM_ADMIN_PASSWORD=${PW}
+            - PHOTOPRISM_ORIGINALS_LIMIT=00
+            - PHOTOPRISM_HTTP_COMPRESSION=gzip
+            - PHOTOPRISM_DEBUG=false
+            - PHOTOPRISM_PUBLIC=false
+            - PHOTOPRISM_READONLY=false
+            - PHOTOPRISM_EXPERIMENTAL=false
+            - PHOTOPRISM_DISABLE_CHOWN=false
+            - PHOTOPRISM_DISABLE_WEBDAV=false
+            - PHOTOPRISM_DISABLE_SETTINGS=false
+            - PHOTOPRISM_DISABLE_TENSORFLOW=false
+            - PHOTOPRISM_DISABLE_FACES=false
+            - PHOTOPRISM_DISABLE_CLASSIFICATION=false
+            - PHOTOPRISM_DARKTABLE_PRESETS=false
+            - PHOTOPRISM_DETECT_NSFW=false
+            - PHOTOPRISM_UPLOAD_NSFW=true
+            - PHOTOPRISM_DATABASE_DRIVER=mysql
+            - PHOTOPRISM_DATABASE_SERVER=${IP}:3306
+            - PHOTOPRISM_DATABASE_NAME=${PHOTO_DB_NAME}
+            - PHOTOPRISM_DATABASE_USER=${PHOTO_DB_U}
+            - PHOTOPRISM_DATABASE_PASSWORD=${PW}
+            - PHOTOPRISM_SITE_URL=http://${SERVER}.local:2342/
+            - PHOTOPRISM_SITE_TITLE=PhotoPrism
+            - PHOTOPRISM_SITE_CAPTION=Browse Your Life
+            - PHOTOPRISM_SITE_DESCRIPTION=Fotoooo's
+            - PHOTOPRISM_SITE_AUTHOR=${USER} de Wekker
+            - PHOTOPRISM_UID=${UID}
+            - PHOTOPRISM_GID=${GID}
+            - PHOTOPRISM_UMASK=0000
+            - PHOTOPRISM_FFMPEG_BUFFERS=64
+            - PHOTOPRISM_FFMPEG_BITRATE=64
+            - PHOTOPRISM_FFMPEG_ENCODER=intel
+            - PHOTOPRISM_INIT=intel tensorflow
+            - PHOTOPRISM_FACE_CLUSTER_SCORE=5
+            - PHOTOPRISM_FACE_CLUSTER_CORE=1
+            - PHOTOPRISM_FACE_SCORE=5
+            - HOME=/mnt/vd0/data/nextcloud/alex/files
+        image: photoprism/photoprism:latest
+        restart: ${US}
+        ports:
+            - "2342:2342"
+        volumes:
+            - "/mnt/vd0/data/nextcloud/alex/files/InstantUpload:/photoprism/originals/nextcloud"
+            - "${CONFIG}/photoprism:/photoprism/storage"
 
     # Portainer
     portainer:
