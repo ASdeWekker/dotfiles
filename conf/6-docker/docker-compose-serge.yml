@@ -98,8 +98,7 @@ services:
     frigate:
         container_name: frigate
         devices:
-            # - /dev/bus/usb:/dev/bus/usb # usb coral
-            - /dev/dri/renderD128
+            - /dev/bus/usb:/dev/bus/usb # usb coral
         environment:
             - PUID=${UID}
             - PGID=${GID}
