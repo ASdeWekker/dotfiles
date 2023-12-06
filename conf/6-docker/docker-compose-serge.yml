@@ -32,7 +32,7 @@ services:
             - TZ=${TZ}
             - LOG_FILE=/data/bitwarden.log
             - SIGNUPS_ALLOWED=true
-        image: bitwardenrs/server:latest
+        image: vaultwarden/server:latest
         ports:
             - "8000:80"
         restart: ${US}
