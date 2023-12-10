@@ -1,0 +1,26 @@
+Dotfiles directory structure
+
+.
+├── archive
+│   └── debian
+│       └── ubundu
+├── conf
+│   ├── 0-original
+│   ├── 1-system
+│   ├── 2-misc
+│   │   └── gimp
+│   ├── 3-web
+│   ├── 4-vfio
+│   │   └── vfioinput
+│   ├── 5-tmux
+│   ├── 6-docker
+│   └── apps
+└── scripts
+    ├── bash
+    ├── python
+    │   ├── archive
+    │   ├── automations
+    │   │   └── services
+    │   └── requirements
+    └── services
+
