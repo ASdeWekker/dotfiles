@@ -39,8 +39,29 @@ def qbit_get_auth_cookie():
     if res.status_code == 200:
         print("Logged in!")
         return res.headers["set-cookie"].split(";")[0].split("=")[1]
-    else:
-        print("Something went wrong while trying to login.")
+    print("Something went wrong while trying to login.")
+
+
+def torrent_list(filters, sort, reverse):
+    """ Get a list of all the torrents currently in Qbit. """
+
+    cookies = {"SID": qbit_get_auth_cookie()}
+    params = {
+        "filter": filters,
+        "sort": sort,
+        "reverse": reverse,
+    }
+
+    res = req.get(
+        url=f"{url}/torrents/info",
+        headers=headers,
+        cookies=cookies,
+        params=params
+    )
+
+    if res.status_code == 200:
+        print("Picked up a list of all the current torrents")
+        return res
 
 
 def logout():
@@ -69,25 +90,38 @@ def main():
 
     if space_left < min_space:
         cookies = {"SID": qbit_get_auth_cookie()}
+        torrents = torrent_list("all", "ratio", "false")
+        params = {
+            "hashes": [torrent["hash"] for torrent in torrents].join("|"),
+            "limit": speed_limit * 1024,
+        }
 
+        # for torrent in torrents:
         res = req.post(
-            url=f"{url}/transfer/setDownloadLimit",
-            data={"limit": speed_limit * 1024},
+            url=f"{url}/torrents",
             headers=headers,
-            cookies=cookies
+            cookies=cookies,
+            params=params
         )
 
-        if res.status_code == 200:
+        # res = req.post(
+        #     url=f"{url}/transfer/setDownloadLimit",
+        #     data={"limit": speed_limit * 1024},
+        #     headers=headers,
+        #     cookies=cookies
+        # )
+
+        if res.status_code == 200:  # Not enough space.
             print(f"Not enough space available: {space_left}GB, "
                   f"limit is set to {min_space}GB.")
             telmes.message(f"Serge has less than {min_space}GB available, "
                            f"limit is set to {min_space}GB. The download "
                            f"speed has been set to {speed_limit} KB/s.")
-        else:
+        else:  # Something went wrong limiting the speed.
             print("Something went wrong :(")
             telmes.message("Something went wrong while trying to limit the "
                            "download speed.")
-    else:
+    else:  # Enough space available.
         print(f"Enough space available: {space_left}GB, "
               f"limit is set to {min_space}GB.")
 
