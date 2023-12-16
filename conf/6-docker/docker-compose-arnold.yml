@@ -75,6 +75,45 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
+    # Paperless NGX
+    # paperless-ngx:
+    #     container_name: paperless-ngx
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - PAPERLESS_REDIS=redis://${IP}
+    #         - PAPERLESS_DBHOST=mariadb
+    #         - USERMAP_UID=${UID}
+    #         - USERMAP_GID=${GID}
+    #         - PAPERLESS_TIME_ZONE=${TZ}
+    #         - PAPERLESS_DBUSER=${PPRLSS_DB_USER}
+    #         - PAPERLESS_DBPASS=${PW}
+    #         - PAPERLESS_SECRET_KEY=${PPRLSS_SECRET_KEY}
+    #         - PAPERLESS_AUTO_LOGIN_USERNAME=${PPRLSS_AUTO_LOGIN_USERNAME}
+    #         - PAPERLESS_ADMIN_USER=${PPRLSS_ADMIN_USER}
+    #         - PAPERLESS_ADMIN_MAIL=${PPRLSS_ADMIN_MAIL}
+    #         - PAPERLESS_ADMIN_PASSWORD=${PW}
+    #         - PAPERLESS_OCR_LANGUAGE=nld
+    #         - PAPERLESS_OCR_LANGUAGES=eng
+    #         - PAPERLESS_CONVERT_MEMORY_LIMIT=128
+    #         - PAPERLESS_OPTIMIZE_THUMBNAILS=false
+    #         - PAPERLESS_WEBSERVER_WORKERS=1
+    #         - PAPERLESS_OCR_THREADS=1
+    #         - PAPERLESS_TASK_WORKERS=1
+    #         - PAPERLESS_THREADS_PER_WORKER=1
+    #         - PAPERLESS_OCR_CLEAN=none
+    #         - PAPERLESS_OCR_PAGES=2
+    #     image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    #     ports:
+    #         - "8010:8000"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/paperless-ngx/data:/usr/src/paperless/data
+    #         - ${CONFIG}/paperless-ngx/media:/usr/src/paperless/media
+    #         - ${CONFIG}/paperless-ngx/export:/usr/src/paperless/export
+    #         - ${CONFIG}/paperless-ngx/consume:/usr/src/paperless/consume
+
     # Photoprism
     photoprism:
         container_name: photoprism
