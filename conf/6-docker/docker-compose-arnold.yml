@@ -185,3 +185,24 @@ services:
             - /etc/localtime:/etc/localtime:ro
             - /home/alex/.docker/shared:/shared
             - /var/run/docker.sock:/var/run/docker.sock
+
+    # Scrutiny
+    scrutiny:
+        cap_add:
+            - SYS_RAWIO
+        container_name: scrutiny
+        devices:
+            - /dev/sdb:/dev/sdb
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: ghcr.io/analogj/scrutiny:master-omnibus
+        ports:
+            - "8088:8080"
+            - "8086:8086"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/scrutiny:/opt/scrutiny/config
+            - ${CONFIG}/scrutiny/influxdb:/opt/scrutiny/influxdb
+            - /run/udev:/run/udev:ro
