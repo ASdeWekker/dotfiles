@@ -15,7 +15,6 @@ load_dotenv()
 
 
 url = f"http://{os.uname()[1]}.local:8080/api/v2"
-headers = {"Referer": url}
 
 
 def redis_init():
@@ -29,6 +28,8 @@ def qbit_get_auth_cookie():
 
     user = os.getenv("QBIT_USER")
     pw = os.getenv("QBIT_PASS")
+
+    headers = {"Referer": url}
 
     res = req.post(
         url=f"{url}/auth/login",
@@ -45,7 +46,7 @@ def qbit_get_auth_cookie():
 def torrent_list(filters, sort, reverse):
     """ Get a list of all the torrents currently in Qbit. """
 
-    cookies = {"SID": qbit_get_auth_cookie()}
+    # cookies = {"SID": qbit_get_auth_cookie()}
     params = {
         "filter": filters,
         "sort": sort,
@@ -54,25 +55,24 @@ def torrent_list(filters, sort, reverse):
 
     res = req.get(
         url=f"{url}/torrents/info",
-        headers=headers,
-        cookies=cookies,
+        # headers=headers,
+        cookies={"SID": qbit_get_auth_cookie()},
         params=params
     )
 
     if res.status_code == 200:
-        print("Picked up a list of all the current torrents")
-        return res
+        return res.json()
 
 
 def logout():
     """ Logout once everything is done. """
 
-    cookies = {"SID": qbit_get_auth_cookie()}
+    # cookies = {"SID": qbit_get_auth_cookie()}
 
     res = req.post(
         url=f"{url}/auth/logout",
-        headers=headers,
-        cookies=cookies
+        # headers=headers,
+        cookies={"SID": qbit_get_auth_cookie()}
     )
 
     if res.status_code == 200:
@@ -84,21 +84,27 @@ def logout():
 def main():
     """ Everything comes together. """
 
-    min_space = 50  # Minimum amount of space that's acceptable in GB.
+    min_space = 150  # Minimum amount of space that's acceptable in GB.
     speed_limit = 500  # The imposed speedlimit in KB/s.
     space_left = round(psutil.disk_usage("/")[2] / 1024 / 1024 / 1024)
+
+    # torrents = torrent_list("all", "ratio", "false")
 
     if space_left < min_space:
         cookies = {"SID": qbit_get_auth_cookie()}
         torrents = torrent_list("all", "ratio", "false")
         params = {
-            "hashes": [torrent["hash"] for torrent in torrents].join("|"),
+            # "hashes": [torrent["hash"] for torrent in torrents].join("|"),
+            "hashes": "|".join([torrent["hash"] for torrent in torrents]),
             "limit": speed_limit * 1024,
+        }
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
         }
 
         # for torrent in torrents:
         res = req.post(
-            url=f"{url}/torrents",
+            url=f"{url}/torrents/setDownloadLimit",
             headers=headers,
             cookies=cookies,
             params=params
@@ -119,11 +125,14 @@ def main():
                            f"speed has been set to {speed_limit} KB/s.")
         else:  # Something went wrong limiting the speed.
             print("Something went wrong :(")
+            print(res.status_code)
             telmes.message("Something went wrong while trying to limit the "
                            "download speed.")
     else:  # Enough space available.
         print(f"Enough space available: {space_left}GB, "
               f"limit is set to {min_space}GB.")
+
+    logout()
 
 
 if __name__ == "__main__":
