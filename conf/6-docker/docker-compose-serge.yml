@@ -154,20 +154,6 @@ services:
         volumes:
             - ${CONFIG}/grocy:/config
 
-    # Homer
-    homer:
-        container_name: homer
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-        image: b4bz/homer:latest
-        ports:
-            - "9009:8080"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/homer/assets:/www/assets
-
     # MotionEye
     motioneye:
         container_name: motioneye
