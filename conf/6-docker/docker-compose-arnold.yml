@@ -192,7 +192,10 @@ services:
             - SYS_RAWIO
         container_name: scrutiny
         devices:
+            - /dev/sda:/dev/sda
             - /dev/sdb:/dev/sdb
+            - /dev/nvme0n1:/dev/nvme0n1
+            - /dev/nvme1n1:/dev/nvme1n1
         environment:
             - PUID=${UID}
             - PGID=${GID}
