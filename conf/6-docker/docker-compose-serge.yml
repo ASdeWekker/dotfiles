@@ -169,29 +169,6 @@ services:
         volumes:
             - ${CONFIG}/motioneye:/config
 
-    # Nextcloud
-    nextcloud:
-        container_name: nextcloud
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - MYSQL_PASSWORD=${PW}
-            - MYSQL_DATABASE=${NXTCLD_DB_NAME}
-            - MYSQL_USER=${NXTCLD_DB_U}
-            - MYSQL_HOST=${IP}
-            - NEXTCLOUD_ADMIN_USER=${NXTCLD_A_U}
-            - NEXTCLOUD_ADMIN_PASSWORD=${PW}
-            - REDIS_HOST=${IP}
-        image: linuxserver/nextcloud:latest
-        ports:
-            - "3333:443"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/nextcloud:/config
-            - /media/nextcloud/data:/data
-            - /mnt/vd0/data/nextcloud:/mrgrfsdata
-
     # Nginx proxy manager
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
