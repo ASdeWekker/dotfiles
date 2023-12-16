@@ -183,7 +183,7 @@ services:
         volumes:
             - ${CONFIG}/portainer:/data
             - /etc/localtime:/etc/localtime:ro
-            - /home/alex/.docker/shared:/shared
+            - ${CONFIG}/../shared:/shared
             - /var/run/docker.sock:/var/run/docker.sock
 
     # Scrutiny
