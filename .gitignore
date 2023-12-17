@@ -9,6 +9,7 @@ include/
 share/
 geckodriver.log
 .DS_Store
+._.DS_Store
 scripts/python/Scripts/
 __pycache__/
 *.pyc
