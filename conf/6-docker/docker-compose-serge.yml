@@ -39,25 +39,6 @@ services:
         volumes:
             - ${CONFIG}/bitwarden:/data
 
-    # Bookstack
-    bookstack:
-        container_name: bookstack
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - APP_URL=http://${SERVER}.local:6875
-            - DB_HOST=${IP}
-            - DB_USER=${BKSTCK_DB_USER}
-            - DB_PASS=${PW}
-            - DB_DATABASE=${BKSTCK_DB_DATABASE}
-        image: linuxserver/bookstack:latest
-        ports:
-            - "6875:80"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/bookstack:/config
-
     # Firefly
     firefly:
         container_name: firefly
