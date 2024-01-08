@@ -39,41 +39,28 @@ services:
         volumes:
             - ${CONFIG}/bitwarden:/data
 
-    # Firefly
-    firefly:
-        container_name: firefly
+    # Frigate
+    frigate:
+        container_name: frigate
+        devices:
+            - /dev/apex_0:/dev/apex_0
+            - /dev/dri/renderD128
         environment:
             - PUID=${UID}
-            - GUID=${GID}
+            - PGID=${GID}
             - TZ=${TZ}
-            - APP_KEY=${FRFL_APP_KEY}
-            - DB_CONNECTION=${FRFL_DB_CONNECTION}
-            - DB_HOST=${IP}
-            - DB_PORT=${FRFL_DB_PORT}
-            - DB_DATABASE=${FRFL_DB_DATABASE}
-            - DB_USERNAME=${FRFL_DB_USERNAME}
-            - DB_PASSWORD=${PW}
-        image: fireflyiii/core:latest
+            - FRIGATE_RTSP_PASSWORD=${PW}
+        image: ghcr.io/blakeblackshear/frigate:stable
         ports:
-            - "8082:8080"
+            - "5000:5000"
+            - "1935:1935"
+        privileged: true
         restart: ${US}
+        shm_size: "128mb"
         volumes:
-            - ${CONFIG}/firefly/upload:/var/www/html/storage/upload
-
-    #Firefly Data Importer
-    firefly-di:
-        container_name: firefly-di
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - FIREFLY_III_ACCESS_TOKEN=${FRFL_ACCESS_TOKEN}
-            - NORDIGEN_ID=${FRFL_NRDGN_ID}
-            - NORDIGEN_KEY=${FRFL_NRDGN_KEY}
-        image: fireflyiii/data-importer:latest
-        ports:
-            - "8083:8080"
-        restart: ${US}
+            - /etc/localtime:/etc/localtime:ro
+            - ${CONFIG}/frigate/config.yml:/config/config.yml
+            - /home/${USER}/frigate/storage:/media/frigate
 
     # Gitea
     gitea:
