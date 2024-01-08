@@ -43,28 +43,6 @@ services:
             - ${CONFIG}/esphome:/config
             - /etc/localtime:/etc/localtime:ro
 
-    # Frigate
-    frigate:
-        container_name: frigate
-        devices:
-            - /dev/bus/usb:/dev/bus/usb # usb coral
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - FRIGATE_RTSP_PASSWORD=${PW}
-        image: ghcr.io/blakeblackshear/frigate:stable
-        ports:
-            - "5000:5000"
-            - "1935:1935"
-        privileged: true
-        restart: ${US}
-        shm_size: "128mb"
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - ${CONFIG}/frigate/config.yml:/config/config.yml
-            - /home/${USER}/frigate/storage:/media/frigate
-
     # Homer
     homer:
         container_name: homer
