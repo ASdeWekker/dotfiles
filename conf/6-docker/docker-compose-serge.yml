@@ -62,30 +62,6 @@ services:
             - ${CONFIG}/frigate/config.yml:/config/config.yml
             - /home/${USER}/frigate/storage:/media/frigate
 
-    # Gitea
-    gitea:
-        container_name: gitea
-        environment:
-            - USER_UID=${UID}
-            - USER_GID=${GID}
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - DB_TYPE=${GITEA_DB_TYPE}
-            - DB_HOST=sql://${IP}:3306
-            - DB_NAME=${GITEA_DB_DATABASE}
-            - DB_USER=${GITEA_DB_USERNAME}
-            - DB_PASSWD=${PW}
-        image: gitea/gitea:latest
-        ports:
-            - "3000:3000"
-            - "222:22"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/gitea:/data
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-
     # Grocy
     grocy:
         container_name: grocy
