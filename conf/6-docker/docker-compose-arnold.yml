@@ -46,8 +46,8 @@ services:
     # Frigate
     frigate:
         container_name: frigate
-            #devices:
-            #- /dev/bus/usb:/dev/bus/usb # usb coral
+        devices:
+            - /dev/bus/usb:/dev/bus/usb # usb coral
         environment:
             - PUID=${UID}
             - PGID=${GID}
