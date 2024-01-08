@@ -100,21 +100,6 @@ services:
         volumes:
             - ${CONFIG}/grocy:/config
 
-    # MotionEye
-    motioneye:
-        container_name: motioneye
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TIMEZONE=${TZ}
-        hostname: motioneye
-        image: jshridha/motioneye:latest
-        ports:
-            - "8765:8765"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/motioneye:/config
-
     # Nginx proxy manager
     nginx-proxy-manager:
         container_name: nginx-proxy-manager
