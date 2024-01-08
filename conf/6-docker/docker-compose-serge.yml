@@ -20,8 +20,7 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/bazarr:/config
-            - /mnt/vd0/data/videos/movies:/movies
-            - /mnt/vd0/data/videos/series:/tv
+            - /mnt/vd0/data/videos:/media
 
     # Bitwarden
     bitwarden:
