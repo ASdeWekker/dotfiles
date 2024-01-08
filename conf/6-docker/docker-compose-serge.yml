@@ -76,29 +76,6 @@ services:
         volumes:
             - ${CONFIG}/grocy:/config
 
-    # Nginx proxy manager
-    nginx-proxy-manager:
-        container_name: nginx-proxy-manager
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - DB_MYSQL_HOST=${IP}
-            - DB_MYSQL_PORT=${NPM_DB_PORT}
-            - DB_MYSQL_USER=${NPM_DB_USER}
-            - DB_MYSQL_PASSWORD=${PW}
-            - DB_MYSQL_NAME=${NPM_DB_NAME}
-        image: jc21/nginx-proxy-manager:latest
-        ports:
-            - "8181:81"
-            - "8081:80"
-            - "4443:443"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/nginx-proxy-manager/config:/app/config
-            - ${CONFIG}/nginx-proxy-manager/data:/data
-            - ${CONFIG}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
-
     # Ouroboros
     ouroboros:
         container_name: ouroboros
