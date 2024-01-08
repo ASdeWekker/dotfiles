@@ -43,8 +43,8 @@ services:
     frigate:
         container_name: frigate
         devices:
-            - /dev/apex_0:/dev/apex_0
-            - /dev/dri/renderD128
+            - "/dev/apex_0:/dev/apex_0"
+            - "/dev/dri:/dev/dri"
         environment:
             - PUID=${UID}
             - PGID=${GID}
