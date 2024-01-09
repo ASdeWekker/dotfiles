@@ -8,19 +8,19 @@ version: "3.9"
 services:
 
     # Factorio
-    factorio:
-        container_name: factorio
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-        image: factoriotools/factorio:stable
-        ports:
-            - "34198:34198/udp"
-            - "27016:27016"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/factorio:/factorio
+    # factorio:
+    #     container_name: factorio
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #     image: factoriotools/factorio:stable
+    #     ports:
+    #         - "34198:34198/udp"
+    #         - "27016:27016"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/factorio:/factorio
     
     # Factorio 2
     factorio2:
@@ -38,57 +38,57 @@ services:
             - ${CONFIG}/factorio2:/factorio
 
     # Sky Factory
-    skyfactory:
-        container_name: skyfactory
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - SERVER_OP=${MNCRFT_SERVER_OP}
-        image: cochief/skyfactory4
-        ports:
-            - "25566:25565"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/skyfactory/world:/minecraft/world
-            - ${CONFIG}/skyfactory/ops.json:/minecraft/ops.json
-            - ${CONFIG}/skyfactory/server.properties:/minecraft/server.properties
-            - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
+    # skyfactory:
+    #     container_name: skyfactory
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - SERVER_OP=${MNCRFT_SERVER_OP}
+    #     image: cochief/skyfactory4
+    #     ports:
+    #         - "25566:25565"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/skyfactory/world:/minecraft/world
+    #         - ${CONFIG}/skyfactory/ops.json:/minecraft/ops.json
+    #         - ${CONFIG}/skyfactory/server.properties:/minecraft/server.properties
+    #         - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
 
     # Tekkit
-    tekkit:
-        container_name: tekkit
-        environment:
-            - PUID=${UID}
-            - GUID=${GID}
-            - TZ=${TZ}
-            - SERVER_OP=${MNCRFT_SERVER_OP}
-        image: dang1t/tekkit-classic-docker:latest
-        ports:
-            - "25565:25565"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/tekkit-server/world:/minecraft/world
-            - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
-            - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
-            - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
+    # tekkit:
+    #     container_name: tekkit
+    #     environment:
+    #         - PUID=${UID}
+    #         - GUID=${GID}
+    #         - TZ=${TZ}
+    #         - SERVER_OP=${MNCRFT_SERVER_OP}
+    #     image: dang1t/tekkit-classic-docker:latest
+    #     ports:
+    #         - "25565:25565"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/tekkit-server/world:/minecraft/world
+    #         - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
+    #         - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
+    #         - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
     
     # Valheim
-    valheim-server:
-        container_name: valheim-server
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - SERVER_NAME=${VLHM_SERVER_NAME}
-            - WORLD_NAME=${VLHM_WORLD_NAME}
-            - SERVER_PASS=${VLHM_SERVER_PASS}
-        image: lloesche/valheim-server
-        ports:
-            - "2456-2458:2456-2458/udp"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/valheim:/config
+    # valheim-server:
+    #     container_name: valheim-server
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - SERVER_NAME=${VLHM_SERVER_NAME}
+    #         - WORLD_NAME=${VLHM_WORLD_NAME}
+    #         - SERVER_PASS=${VLHM_SERVER_PASS}
+    #     image: lloesche/valheim-server
+    #     ports:
+    #         - "2456-2458:2456-2458/udp"
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/valheim:/config
     
     # Valheim
     valheim-server2:
