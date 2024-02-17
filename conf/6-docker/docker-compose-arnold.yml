@@ -19,7 +19,7 @@ services:
             - DB_USER=${BKSTCK_DB_USER}
             - DB_PASS=${PW}
             - DB_DATABASE=${BKSTCK_DB_DATABASE}
-        image: linuxserver/bookstack:latest
+        image: lscr.io/linuxserver/bookstack:latest
         ports:
             - "6875:80"
         restart: ${US}
@@ -95,7 +95,7 @@ services:
             - NEXTCLOUD_ADMIN_USER=${USER}
             - NEXTCLOUD_ADMIN_PASSWORD=${PW}
             - REDIS_HOST=${IP}
-        image: linuxserver/nextcloud:latest
+        image: lscr.io/linuxserver/nextcloud:latest
         ports:
             - "3333:443"
         restart: ${US}
