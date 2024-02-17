@@ -14,7 +14,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-        image: linuxserver/bazarr:latest
+        image: lscr.io/linuxserver/bazarr:latest
         ports:
             - "6767:6767"
         restart: ${US}
@@ -43,7 +43,7 @@ services:
         container_name: frigate
         devices:
             - "/dev/apex_0:/dev/apex_0"
-            - "/dev/dri:/dev/dri"
+            - "/dev/dri/renderD128:/dev/dri/renderD128"
         environment:
             - PUID=${UID}
             - PGID=${GID}
@@ -55,11 +55,15 @@ services:
             - "1935:1935"
         privileged: true
         restart: ${US}
-        shm_size: "128mb"
+        shm_size: "256mb"
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - ${CONFIG}/frigate/config.yml:/config/config.yml
+            - ${CONFIG}/frigate:/config
             - /home/${USER}/frigate/storage:/media/frigate
+            - type: tmpfs
+              target: /tmp/cache
+              tmpfs:
+                size: 1000000000
 
     # Grocy
     grocy:
@@ -68,7 +72,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-        image: linuxserver/grocy
+        image: lscr.io/linuxserver/grocy
         ports:
             - "9283:80"
         restart: ${US}
@@ -173,7 +177,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-        image: linuxserver/radarr:nightly
+        image: lscr.io/linuxserver/radarr:latest
         ports:
             - "7878:7878"
         restart: ${US}
@@ -215,7 +219,7 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-        image: linuxserver/sonarr:latest
+        image: lscr.io/linuxserver/sonarr:latest
         ports:
             - "8989:8989"
         restart: ${US}
@@ -231,7 +235,7 @@ services:
             - PUID=${UID}
             - GUID=${GID}
             - TZ=${TZ}
-        image: tautulli/tautulli:latest
+        image: ghcr.io/tautulli/tautulli:latest
         ports:
             - "8182:8181"
         restart: ${US}
@@ -248,12 +252,15 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
+            - UMASK_SET=002
             - serverIP=${IP}
             - serverPort=8266
             - webUIPort=8265
             - internalNode=true
-            - nodeID=${SERVER}Node
-        image: haveagitgat/tdarr:latest
+            - inContainer=true
+            - nodeName=${SERVER}Node
+            - ffmpegVersion=6
+        image: ghcr.io/haveagitgat/tdarr:latest
         ports:
             - "8265:8265"
             - "8266:8266"
