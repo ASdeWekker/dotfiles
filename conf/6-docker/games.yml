@@ -56,22 +56,22 @@ services:
     #         - ${CONFIG}/skyfactory/whitelist.json:/minecraft/whitelist.json
 
     # Tekkit
-    # tekkit:
-    #     container_name: tekkit
-    #     environment:
-    #         - PUID=${UID}
-    #         - GUID=${GID}
-    #         - TZ=${TZ}
-    #         - SERVER_OP=${MNCRFT_SERVER_OP}
-    #     image: dang1t/tekkit-classic-docker:latest
-    #     ports:
-    #         - "25565:25565"
-    #     restart: ${US}
-    #     volumes:
-    #         - ${CONFIG}/tekkit-server/world:/minecraft/world
-    #         - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
-    #         - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
-    #         - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
+    tekkit:
+        container_name: tekkit
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - SERVER_OP=${MNCRFT_SERVER_OP}
+        image: dang1t/tekkit-classic-docker:latest
+        ports:
+            - "25565:25565"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/tekkit-server/world:/minecraft/world
+            - ${CONFIG}/tekkit-server/world_nether:/minecraft/world_nether
+            - ${CONFIG}/tekkit-server/world_the_end:/minecraft/world_the_end
+            - ${CONFIG}/tekkit-server/plugins:/minecraft/plugins
     
     # Valheim
     # valheim-server:
