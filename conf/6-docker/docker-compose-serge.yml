@@ -42,7 +42,7 @@ services:
     frigate:
         container_name: frigate
         devices:
-            - "/dev/apex_0:/dev/apex_0"
+            - "/dev/bus/usb:/dev/bus/usb"
             - "/dev/dri/renderD128:/dev/dri/renderD128"
         environment:
             - PUID=${UID}
@@ -164,6 +164,7 @@ services:
             - "8080:8080"
             - "8999:8999"
             - "8999:8999/udp"
+            - "28335:28335/tcp"
         privileged: true
         restart: ${US}
         volumes:
