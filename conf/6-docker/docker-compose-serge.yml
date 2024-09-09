@@ -63,7 +63,7 @@ services:
             - type: tmpfs
               target: /tmp/cache
               tmpfs:
-                size: 1000000000
+                  size: 1000000000
 
     # Grocy
     grocy:
