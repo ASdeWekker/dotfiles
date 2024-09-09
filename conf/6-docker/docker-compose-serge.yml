@@ -2,8 +2,6 @@
 # This is my docker compose file. #
 #                                 #
 
-version: "3.9"
-
 # Services.
 services:
 
