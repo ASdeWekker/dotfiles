@@ -2,8 +2,6 @@
 # This is my docker compose file for Arnold. #
 #                                            #
 
-version: "3.9"
-
 # Services.
 services:
 
