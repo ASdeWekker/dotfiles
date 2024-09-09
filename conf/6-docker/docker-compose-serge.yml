@@ -271,3 +271,21 @@ services:
             - ${CONFIG}/tdarr/logs:/app/logs
             - /mnt/vd0/data:/media
             - ${CONFIG}/../../downloads/tdarr/cache:/temp
+
+    # Unmanic
+    unmanic:
+        container_name: unmanic
+        devices:
+            - "/dev/dri:/dev/dri"
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+        image: josh5/unmanic:latest
+        ports:
+            - "8888:8888"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/unmanic:/config
+            - /mnt/vd0/data:/library
+            - ${CONFIG}/../../downloads/unmanic/cache:/tmp/unmanic
