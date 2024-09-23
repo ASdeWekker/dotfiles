@@ -109,7 +109,7 @@ services:
             - GUID=${GID}
             - TZ=${TZ}
             - DB_MYSQL_HOST=${IP}
-            - DB_MYSQL_PORT=${NPM_DB_PORT}
+            - DB_MYSQL_PORT=${MDBPORT}
             - DB_MYSQL_USER=${NPM_DB_USER}
             - DB_MYSQL_PASSWORD=${PW}
             - DB_MYSQL_NAME=${NPM_DB_NAME}
