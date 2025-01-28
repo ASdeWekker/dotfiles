@@ -2,6 +2,12 @@
 # This is my docker compose file. #
 #                                 #
 
+# Networks.
+networks:
+    vpn-network:
+        name: vpn-network
+        external: true
+
 # Services.
 services:
 
@@ -13,6 +19,8 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
         image: lscr.io/linuxserver/bazarr:latest
+        networks:
+            - vpn-network
         ports:
             - "6767:6767"
         restart: ${US}
@@ -35,6 +43,23 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/bitwarden:/data
+
+    # Deluge
+    deluge:
+        container_name: deluge
+        depends_on:
+            - gluetun
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - DELUGE_LOGLEVEL=error
+        image: lscr.io/linuxserver/deluge:latest
+        network_mode: "service:gluetun"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/deluge:/config
+            - /home/${USER}/downloads/deluge:/downloads
 
     # Frigate
     frigate:
@@ -62,6 +87,42 @@ services:
               target: /tmp/cache
               tmpfs:
                   size: 1000000000
+
+    # Gluetun
+    gluetun:
+        cap_add:
+            - NET_ADMIN
+        container_name: gluetun
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - VPN_SERVICE_PROVIDER=nordvpn
+            - VPN_TYPE=openvpn
+            - OPENVPN_USER=${VPN_USERNAME}
+            - OPENVPN_PASSWORD=${VPN_PASSWORD}
+            - DOT=on
+            - DNS_SERVERS=192.168.1.90,1.1.1.1
+            - LOG_LEVEL=info
+            - SERVER_COUNTRIES=Netherlands
+            # - SERVER_CITIES=Amsterdam
+            - VPN_INPUT_PORTS=8112,6881,58846
+        image: qmcgaw/gluetun:latest
+        networks:
+            - vpn-network
+        ports:
+            - "8081:8080/tcp"
+            - "9091:9091/tcp"
+            - "8112:8112" # Deluge
+            - "6881:6881" # Deluge
+            - "6881:6881/udp" # Deluge
+            - "58846:58846" # Deluge
+        privileged: true
+        restart: ${US}
+        sysctls:
+            - net.ipv4.ip_forward=1
+        volumes:
+            - ${CONFIG}/gluetun:/config
 
     # Grocy
     grocy:
@@ -139,6 +200,8 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
         image: linuxserver/prowlarr:develop
+        networks:
+            - vpn-network
         ports:
             - "9696:9696"
         restart: ${US}
@@ -152,17 +215,19 @@ services:
             - PUID=${UID}
             - PGID=${GID}
             - TZ=${TZ}
-            - VPN_ENABLED=yes
+            - VPN_ENABLED=no
             - VPN_USERNAME=${VPN_USERNAME}
             - VPN_PASSWORD=${VPN_PASSWORD}
             - LAN_NETWORK=192.168.1.0/24
             - NAME_SERVERS=192.168.1.90,1.1.1.1
         image: markusmcnugen/qbittorrentvpn:latest
+        networks:
+            - vpn-network
         ports:
             - "8080:8080"
             - "8999:8999"
             - "8999:8999/udp"
-            - "28335:28335/tcp"
+            - "57437:57437"
         privileged: true
         restart: ${US}
         volumes:
@@ -177,13 +242,15 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
         image: lscr.io/linuxserver/radarr:latest
+        networks:
+            - vpn-network
         ports:
             - "7878:7878"
         restart: ${US}
         volumes:
             - ${CONFIG}/radarr:/config
             - /mnt/vd0/data/videos:/movies
-            - /home/${USER}/downloads/qbittorrentvpn:/downloads
+            - /home/${USER}/downloads/deluge:/downloads
 
     # Scrutiny
     scrutiny:
@@ -219,13 +286,15 @@ services:
             - PGID=${GID}
             - TZ=${TZ}
         image: lscr.io/linuxserver/sonarr:latest
+        networks:
+            - vpn-network
         ports:
             - "8989:8989"
         restart: ${US}
         volumes:
             - ${CONFIG}/sonarr:/config
             - /mnt/vd0/data/videos:/tv
-            - /home/${USER}/downloads/qbittorrentvpn:/downloads
+            - /home/${USER}/downloads/deluge:/downloads
 
     # Tautulli
     tautulli:
@@ -271,21 +340,3 @@ services:
             - ${CONFIG}/tdarr/logs:/app/logs
             - /mnt/vd0/data:/media
             - ${CONFIG}/../../downloads/tdarr/cache:/temp
-
-    # Unmanic
-    unmanic:
-        container_name: unmanic
-        devices:
-            - "/dev/dri:/dev/dri"
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-        image: josh5/unmanic:latest
-        ports:
-            - "8888:8888"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/unmanic:/config
-            - /mnt/vd0/data:/library
-            - ${CONFIG}/../../downloads/unmanic/cache:/tmp/unmanic
