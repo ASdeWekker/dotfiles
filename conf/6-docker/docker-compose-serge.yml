@@ -44,23 +44,6 @@ services:
         volumes:
             - ${CONFIG}/bitwarden:/data
 
-    # Deluge
-    deluge:
-        container_name: deluge
-        depends_on:
-            - gluetun
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - DELUGE_LOGLEVEL=error
-        image: lscr.io/linuxserver/deluge:latest
-        network_mode: "service:gluetun"
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/deluge:/config
-            - /home/${USER}/downloads/deluge:/downloads
-
     # Frigate
     frigate:
         container_name: frigate
@@ -112,10 +95,9 @@ services:
         ports:
             - "8081:8080/tcp"
             - "9091:9091/tcp"
-            - "8112:8112" # Deluge
-            - "6881:6881" # Deluge
-            - "6881:6881/udp" # Deluge
-            - "58846:58846" # Deluge
+            - "8080:8080" # Qbittorrent
+            - "6881:6881" # Qbittorrent
+            - "6881:6881/udp" # Qbittorrent
         privileged: true
         restart: ${US}
         sysctls:
@@ -207,6 +189,24 @@ services:
         volumes:
             - ${CONFIG}/prowlarr:/config
 
+    # QBittorrent
+    qbittorrent:
+        container_name: qbittorrent
+        depends_on:
+            - gluetun
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - WEBUI_PORT=8080
+            - TORRENTING_PORT=6881
+        image: lscr.io/linuxserver/qbittorrent:latest
+        network_mode: "service:gluetun"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/qbittorrent:/config
+            - /home/${USER}/downloads/qbittorrent:/downloads
+
     # QBittorrentVPN
     qbittorrentvpn:
         container_name: qbittorrentvpn
@@ -223,7 +223,7 @@ services:
         networks:
             - vpn-network
         ports:
-            - "8080:8080"
+            - "8085:8080"
             - "8999:8999"
             - "8999:8999/udp"
             - "57437:57437"
@@ -249,7 +249,7 @@ services:
         volumes:
             - ${CONFIG}/radarr:/config
             - /mnt/vd0/data/videos:/movies
-            - /home/${USER}/downloads/deluge:/downloads
+            - /home/${USER}/downloads/qbittorrent:/downloads
 
     # Scrutiny
     scrutiny:
@@ -293,7 +293,7 @@ services:
         volumes:
             - ${CONFIG}/sonarr:/config
             - /mnt/vd0/data/videos:/tv
-            - /home/${USER}/downloads/deluge:/downloads
+            - /home/${USER}/downloads/qbittorrent:/downloads
 
     # Tautulli
     tautulli:
