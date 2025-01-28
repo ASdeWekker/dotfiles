@@ -160,16 +160,8 @@ services:
             - PAPERLESS_ADMIN_USER=${PPRLSS_ADMIN_USER}
             - PAPERLESS_ADMIN_MAIL=${PPRLSS_ADMIN_MAIL}
             - PAPERLESS_ADMIN_PASSWORD=${PW}
-            - PAPERLESS_OCR_LANGUAGE=nld
-            - PAPERLESS_OCR_LANGUAGES=eng
-            - PAPERLESS_OCR_THREADS=1
-            - PAPERLESS_OCR_CLEAN=none
-            - PAPERLESS_OCR_PAGES=2
-            - PAPERLESS_CONVERT_MEMORY_LIMIT=128
-            - PAPERLESS_OPTIMIZE_THUMBNAILS=false
-            - PAPERLESS_WEBSERVER_WORKERS=1
-            - PAPERLESS_TASK_WORKERS=1
-            - PAPERLESS_THREADS_PER_WORKER=1
+            - PAPERLESS_OCR_LANGUAGE=eng
+            - PAPERLESS_OCR_LANGUAGES=nld
         image: ghcr.io/paperless-ngx/paperless-ngx:latest
         ports:
             - "8000:8000"
@@ -178,7 +170,7 @@ services:
             - ${CONFIG}/paperless-ngx/data:/usr/src/paperless/data
             - ${CONFIG}/paperless-ngx/media:/usr/src/paperless/media
             - ${CONFIG}/paperless-ngx/export:/usr/src/paperless/export
-            - ${CONFIG}/paperless-ngx/consume:/usr/src/paperless/consume
+            - /mnt/vd0/data/nextcloud/alex/files/InstantUpload/Office Lens:/usr/src/paperless/consume
 
     # Photoprism
     photoprism:
