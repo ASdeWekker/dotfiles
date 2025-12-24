@@ -72,38 +72,48 @@ services:
                   size: 1000000000
 
     # Gluetun
-    gluetun:
-        cap_add:
-            - NET_ADMIN
-        container_name: gluetun
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - VPN_SERVICE_PROVIDER=nordvpn
-            - VPN_TYPE=openvpn
-            - OPENVPN_USER=${VPN_USERNAME}
-            - OPENVPN_PASSWORD=${VPN_PASSWORD}
-            - DOT=on
-            - DNS_SERVERS=192.168.1.90,1.1.1.1
-            - LOG_LEVEL=info
-            - SERVER_COUNTRIES=Netherlands
-            - VPN_INPUT_PORTS=8112,6881,58846
-        image: qmcgaw/gluetun:latest
-        networks:
-            - vpn-network
-        ports:
-            - "8081:8080/tcp"
-            - "9091:9091/tcp"
-            - "8080:8080" # Qbittorrent
-            - "6881:6881" # Qbittorrent
-            - "6881:6881/udp" # Qbittorrent
-        privileged: true
-        restart: ${US}
-        sysctls:
-            - net.ipv4.ip_forward=1
-        volumes:
-            - ${CONFIG}/gluetun:/config
+    # gluetun:
+    #     cap_add:
+    #         - NET_ADMIN
+    #     container_name: gluetun
+    #     # devices:
+    #     #     - /dev/net/tun:/dev/net/tun
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         # - VPN_SERVICE_PROVIDER=nordvpn
+    #         # - VPN_TYPE=openvpn
+    #         - VPN_SERVICE_PROVIDER=custom
+    #         - VPN_TYPE=wireguard
+    #         # - OPENVPN_USER=${VPN_USERNAME}
+    #         # - OPENVPN_PASSWORD=${VPN_PASSWORD}
+    #         # - DOT=on
+    #         # - DNS_SERVERS=192.168.1.90,1.1.1.1
+    #         - LOG_LEVEL=info
+    #         # - SERVER_COUNTRIES=Netherlands
+    #         # - VPN_INPUT_PORTS=8112,6881,58846
+    #         - WIREGUARD_ENDPOINT_IP=${WRGRD_NDPNTP}
+    #         - WIREGUARD_ENDPOINT_PORT=${WRGRD_NDPNTPRT}
+    #         - WIREGUARD_PUBLIC_KEY=${WRGRD_PBLCKY}
+    #         - WIREGUARD_PRIVATE_KEY=${WRGRD_PRVTKY}
+    #         - WIREGUARD_PRESHARED_KEY=${WRGRD_PRSHRDKY}
+    #         - WIREGUARD_ADDRESSES=${WRGRD_DDRSSS}
+    #     image: qmcgaw/gluetun:latest
+    #     networks:
+    #         - vpn-network
+    #     ports:
+    #         - "8081:8080/tcp"
+    #         - "9091:9091/tcp"
+    #         - "8080:8080" # Qbittorrent
+    #         - "6881:6881" # Qbittorrent
+    #         - "6881:6881/udp" # Qbittorrent
+    #     privileged: true
+    #     restart: ${US}
+    #     sysctls:
+    #         - net.ipv4.ip_forward=1
+    #     volumes:
+    #         - ${CONFIG}/gluetun:/config
 
     # Grocy
     grocy:
@@ -119,7 +129,26 @@ services:
         volumes:
             - ${CONFIG}/grocy:/config
 
-    # Ouroboros
+    # Jellyfin
+    jellyfin:
+        container_name: jellyfin
+        devices:
+            - "/dev/dri:/dev/dri"
+        environment:
+            - PLEX_UID=${UID}
+            - PLEX_GID=${GID}
+            - TZ=${TZ}
+        image: jellyfin/jellyfin:latest
+        ports:
+            - "8096:8096"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/jellyfin:/config
+            - /mnt/vd0/data/videos:/data
+            # - /media/arnold/ssd-data/videos:/arnold-videos
+            # - /media/arnold/ssd-data/music:/arnold-music
+
+            # Ouroboros
     ouroboros:
         container_name: ouroboros
         environment:
@@ -192,8 +221,8 @@ services:
     # QBittorrent
     qbittorrent:
         container_name: qbittorrent
-        depends_on:
-            - gluetun
+        # depends_on:
+        #     - gluetun
         environment:
             - PUID=${UID}
             - PGID=${GID}
@@ -201,37 +230,41 @@ services:
             - WEBUI_PORT=8080
             - TORRENTING_PORT=6881
         image: lscr.io/linuxserver/qbittorrent:latest
-        network_mode: "service:gluetun"
+        # network_mode: "service:gluetun"
+        ports:
+            - "8080:8080" # Qbittorrent
+            - "6881:6881" # Qbittorrent
+            - "6881:6881/udp" # Qbittorrent
         restart: ${US}
         volumes:
             - ${CONFIG}/qbittorrent:/config
             - /home/${USER}/downloads/qbittorrent:/downloads
 
     # QBittorrentVPN
-    qbittorrentvpn:
-        container_name: qbittorrentvpn
-        environment:
-            - PUID=${UID}
-            - PGID=${GID}
-            - TZ=${TZ}
-            - VPN_ENABLED=no
-            - VPN_USERNAME=${VPN_USERNAME}
-            - VPN_PASSWORD=${VPN_PASSWORD}
-            - LAN_NETWORK=192.168.1.0/24
-            - NAME_SERVERS=192.168.1.90,1.1.1.1
-        image: markusmcnugen/qbittorrentvpn:latest
-        networks:
-            - vpn-network
-        ports:
-            - "8085:8080"
-            - "8999:8999"
-            - "8999:8999/udp"
-            - "57437:57437"
-        privileged: true
-        restart: ${US}
-        volumes:
-            - ${CONFIG}/qbittorrent:/config
-            - /home/${USER}/downloads/qbittorrentvpn:/downloads
+    # qbittorrentvpn:
+    #     container_name: qbittorrentvpn
+    #     environment:
+    #         - PUID=${UID}
+    #         - PGID=${GID}
+    #         - TZ=${TZ}
+    #         - VPN_ENABLED=no
+    #         - VPN_USERNAME=${VPN_USERNAME}
+    #         - VPN_PASSWORD=${VPN_PASSWORD}
+    #         - LAN_NETWORK=192.168.1.0/24
+    #         - NAME_SERVERS=192.168.1.90,1.1.1.1
+    #     image: markusmcnugen/qbittorrentvpn:latest
+    #     networks:
+    #         - vpn-network
+    #     ports:
+    #         - "8085:8080"
+    #         - "8999:8999"
+    #         - "8999:8999/udp"
+    #         - "57437:57437"
+    #     privileged: true
+    #     restart: ${US}
+    #     volumes:
+    #         - ${CONFIG}/qbittorrent:/config
+    #         - /home/${USER}/downloads/qbittorrentvpn:/downloads
 
     # Radarr
     radarr:
