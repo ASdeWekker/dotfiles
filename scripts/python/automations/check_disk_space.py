@@ -28,7 +28,7 @@ def main():
     """ Everything comes together. """
 
     # Some more vars.
-    min_space = 50  # Minimum amount of space that's acceptable in GB.
+    min_space = 10  # Minimum amount of space that's acceptable in GB.
     speed_limit = 500  # The imposed speedlimit in KB/s.
     space_left = round(psutil.disk_usage("/")[2] / 1024 / 1024 / 1024)
     cookie = ""
@@ -49,7 +49,8 @@ def main():
             res = req.post(
                 url=f"{url}/auth/login",
                 data={"username": user, "password": pw},
-                headers=headers
+                headers=headers,
+                timeout=10
             )
 
             if res.ok:
@@ -63,9 +64,9 @@ def main():
                 url=f"{url}/torrents/info",
                 headers=headers,
                 cookies={"SID": cookie},
-                params={"filter": "all", "sort": "ratio"}
+                    params={"filter": "all", "sort": "ratio"}
+                    timeout=10
             )
-
             if res.ok:
                 data = res.json()
             else:
@@ -82,7 +83,8 @@ def main():
                 url=f"{url}/torrents/setDownloadLimit",
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
                 cookies={"SID": cookie},
-                data=params
+                data=params,
+                timeout=10
             )
 
             if res.ok:
@@ -99,7 +101,8 @@ def main():
             res = req.post(
                 url=f"{url}/auth/logout",
                 headers=headers,
-                cookies={"SID": cookie}
+                cookies={"SID": cookie},
+                timeout=10
             )
 
             if res.ok:
