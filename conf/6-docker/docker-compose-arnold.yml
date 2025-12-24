@@ -24,6 +24,42 @@ services:
         volumes:
             - ${CONFIG}/bookstack:/config
 
+    # Docmost
+    docmost:
+        image: docmost/docmost:latest
+        depends_on:
+            - docmost-db
+            # - redis
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - APP_URL=http://${IP}:4000
+            - APP_SECRET=${DCMST_SECRET}
+            - DATABASE_URL=postgresql://docmost:${PW}@db:5432/docmost?schema=public
+            - REDIS_URL=redis://${IP}:6379
+        ports:
+            - "4000:3000"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/docmost/storage:/app/data/storage
+
+    docmost-db:
+        image: postgres:16-alpine
+        environment:
+            - POSTGRES_DB=docmost
+            - POSTGRES_USER=docmost
+            - POSTGRES_PASSWORD=${PW}
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/docmost/db:/var/lib/postgresql/data
+
+    # redis:
+    #     image: redis:7.2-alpine
+    #     restart: unless-stopped
+    #     volumes:
+    #         - redis_data:/data
+
     # Esphome
     esphome:
         container_name: esphome
