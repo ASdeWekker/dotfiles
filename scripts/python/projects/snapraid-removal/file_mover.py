@@ -2,26 +2,27 @@
     Move tv show files around so that everything is in the same season folder.
 """
 
+
+import json
+import os
 import subprocess
 import sys
+from dotenv import load_dotenv
 from pathlib import Path
+
 
 # ===== CONFIGURATION =====
 
 SOURCE_DISKS = [
-    Path(""),  # ex /mnt/media1
-    Path(""),
-    Path(""),
-    Path(""),
-    Path(""),
+    Path(str(os.getenv("DISK1"))),
+    Path(str(os.getenv("DISK2"))),
+    Path(str(os.getenv("DISK3"))),
+    Path(str(os.getenv("DISK4"))),
+    Path(str(os.getenv("DISK5"))),
 ]
-
-DEST_DISK = Path("")
-
-SERIES_BASE_PATH = Path("")
-
-SERIES_TO_MOVE = [
-]
+DEST_DISK = Path(str(os.getenv("DEST_DISK")))
+SERIES_BASE_PATH = Path(str(os.getenv("SERIES_BASE_PATH")))
+SERIES_CONFIG = Path("series_config.json")
 
 RSYNC_FLAGS = [
     "-avhP",
@@ -34,6 +35,19 @@ RSYNC_FLAGS = [
 DRY_RUN = False  # set to True to test safely
 
 # =========================
+
+
+def load_series_list() -> list[str]:
+    """ Load the list of series from a JSON file. """
+
+    if not SERIES_CONFIG.exists():
+        print(f"❌ Config file not found: {SERIES_CONFIG}")
+        sys.exit(0)
+
+    with open(SERIES_CONFIG, "r") as file:
+        config = json.load(file)
+
+    return config.get("series", [])
 
 
 def run_rsync(src: Path, dst: Path):
@@ -52,7 +66,7 @@ def run_rsync(src: Path, dst: Path):
     result = subprocess.run(cmd)
 
     if result.returncode != 0:
-        print(f"❌ rsync failed for {src}")
+        print(f"❌ Command rsync failed for {src}")
         sys.exit(result.returncode)
 
 
@@ -61,15 +75,30 @@ def find_series(series_name: str) -> Path | None:
         candidate = disk / SERIES_BASE_PATH / series_name
         if candidate.exists():
             return candidate
+    print("❌ No series found")
     return None
 
 
 def main():
+    """ Make it all work together. """
+
+    print("📋 Loading series list from JSON...")
+    series_to_move = load_series_list()
+
+    if not series_to_move:
+        print("⚠️ No series found in config file")
+        sys.exit(1)
+
+    print(f"Found {len(series_to_move)} series to process\n")
+
     dest_series_root = DEST_DISK / SERIES_BASE_PATH
     dest_series_root.mkdir(parents=True, exist_ok=True)
+    series_count = 0
 
-    for series in SERIES_TO_MOVE:
-        print(f"\n📺 Processing series: {series}")
+    for series in series_to_move:
+        series_count += 1
+        show_num = f"({series_count}/{len(series_to_move)})"
+        print(f"\n📺 Processing series: {series} {show_num}")
 
         source_path = find_series(series)
 
