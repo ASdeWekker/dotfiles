@@ -51,6 +51,8 @@ def load_series_list() -> list[str]:
 
 
 def run_rsync(src: Path, dst: Path):
+    """ Craft the rsync command that's needed. """
+
     cmd = ["rsync"]
 
     cmd.extend(RSYNC_FLAGS)
@@ -70,13 +72,21 @@ def run_rsync(src: Path, dst: Path):
         sys.exit(result.returncode)
 
 
-def find_series(series_name: str) -> Path | None:
+def find_all_series(series_name: str) -> list[Path]:
+    """Find all occurrences of a series across all disks."""
+
+    found = []
+
     for disk in SOURCE_DISKS:
         candidate = disk / SERIES_BASE_PATH / series_name
         if candidate.exists():
-            return candidate
-    print("❌ No series found")
-    return None
+            found.append(candidate)
+
+    if found is None:
+        print("❌ No series found")
+        return None
+
+    return found
 
 
 def main():
@@ -100,13 +110,13 @@ def main():
         show_num = f"({series_count}/{len(series_to_move)})"
         print(f"\n📺 Processing series: {series} {show_num}")
 
-        source_path = find_series(series)
+        source_paths = find_all_series(series)
 
-        if not source_path:
+        if not source_paths:
             print(f"⚠️  Not found on any source disk: {series}")
             continue
 
-        for source_path in source_path:
+        for source_path in source_paths:
             print(f"📍 Found on: {source_path}")
             run_rsync(source_path, dest_series_root)
 
