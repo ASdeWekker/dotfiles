@@ -1,2 +1,2 @@
 *.log
-series.json
+series_config*.json
