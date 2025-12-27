@@ -100,7 +100,7 @@ def find_all_series(series_name: str) -> list[Path]:
 def main():
     """ Make it all work together. """
 
-    telmes.message("📋 Loading series list from JSON...")
+    print("📋 Loading series list from JSON...")
     series_to_move = load_series_list()
 
     if not series_to_move:
@@ -116,19 +116,19 @@ def main():
     for series in series_to_move:
         series_count += 1
         show_num = f"({series_count}/{len(series_to_move)})"
-        telmes.message(f"\n📺 Processing series: {series} {show_num}")
+        print(f"\n📺 Processing series: {series} {show_num}")
 
         source_paths = find_all_series(series)
 
         if not source_paths:
-            telmes.message(f"⚠️  Not found on any source disk: {series}")
+            print(f"⚠️  Not found on any source disk: {series}")
             continue
 
         for source_path in source_paths:
-            telmes.message(f"📍 Found on: {source_path}")
+            print(f"📍 Found on: {source_path}")
             run_rsync(source_path, dest_series_root)
 
-        telmes.message(f"✅ Completed: {series}")
+        telmes.message(f"✅ Completed: {series} {show_num}")
 
     telmes.message("\n🎉 All done!")
 
