@@ -19,11 +19,17 @@ appr.add(f"tgram://{bot_token}/{chat_id}")
 
 
 def message(message):
+    """ Craft the message. """
+
+    print(message)
     appr.notify(body=message)
 
+
 def main():
+    """ Actually send the message. """
+
     message(user_message)
-    
+
 
 if __name__ == "__main__":
     main()
