@@ -7,8 +7,16 @@ import json
 import os
 import subprocess
 import sys
+
 from dotenv import load_dotenv
 from pathlib import Path
+
+# Custom service
+sys.path.insert(1, "../../automations/services")
+import telegram_apprise as telmes
+
+
+load_dotenv()
 
 
 # ===== CONFIGURATION =====
@@ -41,7 +49,7 @@ def load_series_list() -> list[str]:
     """ Load the list of series from a JSON file. """
 
     if not SERIES_CONFIG.exists():
-        print(f"❌ Config file not found: {SERIES_CONFIG}")
+        telmes.message(f"❌ Config file not found: {SERIES_CONFIG}")
         sys.exit(0)
 
     with open(SERIES_CONFIG, "r") as file:
@@ -68,7 +76,7 @@ def run_rsync(src: Path, dst: Path):
     result = subprocess.run(cmd)
 
     if result.returncode != 0:
-        print(f"❌ Command rsync failed for {src}")
+        telmes.message(f"❌ Command rsync failed for {src}")
         sys.exit(result.returncode)
 
 
@@ -83,7 +91,7 @@ def find_all_series(series_name: str) -> list[Path]:
             found.append(candidate)
 
     if found is None:
-        print("❌ No series found")
+        telmes.message("❌ No series found")
         return None
 
     return found
@@ -92,14 +100,14 @@ def find_all_series(series_name: str) -> list[Path]:
 def main():
     """ Make it all work together. """
 
-    print("📋 Loading series list from JSON...")
+    telmes.message("📋 Loading series list from JSON...")
     series_to_move = load_series_list()
 
     if not series_to_move:
-        print("⚠️ No series found in config file")
+        telmes.message("⚠️ No series found in config file")
         sys.exit(1)
 
-    print(f"Found {len(series_to_move)} series to process\n")
+    telmes.message(f"Found {len(series_to_move)} series to process\n")
 
     dest_series_root = DEST_DISK / SERIES_BASE_PATH
     dest_series_root.mkdir(parents=True, exist_ok=True)
@@ -108,21 +116,21 @@ def main():
     for series in series_to_move:
         series_count += 1
         show_num = f"({series_count}/{len(series_to_move)})"
-        print(f"\n📺 Processing series: {series} {show_num}")
+        telmes.message(f"\n📺 Processing series: {series} {show_num}")
 
         source_paths = find_all_series(series)
 
         if not source_paths:
-            print(f"⚠️  Not found on any source disk: {series}")
+            telmes.message(f"⚠️  Not found on any source disk: {series}")
             continue
 
         for source_path in source_paths:
-            print(f"📍 Found on: {source_path}")
+            telmes.message(f"📍 Found on: {source_path}")
             run_rsync(source_path, dest_series_root)
 
-        print(f"✅ Completed: {series}")
+        telmes.message(f"✅ Completed: {series}")
 
-    print("\n🎉 All done!")
+    telmes.message("\n🎉 All done!")
 
 
 if __name__ == "__main__":
