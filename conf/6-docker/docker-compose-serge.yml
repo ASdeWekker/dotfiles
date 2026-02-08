@@ -37,6 +37,7 @@ services:
             - TZ=${TZ}
             - LOG_FILE=/data/bitwarden.log
             - SIGNUPS_ALLOWED=true
+            - DOMAIN=http://serge.local:8000
         image: vaultwarden/server:latest
         ports:
             - "8000:80"
@@ -128,6 +129,20 @@ services:
         restart: ${US}
         volumes:
             - ${CONFIG}/grocy:/config
+
+    # Homer
+    homer:
+        container_name: homer
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+        image: b4bz/homer:latest
+        ports:
+            - "9009:8080"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/homer/assets:/www/assets
 
     # Jellyfin
     jellyfin:
