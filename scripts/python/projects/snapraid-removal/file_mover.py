@@ -23,10 +23,10 @@ load_dotenv()
 
 SOURCE_DISKS = [
     Path(str(os.getenv("DISK1"))),
-    Path(str(os.getenv("DISK2"))),
+    #Path(str(os.getenv("DISK2"))),
     Path(str(os.getenv("DISK3"))),
     Path(str(os.getenv("DISK4"))),
-    Path(str(os.getenv("DISK5"))),
+    #Path(str(os.getenv("DISK5"))),
 ]
 DEST_DISK = Path(str(os.getenv("DEST_DISK")))
 SERIES_BASE_PATH = Path(str(os.getenv("SERIES_BASE_PATH")))
