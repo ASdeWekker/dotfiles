@@ -163,7 +163,33 @@ services:
             # - /media/arnold/ssd-data/videos:/arnold-videos
             # - /media/arnold/ssd-data/music:/arnold-music
 
-            # Ouroboros
+            # MariaDB
+    mariadb:
+        container_name: mariadb
+        environment:
+            - PUID=${UID}
+            - GUID=${GID}
+            - TZ=${TZ}
+            - MARIADB_ROOT_PASSWORD=${MARIA_RPW}
+            - MARIADB_DATABASE=appdb
+            - MARIADB_USER=${MARIA_USER}
+            - MARIADB_PASSWORD=${MARIA_PW}
+        healthcheck:
+            test: [ "CMD", "mariadb-admin", "ping", "-h", "127.0.0.1" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+        image: mariadb:11.7.2
+        ports:
+            - "3306:3306"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/mariadb/data:/var/lib/mysql
+            - ${CONFIG}/mariadb/config/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+            - /etc/localtime:/etc/localtime:ro
+
+    # Ouroboros
     ouroboros:
         container_name: ouroboros
         environment:
@@ -177,6 +203,18 @@ services:
         restart: ${US}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+
+    # PHPMyAdmin
+    PHPMyAdmin:
+        container_name: phpmyadmin
+        image: phpmyadmin:latest
+        environment:
+            - PMA_HOST=mariadb
+            - PMA_PORT=${MARIA_PORT}
+        ports:
+            - "8383:80"
+        depends_on:
+            - mariadb
 
     # Plex
     plex:
