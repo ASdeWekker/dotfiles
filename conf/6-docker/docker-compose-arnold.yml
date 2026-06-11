@@ -56,6 +56,22 @@ services:
         volumes:
             - ${CONFIG}/docmost/db:/var/lib/postgresql/data
 
+    # Elasticsearch
+    elasticsearch:
+        container_name: elasticsearch
+        image: elasticsearch:8.19.16
+        environment:
+            - PUID=${UID}
+            - PGID=${GID}
+            - TZ=${TZ}
+            - discovery.type=single-node
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        restart: ${US}
+        volumes:
+            - ${CONFIG}/elasticsearch:/usr/share/elasticsearch/data
+
     # Esphome
     esphome:
         container_name: esphome
