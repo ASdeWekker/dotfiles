@@ -123,10 +123,10 @@ services:
             - MARIADB_USER=${MARIA_USER}
             - MARIADB_PASSWORD=${MARIA_PW}
         healthcheck:
-            test: [ "CMD", "mariadb-admin", "ping", "-h", "127.0.0.1" ]
+            test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
             interval: 10s
             timeout: 5s
-            retries: 5
+            retries: 3
             start_period: 30s
         image: mariadb:11.7.2
         ports:
