@@ -13,3 +13,5 @@ geckodriver.log
 scripts/python/Scripts/
 __pycache__/
 *.pyc
+conf/6-docker/docker-compose-arnold-test.yml
+conf/6-docker/docker-compose-serge-test.yml
