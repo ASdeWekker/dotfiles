@@ -64,8 +64,8 @@ def main():
                 url=f"{url}/torrents/info",
                 headers=headers,
                 cookies={"SID": cookie},
-                    params={"filter": "all", "sort": "ratio"}
-                    timeout=10
+                params={"filter": "all", "sort": "ratio"},
+                timeout=10
             )
             if res.ok:
                 data = res.json()
